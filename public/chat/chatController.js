@@ -27,6 +27,14 @@
 
                 ready = true;
                 username = data.username;
+                if (username != null) {
+                    var operation = {
+                        operate: 'add',
+                        username: username
+                    };
+
+                    $scope.$emit('REFRESH_VISITOR_REQUEST', operation);
+                }
 
                 socket0.on('msg', function(data) {
                     console.log(" wang received data", data);
@@ -37,7 +45,7 @@
         }
 
         _reset_socket();
-        $scope.$on('RESET_SOCKET1', function(message) {
+        $scope.$on('RESET_SOCKET_RES', function(message) {
             console.log('xxxxxxxxxxxx');
             socket0.close();
 
@@ -59,11 +67,6 @@
                 socket0.emit('msg', msg);
             }
         }
-
-        $scope.testScope = function() {
-            $scope.$broadcast('RESET_SOCKET1');
-        }
-
 
         global.socket0 = socket0;
 

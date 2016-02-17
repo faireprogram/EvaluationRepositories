@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var mongodbAPI = require('../db/mongodb.js');
-var $injector = require('../util/Injector.js');
+var $injector = require('../util/injector.js');
 
 // login
 router.post('/login', function(req, res, next) {
@@ -70,8 +70,9 @@ router.post('/register', function(req, res, next) {
 
 router.post('/loginout', function(req, res, next) {
     if (req.session) {
+        var username = req.session.user.username;
         req.session.destroy(function(err) {
-            res.json({});
+            res.json({username: username});
         });
     }
 
@@ -82,9 +83,5 @@ router.post('/loginout', function(req, res, next) {
 router.get('/active/:activecode', function(req, res, next) {
 
 });
-
-router.post('/visitor', function(req, res, next) {
-
-})
 
 module.exports = router;

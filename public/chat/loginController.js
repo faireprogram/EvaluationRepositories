@@ -20,7 +20,7 @@
 
     var loginCtrl = function($scope, $http, $uibModal, $rootScope, sharedDataService) {
         $http.post('/api/login').success(function(data) {
-           _assign_login($scope, data);
+            _assign_login($scope, data);
         })
 
 
@@ -31,16 +31,27 @@
             });
 
             instance.result.then(function(data) {
-                $scope.$emit('RESET_SOCKET');
-            	_assign_login($scope, data);
+                var operation = {
+                    operate: 'add',
+
+                }
+                _assign_login($scope, data);
+                $scope.$emit('RESET_SOCKET_REQUEST');
+                $scope.$emit('REFRESH_VISITOR_REQUEST');
             })
         }
 
         $scope.logOut = function() {
-        	 $http.post('/api/loginout').success(function(data) {
-        	 	$scope.login = {};
-                $scope.$emit('RESET_SOCKET');
-        	 });
+            $http.post('/api/loginout').success(function(data) {
+                var operation = {
+                     operate: 'delete',
+                     username : data.username
+                };
+
+                $scope.login = {};
+                $scope.$emit('RESET_SOCKET_REQUEST');
+                $scope.$emit('REFRESH_VISITOR_REQUEST', operation);
+            });
         }
 
         $scope.register = function(user) {
@@ -49,7 +60,7 @@
                 'user': user
             }).success(function(data) {
                 if (data.status !== 'ok') {
-                	_assign_login($scope, data);
+                    _assign_login($scope, data);
 
                 } else {
                     sharedDataService.loginInstance.close(data);
@@ -58,7 +69,8 @@
         }
 
         $scope.login = function(user) {
-            $scope.$emit('RESET_SOCKET');
+            $scope.$emit('RESET_SOCKET_REQUEST');
+            $scope.$emit('REFRESH_VISITOR_REQUEST');
         }
     };
 

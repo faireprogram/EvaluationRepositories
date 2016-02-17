@@ -1,14 +1,43 @@
 (function(global) {
 
 
-	'use strict';
+    'use strict';
     var main_module = global.main_module;
-    var visitorController = function($scope) {
-    	$scope.visitors = ['aaa', 'bbb', 'ccc'];
 
-    	$scope.$on('REFRESH_VISITOR', function() {
-    		
-    	})
+    var _find = function(arr, username, callback) {
+        var ind = -1;
+        arr.forEach(function(visitor, index) {
+            if (visitor === username) {
+                ind = index;
+            }
+        });
+        if (ind != -1) {
+            callback(arr[ind], ind);
+        }
+        return ind;
+    }
+
+    var visitorController = function($scope) {
+        $scope.visitors = [];
+
+        $scope.$on('REFRESH_VISITOR_RES', function(eve, operation) {
+            if (operation.operate === 'delete') {
+                _find($scope.visitors, operation.username, function(visitor, i) {
+                    $scope.visitors.remove(i);
+                });
+            };
+
+            if (operation.operate === 'add') {
+                var find = false;
+                _find($scope.visitors, operation.username, function(visitor, i) {
+                    find = true;
+                });
+                if (!find) {
+                    $scope.visitors.push(operation.username);
+                }
+            };
+
+        });
     }
 
     visitorController.$inject = ['$scope'];
