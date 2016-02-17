@@ -37,6 +37,9 @@
                 }
             };
 
+            if (operation.operate === 'init') {
+                $scope.visitors = operation.username;
+            }
         });
     }
 

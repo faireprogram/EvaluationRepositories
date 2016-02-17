@@ -38,7 +38,14 @@
 
             $rootScope.$on('UPDATE_VISITOR_REQUEST', function(eve, m) {
                 console.log('Update visitor RootScope');
-                $rootScope.$broadcast('UPDATE_VISITOR_RES', {operate:m.message.op, username: m.message.from});
+                if(m.type === 'update_visitor') {
+                    $rootScope.$broadcast('UPDATE_VISITOR_RES', {operate:m.message.op, username: m.message.from});
+                } 
+
+                if(m.type === 'init_visitor') {
+                    $rootScope.$broadcast('UPDATE_VISITOR_RES', {operate:'init', username: m});
+                }
+                
             });
 
             $rootScope.$on('CHANGE_LOGIN_NAME_REQUEST', function(even, message) {
