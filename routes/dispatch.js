@@ -24,6 +24,9 @@ var dispatch = function(server) {
      **/
     io.on('connection', function(socket) {
 
+        var roomInstance = null;
+        var currentObserver = null;
+
         //notify the client, I've successful connect to your device
         var session = socket.handshake.session ? socket.handshake.session : null;
         var username = session ? (session.user ? session.user.username : null) : null;
@@ -34,7 +37,6 @@ var dispatch = function(server) {
         console.log('re build connected', socket.client.id)
 
         // console.log('socket', socket.handshake.session);
-
 
 
         socket.on('registerOnChanel', function(data) {
@@ -53,9 +55,10 @@ var dispatch = function(server) {
             subjectManagers.add(roomInstance);
             
             if(username) {
-                
-            }
+                roomInstance.addClient(username);
+            };
 
+            socket.emit('init_visitor', roomInstance.clients);
         });
 
         // receive the msg from the client
@@ -83,6 +86,18 @@ var dispatch = function(server) {
             // if register with wrap the socket in observer,
             // then detach observer
             // else delete socket itself
+            if(username) {
+                var msg = {
+                    from : username,
+                    msgtype: 'MSG_GROUP',
+                    to : 'rrr1',
+                    op : 'delete',
+                    type : 'visitor'
+                };
+
+                roomInstance.removeClient(username);
+                roomInstance.dispatchMsg(msg);
+            }
 
             if (currentObserver) {
                 roomInstance.detach(currentObserver);

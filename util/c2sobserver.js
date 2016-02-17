@@ -4,8 +4,6 @@ var AbstractObserver = require('./observer.js').AbstractObserver;
 var C2SObserver = function(uuid_socket, socket) {
     AbstractObserver.call(this, uuid_socket, socket);
 
-    this.clients = [];
-
     this.update = function(msg) {
         //TODO 1) find the propriate socket in the redis
         //TODO 2) redircect message to the next socket
@@ -19,7 +17,7 @@ var C2SObserver = function(uuid_socket, socket) {
         }
 
         if (msg.type == 'visitor') {
-            this.getSocket().emit('visitor', {
+            this.getSocket().emit('update_visitor', {
                 message: msg
             });
         }
@@ -47,6 +45,8 @@ var C2SObserver = function(uuid_socket, socket) {
  *
  **/
 var C2SSubject = function(roomName) {
+    this.clients = [];
+
     //client side uuid;
     AbstractSubject.call(this, roomName);
 }
@@ -54,7 +54,7 @@ var C2SSubject = function(roomName) {
 C2SObserver.prototype = Object.create(AbstractObserver.prototype);
 C2SSubject.prototype = Object.create(AbstractSubject.prototype);
 
-C2SObserver.prototype.addClient = function(clientName) {
+C2SSubject.prototype.addClient = function(clientName) {
     var ind = -1;
     this.clients.forEach(function(client, i) {
         if(client === clientName) {
@@ -66,7 +66,7 @@ C2SObserver.prototype.addClient = function(clientName) {
     }
 }
 
-C2SObserver.prototype.removeClient = function(clientName) {
+C2SSubject.prototype.removeClient = function(clientName) {
     var ind = -1;
     this.clients.forEach(function(client, i) {
         if(client === clientName) {

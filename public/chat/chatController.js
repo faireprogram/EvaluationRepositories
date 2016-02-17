@@ -53,7 +53,14 @@
                 //     socket0.emit('visitor', {roomId: 'rrr1', data: data});
                 // })
 
-                socket0.on('visitor', function(data) {
+                socket0.on('init_visitor', function(data) {
+                    data.type = 'init_visitor';
+                    $scope.$emit('UPDATE_VISITOR_REQUEST', data);
+                    $scope.$apply();
+                });
+
+                socket0.on('update_visitor', function(data) {
+                    data.type = 'update_visitor';
                     $scope.$emit('UPDATE_VISITOR_REQUEST', data);
                     $scope.$apply();
                 });
