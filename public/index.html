@@ -75,19 +75,19 @@
 								<div class="row fix_margin_padding">
 									<div class="col-md-10 fix_margin_padding">
 										<!-- <input type="text" class="form-control row-xs-12 rightbottom"> -->
-											<input type="text" class="form-control rightbottom"  style="height:64px" ng-model="inputMsg"> 
+											<input type="text" class="form-control " id="inputbar" placeholder="What's in your mind ?" ng-model="inputMsg"> 
 									</div>
 									<div class="col-md-1 fix_margin_padding">
 										<div class="row-xs-12">
-											<span class="glyphicon glyphicon-plus center" aria-hidden="true" 
+											<span class="glyphicon glyphicon-plus center close" aria-hidden="true" 
 											ng-click="testScope()">
 											</span>
 										</div>
 									</div>
 									<div class="col-md-1 fix_margin_padding">
 										<div class="row-xs-12">
-											<span class="glyphicon glyphicon-ok center" aria-hidden="true" 
-												ng-click="sendMsg(inputMsg)">
+											<span class="glyphicon glyphicon-ok center close aria-hidden="true" 
+												ng-click="sendMsg(inputMsg)" >
 											</span>
 										</div>
 									</div>

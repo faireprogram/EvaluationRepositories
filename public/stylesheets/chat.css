@@ -9,8 +9,9 @@
 }
 .row-xs-11 {
   height: 91.66666667%;
+  
   background-color: #E4F5B1;
-  }
+}
 .row-xs-10 {
   height: 83.33333333%;
   background-color: #512B52;
@@ -41,14 +42,23 @@
 }
 .row-xs-1 {
   height: 8.33333333%;
-  background-color: #635274;
+  background-color: #512B52;
+ /* background-color: #635274;*/
 }
 
 .rightbottom{
   background-color: #7BB0A8 ! important;
+  color:white;
 }
 .leftbottom{
-  background-color: #635274;
+  background-color: #512B52;
+  color:white;
+}
+#inputbar{
+  height: 100%;
+}
+.sendbutton:hovar{
+   opacity: 70%;
 }
 .fix_margin_padding {
 	margin: 0;
