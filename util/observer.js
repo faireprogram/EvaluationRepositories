@@ -88,7 +88,7 @@ var AbstractSubject = function(roomName) {
             }
             return validate;
         }
-        if (!validateState(st)) {
+        if (st.type === 'msg' && !validateState(st)) {
             return;
         }
         state = st;

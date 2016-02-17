@@ -19,16 +19,15 @@
 							</span>
 						</div>
 					</div>
-					<ul class="nav nav-sidebar row-xs-10">
-						<li class="active"><a class="list" href="#">Yakka <span class="sr-only">(current)</span></a></li>
-						<li class="active"><a class="list" href="#">Daha <span class="sr-only">(current)</span></a></li>
-						<li class="active"><a class="list" href="#">Mahaha <span class="sr-only">(current)</span></a></li>
-						<li class="active"><a class="list" href="#">Mahaha <span class="sr-only">(current)</span></a></li>
-						<li class="active"><a class="list" href="#">Mahaha <span class="sr-only">(current)</span></a></li>
+					<ul class="nav nav-sidebar row-xs-10" ng-controller="VisitorController">
+						<li class="active" ng-repeat="vistor in visitors">
+							<a class="list" href="#">
+								{{vistor}} <span class="sr-only">(current)</span>
+							</a>
+						</li>
 					</ul>
 					<div class="row-xs-1 leftbottom" ng-controller="LoginCtrl">
-						<div>
-							{{login.username}}
+						<div ng-bind="login.username" ng-controller="loginUserNameCtrl">
 						</div>
 						<div class="btn-group btn-group-justified footer" role="group" aria-label="...">
 							<div class="btn-group" role="group">
@@ -101,5 +100,7 @@
 		<script type="text/javascript" src="chat/main.js"></script>
 		<script type="text/javascript" src="chat/chatController.js"></script>
 		<script type="text/javascript" src="chat/loginController.js"></script>
+		<script type="text/javascript" src="chat/loginUserNameController.js"></script>
+		<script type="text/javascript" src="chat/visitorController.js"></script>
 	</body>
 </html>

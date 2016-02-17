@@ -33,13 +33,29 @@
                         username: username
                     };
 
-                    $scope.$emit('REFRESH_VISITOR_REQUEST', operation);
+                    var msg = {
+                        'msgtype': 'MSG_GROUP',
+                        'from': username,
+                        'to': 'rrr1',
+                        'op': 'add'
+                    }
+
+                    socket0.emit('visitor', msg);
                 }
 
                 socket0.on('msg', function(data) {
                     console.log(" wang received data", data);
                     $scope.msgs.push(data.message);
                     $scope.$digest();
+                });
+
+                // $scope.$on('REFRESH_VISITOR_RES', function(ev, data) {
+                //     socket0.emit('visitor', {roomId: 'rrr1', data: data});
+                // })
+
+                socket0.on('visitor', function(data) {
+                    $scope.$emit('UPDATE_VISITOR_REQUEST', data);
+                    $scope.$apply();
                 });
             });
         }

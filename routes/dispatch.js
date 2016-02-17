@@ -35,8 +35,7 @@ var dispatch = function(server) {
 
         // console.log('socket', socket.handshake.session);
 
-        var currentObserver = null;
-        var roomInstance = null;
+
 
         socket.on('registerOnChanel', function(data) {
 
@@ -52,6 +51,10 @@ var dispatch = function(server) {
 
             //add roomInstance to rooms
             subjectManagers.add(roomInstance);
+            
+            if(username) {
+                
+            }
 
         });
 
@@ -64,6 +67,13 @@ var dispatch = function(server) {
                 });
             });
 
+            msg.type = 'msg';
+            roomInstance.dispatchMsg(msg);
+        });
+
+        socket.on('visitor', function(msg) {
+            //dispatch Msg, save the msgs to DB
+            msg.type = 'visitor';
             roomInstance.dispatchMsg(msg);
         });
 

@@ -4,67 +4,64 @@
     'use strict';
     var main_module = global.main_module;
     //private method
-    var _assign_login = function($scope, data) {
+
+    //delete: logout, disconnect, 
+    //add: login, register,  
+    //session: get the order of name
+
+    var _send_close_request = function($scope, data) {
         if (data.status === 'ok') {
-            $scope.login = {
-                status: data.status,
-                username: data.username
-            }
-        } else {
-            $scope.login = {
-                status: data.status,
-                errmsg: data.msg
-            }
+            $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', data);
+            $scope.$emit('RESET_SOCKET_REQUEST', data);
+            $scope.$emit('REFRESH_VISITOR_REQUEST', {op: 'add', username: data.username});
         }
     }
 
     var loginCtrl = function($scope, $http, $uibModal, $rootScope, sharedDataService) {
-        $http.post('/api/login').success(function(data) {
-            _assign_login($scope, data);
+
+        $scope.$on('CHANGE_LOGIN_BUTTON_RES', function(ev, data) {
+            $scope.login = data;
         })
 
-
         $scope.openLogin = function() {
+
             var instance = sharedDataService.loginInstance = $uibModal.open({
-                templateUrl: 'login/login.html',
+                templateUrl: 'login/loginwindow.html',
                 controller: 'LoginCtrl'
             });
 
-            instance.result.then(function(data) {
-                var operation = {
-                    operate: 'add',
+            if (sharedDataService.signUpInstance) {
+                sharedDataService.signUpInstance.close();
+            };
 
-                }
-                _assign_login($scope, data);
-                $scope.$emit('RESET_SOCKET_REQUEST');
-                $scope.$emit('REFRESH_VISITOR_REQUEST');
-            })
-        }
+        };
 
-        $scope.logOut = function() {
-            $http.post('/api/loginout').success(function(data) {
-                var operation = {
-                     operate: 'delete',
-                     username : data.username
-                };
-
-                $scope.login = {};
-                $scope.$emit('RESET_SOCKET_REQUEST');
-                $scope.$emit('REFRESH_VISITOR_REQUEST', operation);
+        $scope.openSignup = function() {
+            var instance = sharedDataService.signUpInstance = $uibModal.open({
+                templateUrl: 'login/signup.html',
+                controller: 'LoginCtrl'
             });
-        }
+
+            if (sharedDataService.loginInstance) {
+                sharedDataService.loginInstance.close();
+            };
+        };
 
         $scope.register = function(user) {
 
             $http.post('/api/register', {
                 'user': user
             }).success(function(data) {
-                if (data.status !== 'ok') {
-                    _assign_login($scope, data);
+                //if successful get the data
+                //send the refresh visitor, refresh socket, username
 
+                _send_close_request($scope, data);
+
+                if (data.status !== 'ok') {
+                    // do nothing here
                 } else {
-                    sharedDataService.loginInstance.close(data);
-                }
+                    sharedDataService.signUpInstance.close();
+                };
             });
         }
 
@@ -72,6 +69,21 @@
             $scope.$emit('RESET_SOCKET_REQUEST');
             $scope.$emit('REFRESH_VISITOR_REQUEST');
         }
+
+        $scope.logOut = function() {
+            $http.post('/api/loginout').success(function(data) {
+                var operation = {
+                    operate: 'delete',
+                    username: data.username
+                };
+
+                $scope.login = {};
+                $scope.$emit('RESET_SOCKET_REQUEST');
+                $scope.$emit('REFRESH_VISITOR_REQUEST', operation);
+                $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', $scope.login);
+            });
+        };
+
     };
 
     loginCtrl.$inject = ['$scope', '$http', '$uibModal', '$rootScope', 'ShareDataService'];

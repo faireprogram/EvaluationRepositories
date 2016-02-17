@@ -20,7 +20,7 @@
     var visitorController = function($scope) {
         $scope.visitors = [];
 
-        $scope.$on('REFRESH_VISITOR_RES', function(eve, operation) {
+        $scope.$on('UPDATE_VISITOR_RES', function(eve, operation) {
             if (operation.operate === 'delete') {
                 _find($scope.visitors, operation.username, function(visitor, i) {
                     $scope.visitors.remove(i);
