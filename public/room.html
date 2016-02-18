@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 	<head>
 		<link href="libs/bootstrap/dist/css/bootstrap.css"  type="text/css" rel="stylesheet">
@@ -7,36 +6,36 @@
 		<script type="text/javascript"  src="libs/angular/angular.js"></script>
 		<script type="text/javascript"  src="libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	</head>
-	<body ng-app="main">
+	<body ng-app="main" ng-cloak>
 		<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">IChat</a>
-				</div>
-				<div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Room No.1</a></li>
-						<li><a href="#">Room No.2</a></li>
-						<li><a href="#">Room No.3</a></li>
-						<li><a href="#">Room No.4</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right" ng-controller="LoginCtrl">
-						<li ng-if="login.status == 'ok'"><a><span>Welcome,</span></a></li>
-						<li  ng-controller="LoginCtrl">
-							<a><div ng-bind="login.username" ng-controller="loginUserNameCtrl"></div></a>
-						</li>
-						<li ng-click="openSignup()" ng-if="login.status != 'ok'"><a href="" ><span class="glyphicon glyphicon-user" ></span > Sign Up</a></li>
-						<li ng-click="openLogin()" ng-if="login.status != 'ok'"><a href="" ><span class="glyphicon glyphicon-log-in" ></span > Login</a></li>
-						<li ng-click="logOut()" ng-if="login.status == 'ok'"><a href="" ><span class="glyphicon glyphicon-log-in" ></span > Logout</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+      <a class="navbar-brand" href="#">IChat</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Room No.1</a></li>
+        <li><a href="#">Room No.2</a></li>
+        <li><a href="#">Room No.3</a></li> 
+        <li><a href="#">Room No.4</a></li> 
+      </ul>
+      <ul class="nav navbar-nav navbar-right" ng-controller="LoginCtrl">
+      	<li ng-if="login.status == 'ok'"><a><span>Welcome,</span></a></li>
+      	<li  ng-controller="LoginCtrl">
+			<a><div ng-bind="login.username" ng-controller="loginUserNameCtrl"></div></a>
+		</li>
+        <li ng-click="openSignup()" ng-if="login.status != 'ok'"><a href="" ><span class="glyphicon glyphicon-user" ></span > Sign Up</a></li>
+        <li ng-click="openLogin()" ng-if="login.status != 'ok'"><a href="" ><span class="glyphicon glyphicon-log-in" ></span > Login</a></li>  
+        <li ng-click="logOut()" ng-if="login.status == 'ok'"><a href="" ><span class="glyphicon glyphicon-log-in" ></span > Logout</a></li>        
+      </ul>
+    </div>
+  </div>
+</nav>
 		<div class="container-fluid row-xs-12 ">
 			<div class="row">
 				<!-- Left -->
@@ -57,11 +56,11 @@
 						</li>
 					</ul>
 					<div class="leftbottom" >
-						
-						<div  >
-							<button type="button" class="btn btn-default leftbottom buttons">Settings</button>
-						</div>
-						
+					
+							<div  >
+								<button type="button" class="btn btn-default leftbottom buttons">Settings</button>
+							</div>
+							
 						
 					</div>
 				</div>
@@ -69,55 +68,59 @@
 				
 				<div class="col-md-10 row-xs-12 fix_margin_padding" ng-controller="ChatWindowCtrl">
 					<!-- Panel -->
+					
 					<div class="row-xs-11">
 						<div ng-class="msg_position(msg)" ng-repeat="msg in msgs">
-							
-							<p>
-								{{msg.content}}
-								<span>xxxx</span>
-							</p>
+								
+								<p>
+									{{msg.content}}
+									<span>xxxx</span>
+								</p>
+
 						</div>
 					</div>
-					<!-- <div class="singlechat">
+
+						<!-- <div class="singlechat">
 							<div class="close">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>
 							</div>
 							<P>Messge!</p>
-					</div> -->
+						</div> -->
+
 					<!--Bottom -->
-					
+				
 					<div class="row-xs-1 rightbottom">
-						<div class="col-md-8 col-md-push-4 fix_margin_padding">
-							<!-- Input Box -->
-							<div class="row fix_margin_padding">
-								<div class="col-md-10 fix_margin_padding">
-									<!-- <input type="text" class="form-control row-xs-12 rightbottom"> -->
-									<input type="text" class="form-control " id="inputbar" placeholder="What's in your mind ?" ng-model="inputMsg">
-								</div>
-								<div class="col-md-1 fix_margin_padding">
-									<div class="row-xs-12">
-										<span class="glyphicon glyphicon-plus center close" aria-hidden="true"
+							<div class="col-md-8 col-md-push-4 fix_margin_padding">
+								<!-- Input Box -->
+								<div class="row fix_margin_padding">
+									<div class="col-md-10 fix_margin_padding">
+										<!-- <input type="text" class="form-control row-xs-12 rightbottom"> -->
+											<input type="text" class="form-control " id="inputbar" placeholder="What's in your mind ?" ng-model="inputMsg"> 
+									</div>
+									<div class="col-md-1 fix_margin_padding">
+										<div class="row-xs-12">
+											<span class="glyphicon glyphicon-plus center close" aria-hidden="true" 
 											ng-click="testScope()">
-										</span>
+											</span>
+										</div>
+									</div>
+									<div class="col-md-1 fix_margin_padding">
+										<div class="row-xs-12">
+											<span class="glyphicon glyphicon-ok center close aria-hidden="true" 
+												ng-click="sendMsg(inputMsg)" >
+											</span>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-1 fix_margin_padding">
-									<div class="row-xs-12">
-										<span  class="glyphicon 
-										glyphicon-ok center close"  
-										aria-hidden="true"
-										ng-click="sendMsg(inputMsg)">
-										</span>
-									</div>
 							</div>
-						</div>
 					</div>
-			 </div>
+				</div>
+			</div>
 		</div>
-		<script type="text/javascript" src="/chat/main.js"></script>
-		<script type="text/javascript" src="/chat/chatController.js"></script>
-		<script type="text/javascript" src="/chat/loginController.js"></script>
-		<script type="text/javascript" src="/chat/loginUserNameController.js"></script>
-		<script type="text/javascript" src="/chat/visitorController.js"></script>
+		<script type="text/javascript" src="chat/main.js"></script>
+		<script type="text/javascript" src="chat/chatController.js"></script>
+		<script type="text/javascript" src="chat/loginController.js"></script>
+		<script type="text/javascript" src="chat/loginUserNameController.js"></script>
+		<script type="text/javascript" src="chat/visitorController.js"></script>
 	</body>
 </html>
