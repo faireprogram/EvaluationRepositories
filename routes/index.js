@@ -10,6 +10,10 @@ router.get('/test', function(req, res, next) {
     res.render('index');
 });
 
+router.get('/room', function(req, res, next) {
+    res.render('index');
+});
+
 router.get('/grasp/:roomId', function(req, res, next) {
 
     fs.readFile('./public/jade/phantom.template', 'utf8', (err, data) => {

@@ -3,17 +3,24 @@
 
 }
 
-
+.navbar{
+  height: 8% !important;
+  border-radius: 0px !important;
+  margin-bottom: 0px !important;
+}
 .row-xs-12 {
-  height: 100%;
+ 
+  height: 92%;
 }
 .row-xs-11 {
-  height: 91.66666667%;
+  height: 100%;
+  
   background-color: #E4F5B1;
-  }
+}
 .row-xs-10 {
-  height: 83.33333333%;
-  background-color: #512B52;
+  height: 94%;
+  /*background-color: #512B52;*/
+  background-color: #5cb85c;
 }
 .row-xs-9 {
   height: 75%;
@@ -40,15 +47,28 @@
   height: 16.66666667%;
 }
 .row-xs-1 {
-  height: 8.33333333%;
-  background-color: #635274;
+  height: 8.7%;
+  background-color: #5cb85c;
+  /*background-color: #512B52;*/
+ /* background-color: #635274;*/
 }
 
 .rightbottom{
   background-color: #7BB0A8 ! important;
+  color:white;
 }
 .leftbottom{
-  background-color: #635274;
+  background-color: #5cb85c;
+  /*background-color: #512B52;*/
+  color:white;
+}
+#inputbar{
+
+  height: 100%;
+  height: 55px\9;
+}
+.sendbutton:hovar{
+   opacity: 70%;
 }
 .fix_margin_padding {
 	margin: 0;
@@ -127,7 +147,7 @@ form > div {
   height:100%; 
 }
 .buttons{
-  height: 100%
+  width: 100%
 }
 
 .singlechat{
