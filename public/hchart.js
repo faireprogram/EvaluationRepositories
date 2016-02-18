@@ -19,7 +19,7 @@ $(function () {
             }
         });
 }
-    Highcharts.chart('id_hchat', {
+    Highcharts.chart('id_hchart', {
 
         chart: {
             type: 'solidgauge',
@@ -40,7 +40,7 @@ $(function () {
             style: {
                 fontSize: '16px'
             },
-            pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}%</span>',
+          pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
             positioner: function (labelWidth, labelHeight) {
                 return {
                     x: 200 - labelWidth / 2,
@@ -95,7 +95,7 @@ $(function () {
                 color: Highcharts.getOptions().colors[0],
                 radius: '100%',
                 innerRadius: '100%',
-                y: 80
+                y: 8
             }]
         }, {
             name: 'Message Amount',
