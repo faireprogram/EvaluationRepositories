@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link href="libs/bootstrap/dist/css/bootstrap.css"  type="text/css" rel="stylesheet">
+		<link href="/libs/bootstrap/dist/css/bootstrap.css"  type="text/css" rel="stylesheet">
 		<link href="stylesheets/chat.css"  type="text/css" rel="stylesheet">
 		<script src="libs/socket.io-client/socket.io.js"> </script>
-		<script type="text/javascript"  src="libs/angular/angular.js"></script>
-		<script type="text/javascript"  src="libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript"  src="/libs/angular/angular.js"></script>
+		<script type="text/javascript"  src="/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript"  src="/libs/angular-ui-router/release/angular-ui-router.js"></script>
 	</head>
-	<body ng-app="main">
-		<nav class="navbar navbar-default">
-		</nav>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-offset-1 col-md-10" >
-					<div class="row">
-						<div class="col-md-4 col-sm-6">
-							<div class="wPanel">
-								xxxx
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+	<body ng-app="main" ng-cloak>
+		
+		<div ng-include="'/template/nav/nav.html'"></div>
+		<div ui-view></div>
+
+		<script type="text/javascript" src="chat/main.js"></script>
+		<script type="text/javascript" src="chat/chatController.js"></script>
+		<script type="text/javascript" src="chat/loginController.js"></script>
+		<script type="text/javascript" src="chat/loginUserNameController.js"></script>
+		<script type="text/javascript" src="chat/visitorController.js"></script>
 	</body>
 </html>
