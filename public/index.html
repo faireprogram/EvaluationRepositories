@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<link href="libs/bootstrap/dist/css/bootstrap.css"  type="text/css" rel="stylesheet">
@@ -7,100 +8,21 @@
 		<script type="text/javascript"  src="libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	</head>
 	<body ng-app="main">
-		<div class="container-fluid row-xs-12 ">
-			<div class="row row-xs-12">
-				<!-- Left -->
-				<div class="col-md-2 row-xs-12 fix_margin_padding">
-					<div class="row-xs-1 ">
-						<div class="input-group">
-							<input type="text" class="form-control " height="50px" placeholder="Search for...">
-							<span class="input-group-btn leftbottom">
-								<button class="btn btn-default " type="button">GO!</button>
-							</span>
-						</div>
-					</div>
-					<ul class="nav nav-sidebar row-xs-10" ng-controller="VisitorController">
-						<li class="active" ng-repeat="vistor in visitors">
-							<a class="list" href="#">
-								{{vistor}} <span class="sr-only">(current)</span>
-							</a>
-						</li>
-					</ul>
-					<div class="row-xs-1 leftbottom" ng-controller="LoginCtrl">
-						<div ng-bind="login.username" ng-controller="loginUserNameCtrl">
-						</div>
-						<div class="btn-group btn-group-justified footer" role="group" aria-label="...">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default leftbottom buttons">Settings</button>
-							</div>
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default leftbottom buttons" ng-click="logOut()" ng-if="login.status == 'ok'">
-									LoginOut
-								</button>
-								<button type="button" class="btn btn-default leftbottom buttons" ng-click="openLogin()" ng-if="login.status != 'ok'">
-									Login
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Right -->
-				
-				<div class="col-md-10 row-xs-12 fix_margin_padding" ng-controller="ChatWindowCtrl">
-					<!-- Panel -->
-					
-					<div class="row-xs-11">
-						<div ng-class="msg_position(msg)" ng-repeat="msg in msgs">
-								
-								<p>
-									{{msg.content}}
-									<span>xxxx</span>
-								</p>
+			<nav class="navbar navbar-default">
+			</nav>
 
-						</div>
-					</div>
-
-						<!-- <div class="singlechat">
-							<div class="close">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>
-							</div>
-							<P>Messge!</p>
-						</div> -->
-
-					<!--Bottom -->
-				
-					<div class="row-xs-1 rightbottom">
-							<div class="col-md-8 col-md-push-4 fix_margin_padding">
-								<!-- Input Box -->
-								<div class="row fix_margin_padding">
-									<div class="col-md-10 fix_margin_padding">
-										<!-- <input type="text" class="form-control row-xs-12 rightbottom"> -->
-											<input type="text" class="form-control rightbottom"  style="height:64px" ng-model="inputMsg"> 
-									</div>
-									<div class="col-md-1 fix_margin_padding">
-										<div class="row-xs-12">
-											<span class="glyphicon glyphicon-plus center" aria-hidden="true" 
-											ng-click="testScope()">
-											</span>
-										</div>
-									</div>
-									<div class="col-md-1 fix_margin_padding">
-										<div class="row-xs-12">
-											<span class="glyphicon glyphicon-ok center" aria-hidden="true" 
-												ng-click="sendMsg(inputMsg)">
-											</span>
-										</div>
-									</div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-offset-1 col-md-10" >
+						<div class="row">
+							<div class="col-md-4 col-sm-6">
+								<div class="wPanel">
+										xxxx
 								</div>
 							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<script type="text/javascript" src="chat/main.js"></script>
-		<script type="text/javascript" src="chat/chatController.js"></script>
-		<script type="text/javascript" src="chat/loginController.js"></script>
-		<script type="text/javascript" src="chat/loginUserNameController.js"></script>
-		<script type="text/javascript" src="chat/visitorController.js"></script>
 	</body>
 </html>

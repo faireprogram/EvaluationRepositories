@@ -46,6 +46,7 @@ var C2SObserver = function(uuid_socket, socket) {
  **/
 var C2SSubject = function(roomName) {
     this.clients = [];
+    this.lastestMsgs = [];
 
     //client side uuid;
     AbstractSubject.call(this, roomName);
@@ -57,11 +58,11 @@ C2SSubject.prototype = Object.create(AbstractSubject.prototype);
 C2SSubject.prototype.addClient = function(clientName) {
     var ind = -1;
     this.clients.forEach(function(client, i) {
-        if(client === clientName) {
+        if (client === clientName) {
             ind = i;
         };
     });
-    if(ind == -1) {
+    if (ind == -1) {
         this.clients.push(clientName);
     }
 }
@@ -69,13 +70,20 @@ C2SSubject.prototype.addClient = function(clientName) {
 C2SSubject.prototype.removeClient = function(clientName) {
     var ind = -1;
     this.clients.forEach(function(client, i) {
-        if(client === clientName) {
+        if (client === clientName) {
             ind = i;
         };
     });
-    if(ind != -1) {
+    if (ind != -1) {
         this.clients.remove(ind);
     }
+}
+
+C2SSubject.prototype.pushMsg = function(msg) {
+    if (this.lastestMsgs.length > 6) {
+        this.lastestMsgs.remove(0);
+    }
+    this.lastestMsgs.push(msg);
 }
 
 C2SObserver.prototype.contructor = C2SObserver;

@@ -193,4 +193,10 @@ form > div {
       content: "";
       display: table;
       clear: both;
-};
+}
+
+
+.wPanel {
+  height: 50px;
+  padding: 10px;
+}

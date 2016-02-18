@@ -72,6 +72,7 @@ var dispatch = function(server) {
 
             msg.type = 'msg';
             roomInstance.dispatchMsg(msg);
+            roomInstance.pushMsg(msg);
         });
 
         socket.on('visitor', function(msg) {
