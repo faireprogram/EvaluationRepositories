@@ -10,6 +10,12 @@
         return this.push.apply(this, rest);
     };
 
+    var defer = function() {
+        if(defer.futurework) {
+            defer.futurework();
+        };
+    };
+
     var main = angular.module('main', ['ui.bootstrap', 'ui.router']);
 
     main.service('ShareDataService', function() {
@@ -20,17 +26,26 @@
     main.config(['$stateProvider',
         '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise('/');
 
-        $stateProvider
-        .state('index', {
-            url: '/',
-            templateUrl: '/template/roomlists/roomlists.html'
-        }).state('room', {
-            url: '/room/:roomid',
-            templateUrl: '/template/room/room.html'
-        });
-    }]);
+            $stateProvider
+                .state('index', {
+                    url: '/',
+                    templateUrl: '/template/roomlists/roomlists.html'
+                }).state('room', {
+                    url: '/room/:roomId',
+                    templateUrl: '/template/room/room.html',
+                    onExit: function() {
+                        console.log('ddddd');
+                        // defer.resolve();
+                        defer();
+                    }
+                }).state('statistics', {
+                    url: '/statistics',
+                    templateUrl: '/template/'
+                });
+        }
+    ]);
 
     main.run(['$rootScope',
         function($rootScope) {
@@ -72,6 +87,11 @@
                 console.log('CHANGE_LOGIN_NAME_REQUEST');
                 $rootScope.$broadcast('CHANGE_LOGIN_NAME_RES', message);
             })
+
+            defer.futurework = function() {
+                console.log('hhhhhhhhhh');
+                $rootScope.$broadcast('CLOSE_SOCKET_RES');
+            }
         }
     ]);
 

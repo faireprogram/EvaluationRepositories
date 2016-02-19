@@ -23,7 +23,7 @@ var dispatch = function(server) {
      * connection socket
      **/
     io.on('connection', function(socket) {
-
+        var roomId;
         var roomInstance = null;
         var currentObserver = null;
 
@@ -40,9 +40,10 @@ var dispatch = function(server) {
 
 
         socket.on('registerOnChanel', function(data) {
+            roomId = data.roomId;
 
             //data.roomId, create a room
-            roomInstance = $injector.getInstance(data.roomId, C2SSubject, data.roomId);
+            roomInstance = $injector.getInstance(roomId, C2SSubject, roomId);
 
             //client, create instance for the client
             currentObserver = $injector.getInstance(socket.client.id,
@@ -91,7 +92,7 @@ var dispatch = function(server) {
                 var msg = {
                     from : username,
                     msgtype: 'MSG_GROUP',
-                    to : 'rrr1',
+                    to : roomId,
                     op : 'delete',
                     type : 'visitor'
                 };
@@ -102,10 +103,8 @@ var dispatch = function(server) {
 
             if (currentObserver) {
                 roomInstance.detach(currentObserver);
-            } else {
-                delete socket.nsp.sockets[socket.id];
             }
-
+            console.log(roomInstance);
         })
     });
 

@@ -8,9 +8,7 @@ var RoomSchema  = new Schema({
 		createDate: Date,
 	},
 
-	status: {
-		close: Boolean
-	}
+	owner: String
 });
 
 module.exports = mongoose.model('History', HistorySchema);

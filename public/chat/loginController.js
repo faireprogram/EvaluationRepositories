@@ -17,11 +17,13 @@
         }
     }
 
-    var loginCtrl = function($scope, $http, $uibModal, $rootScope, sharedDataService) {
+    var loginCtrl = function($scope, $http, $uibModal, $rootScope, $stateParams, sharedDataService) {
 
         $scope.$on('CHANGE_LOGIN_BUTTON_RES', function(ev, data) {
             $scope.login = data;
-        })
+        });
+
+        console.log('$stateParams', $stateParams.roomId);
 
         $scope.openLogin = function() {
 
@@ -31,7 +33,7 @@
             });
 
             if (sharedDataService.signUpInstance) {
-                sharedDataService.signUpInstance.close();
+                sharedDataService.signUpInstance.dismiss();
             };
 
         };
@@ -43,7 +45,7 @@
             });
 
             if (sharedDataService.loginInstance) {
-                sharedDataService.loginInstance.close();
+                sharedDataService.loginInstance.dismiss();
             };
         };
 
@@ -86,7 +88,7 @@
 
     };
 
-    loginCtrl.$inject = ['$scope', '$http', '$uibModal', '$rootScope', 'ShareDataService'];
+    loginCtrl.$inject = ['$scope', '$http', '$uibModal', '$rootScope', '$stateParams' , 'ShareDataService'];
 
     main_module.controller('LoginCtrl', loginCtrl);
 

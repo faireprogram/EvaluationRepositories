@@ -11,17 +11,19 @@
     //      to: 'zhang',
     //      msg: 'HelloWorld!'
     //  }
-    var ChatWindowCtrl = function($scope, $http, $rootScope, shareservice) {
+    var ChatWindowCtrl = function($scope, $http, $rootScope, $stateParams, shareservice) {
         var socket0 = io.connect('http://localhost:8090');
         var ready = false;
         var username = null;
+
+        global.$stateParams = $stateParams;
 
         global.socket0 = socket0;
 
         var _reset_socket = function() {
             socket0.on('connected', function(data) {
                 socket0.emit('registerOnChanel', {
-                    roomId: 'rrr1',
+                    roomId: $stateParams.roomId,
                     socketId: data.username
                 });
 
@@ -36,7 +38,7 @@
                     var msg = {
                         'msgtype': 'MSG_GROUP',
                         'from': username,
-                        'to': 'rrr1',
+                        'to': $stateParams.roomId,
                         'op': 'add'
                     }
 
@@ -76,14 +78,16 @@
             _reset_socket();
         });
 
-
+        $scope.$on('CLOSE_SOCKET_RES', function() {
+            socket0.close();
+        });
 
         $scope.sendMsg = function(content) {
             if (ready && username) {
                 var msg = {
                     'msgtype': 'MSG_GROUP',
                     'from': username,
-                    'to': 'rrr1',
+                    'to': $stateParams.roomId,
                     'content': content
                 }
 
@@ -106,7 +110,8 @@
         }
     }
 
-    ChatWindowCtrl.$inject = ['$scope', '$http', '$rootScope', 'ShareDataService'];
+    ChatWindowCtrl.$inject = ['$scope', '$http', '$rootScope', 
+        '$stateParams', 'ShareDataService'];
 
     main_module.controller('ChatWindowCtrl', ChatWindowCtrl);
 
