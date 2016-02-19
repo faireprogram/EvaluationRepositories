@@ -2,21 +2,35 @@
 
 
     'use strict';
-    var main = angular.module('main', ['ui.bootstrap']);
+
+    /* config array, add array method here*/
+    Array.prototype.remove = function(from, to) {
+        var rest = this.slice((to || from) + 1 || this.length);
+        this.length = from < 0 ? this.length + from : from;
+        return this.push.apply(this, rest);
+    };
+
+    var main = angular.module('main', ['ui.bootstrap', 'ui.router']);
 
     main.service('ShareDataService', function() {
         this.loginInstance = null;
         this.signUpInstance = null;
     });
 
-    main.config(function() {
-        /* config array, add array method here*/
-        Array.prototype.remove = function(from, to) {
-            var rest = this.slice((to || from) + 1 || this.length);
-            this.length = from < 0 ? this.length + from : from;
-            return this.push.apply(this, rest);
-        };
-    });
+    main.config(['$stateProvider',
+        '$urlRouterProvider',
+        function($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
+
+        $stateProvider
+        .state('index', {
+            url: '/',
+            templateUrl: '/template/roomlists/roomlists.html'
+        }).state('room', {
+            url: '/room/:roomid',
+            templateUrl: '/template/room/room.html'
+        });
+    }]);
 
     main.run(['$rootScope',
         function($rootScope) {
@@ -38,14 +52,20 @@
 
             $rootScope.$on('UPDATE_VISITOR_REQUEST', function(eve, m) {
                 console.log('Update visitor RootScope');
-                if(m.type === 'update_visitor') {
-                    $rootScope.$broadcast('UPDATE_VISITOR_RES', {operate:m.message.op, username: m.message.from});
-                } 
-
-                if(m.type === 'init_visitor') {
-                    $rootScope.$broadcast('UPDATE_VISITOR_RES', {operate:'init', username: m});
+                if (m.type === 'update_visitor') {
+                    $rootScope.$broadcast('UPDATE_VISITOR_RES', {
+                        operate: m.message.op,
+                        username: m.message.from
+                    });
                 }
-                
+
+                if (m.type === 'init_visitor') {
+                    $rootScope.$broadcast('UPDATE_VISITOR_RES', {
+                        operate: 'init',
+                        username: m
+                    });
+                }
+
             });
 
             $rootScope.$on('CHANGE_LOGIN_NAME_REQUEST', function(even, message) {

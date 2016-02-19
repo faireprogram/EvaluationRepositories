@@ -12,12 +12,16 @@ SubjectManagers.prototype.find = function(subject) {
 			index = ind;
 		}
 	});
-	return index === -1 ? false : true;
+	return index;
+}
+
+SubjectManagers.prototype.has = function(subject) {
+	return this.find(subject) === -1 ? false : true;
 }
 
 SubjectManagers.prototype.add = function(subject) {
 	if(subject && subject instanceof Subject) {
-		if(!this.find(subject)) {
+		if(!this.has(subject)) {
 			this.subjects.push(subject);
 		}
 	}
