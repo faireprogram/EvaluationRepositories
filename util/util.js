@@ -102,12 +102,12 @@ util.string.num_uuid = function (n) {
             return result.toString();
         }
         if (parseInt(result / 100) != 0) {
-            return '0' + result.toString();
+            return '1' + result.toString();
         }
         if (parseInt(result / 10) != 0) {
-            return '00' + result.toString();
+            return '11' + result.toString();
         }
-        return '000' + result.toString();
+        return '111' + result.toString();
     }
 
     var _final_result = '';

@@ -26,7 +26,6 @@
         }
 
         $scope.saveRoom = function(newRoom) {
-            console.log('wowowowlalala', newRoom);
             $http.post('/api/addRoom', newRoom).success(function(newRecord) {
                 modal.close(newRecord);
             })
