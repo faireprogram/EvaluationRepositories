@@ -5,10 +5,21 @@ var RoomSchema  = new Schema({
 	rid: String,
 
 	description: {
-		createDate: Date,
+		description: String
 	},
 
-	owner: String
+	owner: {
+		username: String,
+		pid: String
+	},
+
+	tags: [String],
+
+	status: {
+		createDate: {type: Date, default: Date.now},
+		closeDate: Date,
+		open: {type: Boolean, default: true}
+	}
 });
 
-module.exports = mongoose.model('History', HistorySchema);
+module.exports = mongoose.model('ChatRoom', RoomSchema);

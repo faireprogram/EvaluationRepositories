@@ -84,4 +84,29 @@ router.get('/active/:activecode', function(req, res, next) {
 
 });
 
+
+/////////////////////////////////////////////////////////////////
+////  ROOM PART
+
+//// show all rooms
+router.post('/roomlists', function(req, res, next) {
+    mongodbAPI.findAllLivesRoom().then(function(allLivedRooms){
+        res.json(allLivedRooms);
+    });
+});
+
+//// add Room
+router.post('/addRoom', function(req, res, next) {
+    mongodbAPI.createChatRoom(req.body).then(function(savedRoom){
+        res.json(savedRoom);
+    });
+});
+
+//// check roomExist
+router.post('/roomExist', function(req, res, next) {
+    mongodbAPI.isRoomLive(req.body.rid).then(function(isRoomLive){
+        res.json({status: isRoomLive});
+    });
+});
+
 module.exports = router;

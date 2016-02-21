@@ -1,23 +1,42 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">IChat</a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">IChat</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right" ng-controller="LoginCtrl">
-        <li ng-if="login.status == 'ok'"><a><span>Welcome,</span></a></li>
-        <li  ng-controller="LoginCtrl">
-          <a><div ng-bind="login.username" ng-controller="loginUserNameCtrl"></div></a>
+        <li ng-if="login.status == 'ok'">
+            <a><span>Welcome,</span></a>
         </li>
-        <li ng-click="openSignup()" ng-if="login.status != 'ok'"><a href="" ><span class="glyphicon glyphicon-user" ></span > Sign Up</a></li>
-        <li ng-click="openLogin()" ng-if="login.status != 'ok'"><a href="" ><span class="glyphicon glyphicon-log-in" ></span > Login</a></li>
-        <li ng-click="logOut()" ng-if="login.status == 'ok'"><a href="" ><span class="glyphicon glyphicon-log-in" ></span > Logout</a></li>
-      </ul>
-    </div>
-  </div>
+        <li ng-controller="loginUserNameCtrl">
+            <a><div ng-bind="login.username"></div></a>
+        </li>
+        <li ng-click="openSignup()" ng-if="login.status != 'ok'">
+            <a href="" >
+               <span class="glyphicon glyphicon-user" ></span > Sign Up
+            </a>
+        </li>
+        <li ng-click="openLogin()" ng-if="login.status != 'ok'">
+            <a href="" >
+                <span class="glyphicon glyphicon-log-in" ></span > Login
+            </a>
+        </li>
+        <li ng-click="logOut()" ng-if="login.status == 'ok'">
+            <a href="" >
+              <span class="glyphicon glyphicon-log-in" ></span > Logout
+            </a>
+        </li>
+        <li>
+            <a ui-sref="roominfos">
+              <span class="glyphicon glyphicon-log-in" ></span > rooms
+            </a>
+        </li>
+  </ul>
+</div>
+</div>
 </nav>

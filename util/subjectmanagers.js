@@ -27,4 +27,10 @@ SubjectManagers.prototype.add = function(subject) {
 	}
 }
 
+SubjectManagers.prototype.dispatchMsg = function(msg) {
+	this.subjects.forEach(function(subject) {
+		subject.dispatchMsg(msg);
+	});
+}
+
 module.exports = SubjectManagers;

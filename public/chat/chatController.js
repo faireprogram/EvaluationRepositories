@@ -22,6 +22,9 @@
 
         var _reset_socket = function() {
             socket0.on('connected', function(data) {
+                $scope.id = socket0.id;
+                $scope.$apply();
+
                 socket0.emit('registerOnChanel', {
                     roomId: $stateParams.roomId,
                     socketId: data.username
@@ -70,8 +73,12 @@
         }
 
         _reset_socket();
-        $scope.$on('RESET_SOCKET_RES', function(message) {
-            console.log('xxxxxxxxxxxx');
+        $scope.$on('RESET_SOCKET_RES', function(evt, message) {
+            console.log('close the socket of client');
+            if(message.logout) {
+                socket0.emit('logout', {logout: message.logout});
+            }
+
             socket0.close();
 
             socket0 = io.connect('http://localhost:8090');
@@ -80,6 +87,17 @@
 
         $scope.$on('CLOSE_SOCKET_RES', function() {
             socket0.close();
+        });
+
+        $scope.$on('UPDATE_OBSERVER_NAME_RES', function(evt, username) {
+            var msg = {
+                'msgtype': 'MSG_GROUP',
+                'from': username,
+                'to': $stateParams.roomId,
+                'socketId': socket0.id
+            };
+
+            socket0.emit('update_observer', msg);
         });
 
         $scope.sendMsg = function(content) {
@@ -110,8 +128,9 @@
         }
     }
 
-    ChatWindowCtrl.$inject = ['$scope', '$http', '$rootScope', 
-        '$stateParams', 'ShareDataService'];
+    ChatWindowCtrl.$inject = ['$scope', '$http', '$rootScope',
+        '$stateParams', 'ShareDataService'
+    ];
 
     main_module.controller('ChatWindowCtrl', ChatWindowCtrl);
 

@@ -48,14 +48,14 @@ var dispatch = function(server) {
             //client, create instance for the client
             currentObserver = $injector.getInstance(socket.client.id,
                 C2SObserver,
-                data.socketId ? data.socketId : socket.client.id, socket);
+                socket.client.id, socket, data.socketId);
 
             roomInstance.attach(currentObserver);
 
             //add roomInstance to rooms
             subjectManagers.add(roomInstance);
-            
-            if(username) {
+
+            if (username) {
                 roomInstance.addClient(username);
             };
 
@@ -82,30 +82,66 @@ var dispatch = function(server) {
             roomInstance.dispatchMsg(msg);
         });
 
+        socket.on('update_observer', function(msg) {
+            //dispatch Msg, save the msgs to DB
+            username = msg.from;
+            if (roomInstance) {
+                msg.type = 'update_observer';
+                roomInstance.dispatchMsg(msg);
+            }
+        });
+
+        var maintain = function(msg) {
+            console.log('logout  ', msg);
+            if (username) {
+                var default_msg = {
+                    from: username,
+                    msgtype: 'MSG_GROUP',
+                    to: roomId,
+                    op: 'delete',
+                    type: 'visitor',
+                    logout: msg.logout || false
+                };
+                console.log('roomInstance.count(username)', roomInstance.count(username));
+                //if it's logout, delete all the msgs
+                // otherwise judge all the socket in the room whether has been closed
+
+                if (roomInstance.count(username) == 1) {
+                    roomInstance.removeClient(username);
+                    roomInstance.dispatchMsg(default_msg);
+                };
+
+                if (default_msg.logout) {
+                    roomInstance.removeClient(username);
+                    subjectManagers.dispatchMsg(default_msg);
+                }
+
+            };
+        };
+
+        socket.on('logout', function(msg) {
+            maintain(msg);
+        });
 
         socket.on('disconnect', function() {
             console.log('disconnect is called!!', socket.client.id);
             // if register with wrap the socket in observer,
             // then detach observer
             // else delete socket itself
-            if(username) {
-                var msg = {
-                    from : username,
-                    msgtype: 'MSG_GROUP',
-                    to : roomId,
-                    op : 'delete',
-                    type : 'visitor'
-                };
-
-                roomInstance.removeClient(username);
-                roomInstance.dispatchMsg(msg);
-            }
+            maintain({});
 
             if (currentObserver) {
                 roomInstance.detach(currentObserver);
             }
-            console.log(roomInstance);
-        })
+            if (roomInstance) {
+                console.log('roomInstance', roomInstance);
+
+            };
+            if (roomInstance.observers[0]) {
+                console.log('after delete socket', roomInstance.observers[0].socket.nsp.sockets);
+            }
+        });
+
     });
 
     return io;

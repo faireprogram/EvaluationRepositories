@@ -14,6 +14,7 @@
             $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', data);
             $scope.$emit('RESET_SOCKET_REQUEST', data);
             $scope.$emit('REFRESH_VISITOR_REQUEST', {op: 'add', username: data.username});
+            global.localStorage.setItem('login', JSON.stringify(data));
         }
     }
 
@@ -80,9 +81,10 @@
                 };
 
                 $scope.login = {};
-                $scope.$emit('RESET_SOCKET_REQUEST');
+                $scope.$emit('RESET_SOCKET_REQUEST', {logout: true});
                 $scope.$emit('REFRESH_VISITOR_REQUEST', operation);
                 $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', $scope.login);
+                global.localStorage.setItem('login', JSON.stringify({}));
             });
         };
 

@@ -4,13 +4,13 @@
 			<div class="row">
 				<div class="col-md-4 col-sm-6" ng-repeat="roomInstance in rooms">
 					<div class="wPanel">
-						<a ui-sref="room({'roomId' : {{roomInstance}}})">
+						<a ui-sref="room({'roomId' : {{roomInstance.rid}}})">
 							<img src="/resource/screenshots/1111.png"></img>
 						</a>
 						<div>
-							<p>room owner: xxxx</p>
-							<p>room owner: {{roomInstance}}</p>
-							<p>description: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+							<p>room owner: {{roomInstance.status.open}}</p>
+							<p>description: {{roomInstance.description}}</p>
+							<p>room owner: {{roomInstance.owner}}</p>
 							<p>tags tags tags</p>
 						</div>
 					</div>

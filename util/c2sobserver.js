@@ -1,28 +1,30 @@
 var AbstractSubject = require('./observer.js').AbstractSubject;
 var AbstractObserver = require('./observer.js').AbstractObserver;
 
-var C2SObserver = function(uuid_socket, socket) {
-    AbstractObserver.call(this, uuid_socket, socket);
+var C2SObserver = function(uuid_socket, socket, observerName) {
+    AbstractObserver.call(this, uuid_socket, socket, observerName);
 
     this.update = function(msg) {
         //TODO 1) find the propriate socket in the redis
         //TODO 2) redircect message to the next socket
-        console.log("Hello xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        console.log("Hello", msg);
 
         if (msg.type == 'msg') {
             this.getSocket().emit('msg', {
                 message: msg
             });
-        }
+        };
 
         if (msg.type == 'visitor') {
             this.getSocket().emit('update_visitor', {
                 message: msg
             });
-        }
+        };
 
-
+        if(msg.type == 'update_observer') {
+            if(this.uuid === msg.socketId) {
+                this.observerName = msg.from || '__$visitor';
+            };
+        };
 
         //MSG_SINGLE, 
         // find the socket ID in the redis,
