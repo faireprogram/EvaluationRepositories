@@ -11,17 +11,22 @@
     //      to: 'zhang',
     //      msg: 'HelloWorld!'
     //  }
-    var ChatWindowCtrl = function($scope, $http, $rootScope, shareservice) {
+    var ChatWindowCtrl = function($scope, $http, $rootScope, $stateParams, shareservice) {
         var socket0 = io.connect('http://localhost:8090');
         var ready = false;
         var username = null;
+
+        global.$stateParams = $stateParams;
 
         global.socket0 = socket0;
 
         var _reset_socket = function() {
             socket0.on('connected', function(data) {
+                $scope.id = socket0.id;
+                $scope.$apply();
+
                 socket0.emit('registerOnChanel', {
-                    roomId: 'rrr1',
+                    roomId: $stateParams.roomId,
                     socketId: data.username
                 });
 
@@ -36,7 +41,7 @@
                     var msg = {
                         'msgtype': 'MSG_GROUP',
                         'from': username,
-                        'to': 'rrr1',
+                        'to': $stateParams.roomId,
                         'op': 'add'
                     }
 
@@ -68,22 +73,39 @@
         }
 
         _reset_socket();
-        $scope.$on('RESET_SOCKET_RES', function(message) {
-            console.log('xxxxxxxxxxxx');
+        $scope.$on('RESET_SOCKET_RES', function(evt, message) {
+            console.log('close the socket of client');
+            if(message.logout) {
+                socket0.emit('logout', {logout: message.logout});
+            }
+
             socket0.close();
 
             socket0 = io.connect('http://localhost:8090');
             _reset_socket();
         });
 
+        $scope.$on('CLOSE_SOCKET_RES', function() {
+            socket0.close();
+        });
 
+        $scope.$on('UPDATE_OBSERVER_NAME_RES', function(evt, username) {
+            var msg = {
+                'msgtype': 'MSG_GROUP',
+                'from': username,
+                'to': $stateParams.roomId,
+                'socketId': socket0.id
+            };
+
+            socket0.emit('update_observer', msg);
+        });
 
         $scope.sendMsg = function(content) {
             if (ready && username) {
                 var msg = {
                     'msgtype': 'MSG_GROUP',
                     'from': username,
-                    'to': 'rrr1',
+                    'to': $stateParams.roomId,
                     'content': content
                 }
 
@@ -106,7 +128,9 @@
         }
     }
 
-    ChatWindowCtrl.$inject = ['$scope', '$http', '$rootScope', 'ShareDataService'];
+    ChatWindowCtrl.$inject = ['$scope', '$http', '$rootScope',
+        '$stateParams', 'ShareDataService'
+    ];
 
     main_module.controller('ChatWindowCtrl', ChatWindowCtrl);
 

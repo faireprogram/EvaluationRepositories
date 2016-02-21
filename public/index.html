@@ -1,12 +1,16 @@
+<!DOCTYPE html>
 <html>
 	<head>
-		<link href="libs/bootstrap/dist/css/bootstrap.css"  type="text/css" rel="stylesheet">
+		<link href="/libs/bootstrap/dist/css/bootstrap.css"  type="text/css" rel="stylesheet">
 		<link href="stylesheets/chat.css"  type="text/css" rel="stylesheet">
 		<script src="libs/socket.io-client/socket.io.js"> </script>
-		<script type="text/javascript"  src="libs/angular/angular.js"></script>
-		<script type="text/javascript"  src="libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript"  src="/libs/angular/angular.js"></script>
+		<script type="text/javascript"  src="/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript"  src="/libs/angular-ui-router/release/angular-ui-router.js"></script>
+		<script type="text/javascript"  src="/libs/jquery/dist/jquery.js"></script>
 	</head>
 	<body ng-app="main" ng-cloak>
+<<<<<<< HEAD
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -118,5 +122,18 @@
 		<script type="text/javascript" src="chat/loginController.js"></script>
 		<script type="text/javascript" src="chat/loginUserNameController.js"></script>
 		<script type="text/javascript" src="chat/visitorController.js"></script>
+=======
+		
+		<div ng-include="'/template/nav/nav.html'"></div>
+		<div ui-view></div>
+
+		<script type="text/javascript" src="/chat/main.js"></script>
+		<script type="text/javascript" src="/chat/chatController.js"></script>
+		<script type="text/javascript" src="/chat/loginController.js"></script>
+		<script type="text/javascript" src="/chat/loginUserNameController.js"></script>
+		<script type="text/javascript" src="/chat/visitorController.js"></script>
+		<script type="text/javascript" src="/chat/roomListsController.js"></script>
+		<script type="text/javascript" src="/chat/roominfoController.js"></script>
+>>>>>>> fcd60ac259dc727665df69c718ec86c51fe4da60
 	</body>
 </html>
