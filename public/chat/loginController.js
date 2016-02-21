@@ -14,14 +14,17 @@
             $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', data);
             $scope.$emit('RESET_SOCKET_REQUEST', data);
             $scope.$emit('REFRESH_VISITOR_REQUEST', {op: 'add', username: data.username});
+            global.localStorage.setItem('login', JSON.stringify(data));
         }
     }
 
-    var loginCtrl = function($scope, $http, $uibModal, $rootScope, sharedDataService) {
+    var loginCtrl = function($scope, $http, $uibModal, $rootScope, $stateParams, sharedDataService) {
 
         $scope.$on('CHANGE_LOGIN_BUTTON_RES', function(ev, data) {
             $scope.login = data;
-        })
+        });
+
+        console.log('$stateParams', $stateParams.roomId);
 
         $scope.openLogin = function() {
 
@@ -31,7 +34,7 @@
             });
 
             if (sharedDataService.signUpInstance) {
-                sharedDataService.signUpInstance.close();
+                sharedDataService.signUpInstance.dismiss();
             };
 
         };
@@ -43,7 +46,7 @@
             });
 
             if (sharedDataService.loginInstance) {
-                sharedDataService.loginInstance.close();
+                sharedDataService.loginInstance.dismiss();
             };
         };
 
@@ -78,15 +81,16 @@
                 };
 
                 $scope.login = {};
-                $scope.$emit('RESET_SOCKET_REQUEST');
+                $scope.$emit('RESET_SOCKET_REQUEST', {logout: true});
                 $scope.$emit('REFRESH_VISITOR_REQUEST', operation);
                 $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', $scope.login);
+                global.localStorage.setItem('login', JSON.stringify({}));
             });
         };
 
     };
 
-    loginCtrl.$inject = ['$scope', '$http', '$uibModal', '$rootScope', 'ShareDataService'];
+    loginCtrl.$inject = ['$scope', '$http', '$uibModal', '$rootScope', '$stateParams' , 'ShareDataService'];
 
     main_module.controller('LoginCtrl', loginCtrl);
 

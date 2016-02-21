@@ -262,3 +262,7 @@ form > div {
 .contentHeight input.form-control  {
   height: 100%;
 }
+
+*[ng-controller='RoomInfosCtl']  .label {
+  margin: 5px;
+}

@@ -91,6 +91,34 @@ util.string.uuid = function(n) {
 	return _generate();
 }
 
+util.string.num_uuid = function (n) {
+    var max = 9999,
+        min = 0,
+        _default_n = n || 4;
+
+    var _getRandomIntInclusive = function () {
+        var result = Math.floor(Math.random() * (max - min + 1)) + min;
+        if (parseInt(result / 1000) != 0) {
+            return result.toString();
+        }
+        if (parseInt(result / 100) != 0) {
+            return '1' + result.toString();
+        }
+        if (parseInt(result / 10) != 0) {
+            return '11' + result.toString();
+        }
+        return '111' + result.toString();
+    }
+
+    var _final_result = '';
+
+    for(var i = 0; i < n; i++) {
+    	_final_result += _getRandomIntInclusive();
+    }
+
+    return _final_result;
+}
+
 // util.function
 util.fn.defer = typeof setImmediate === 'function'
   ? setImmediate

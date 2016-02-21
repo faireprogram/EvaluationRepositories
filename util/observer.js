@@ -7,10 +7,11 @@ var $injector = require('./injector.js');
  *  AbstractObserver is abstract Class to provider default implementation
  * */
 
-var AbstractObserver = function(uuid_socket, socketarg) {
+var AbstractObserver = function(uuid_socket, socketarg, observerName) {
 
     this.uuid = uuid_socket;
     this.socket = socketarg;
+    this.observerName = observerName || '__$visitor';
 
     this.update = function(msg) {
         //NEED TO BE DONE BY OBSERVER
@@ -115,6 +116,18 @@ AbstractSubject.prototype.find = function(observer) {
             });
         }
         return find;
+}
+
+AbstractSubject.prototype.count = function(username) {
+        var count = 0;
+        if(!!this.observers) {
+            this.observers.forEach(function(item, index) {
+                if(item.observerName === username) {
+                    count++;
+                };
+            });
+        }
+        return count;
 }
 
 /**

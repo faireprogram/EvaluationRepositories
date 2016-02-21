@@ -22,12 +22,16 @@
 
     var loginUserNameController = function($scope, $http) {
         $http.post('/api/login').success(function(data) {
+            data.init = true;
             $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', data);
         });
 
         $scope.$on('CHANGE_LOGIN_NAME_RES', function(even, data) {
             $scope.login = _assign_login(data);
             $scope.$emit('CHANGE_LOGIN_BUTTON_REQUEST', $scope.login);
+            if(!data.init) {
+                $scope.$emit('UPDATE_OBSERVER_NAME_REQUEST', $scope.login.username);
+            };
         });
     }
 
