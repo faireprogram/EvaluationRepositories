@@ -99,7 +99,7 @@
                     templateUrl: '/template/'
                 }).state('roominfos', {
                     url: '/roominfos',
-                    templateUrl: 'template/roominfos/roominfos.html'
+                    templateUrl: 'template/roominfos/roomInfos.html'
                 });
         }
     ]);
