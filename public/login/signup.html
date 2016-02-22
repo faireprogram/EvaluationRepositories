@@ -22,7 +22,7 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header" style="padding:35px 50px;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" ng-click="close()">&times;</button>
           <h4><span class="glyphicon glyphicon-lock"></span> Sign Up</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
@@ -44,7 +44,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal" ng-click="close()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
           <p>Already a member? <a href="#" ng-click="openLogin()">Login</a></p>
           <p>Forgot <a href="#">Password?</a></p>
         </div>

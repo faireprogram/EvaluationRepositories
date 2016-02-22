@@ -22,7 +22,7 @@ var grasp = function(roomId) {
 
 
 var graspAll = function() {
-    var roomIds = [1111, 1123, 1134, 454354, 777, 888];
+    var roomIds = [751177462940];
     var promise;
     roomIds.forEach(function(roomId, i) {
         if (i == 0) {
