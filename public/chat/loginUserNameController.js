@@ -20,9 +20,14 @@
         return login;
     }
 
-    var loginUserNameController = function($scope, $http) {
+    var loginUserNameController = function($scope, $http, sharedDataService) {
         $http.post('/api/login').success(function(data) {
             data.init = true;
+            sharedDataService.login = {
+                pid: data.pid,
+                username: data.username
+            };
+
             $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', data);
         });
 
@@ -35,7 +40,7 @@
         });
     }
 
-    loginUserNameController.$inject = ['$scope', '$http'];
+    loginUserNameController.$inject = ['$scope', '$http', 'ShareDataService'];
 
     main_module.controller('loginUserNameCtrl', loginUserNameController);
 

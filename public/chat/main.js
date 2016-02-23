@@ -40,6 +40,7 @@
     main.service('ShareDataService', function() {
         this.loginInstance = null;
         this.signUpInstance = null;
+        this.login = {};
     });
 
     main.service('RoomService', ['$http', '$q', '$templateCache', 
@@ -99,7 +100,7 @@
                     templateUrl: '/template/'
                 }).state('roominfos', {
                     url: '/roominfos',
-                    templateUrl: 'template/roominfos/roominfos.html'
+                    templateUrl: 'template/roominfos/roomInfos.html'
                 });
         }
     ]);

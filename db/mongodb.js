@@ -181,7 +181,9 @@ MongoDB.createChatRoom = function(chatRoom) {
     var defer = Q.defer();
     var _default_chatRoom = {
         rid: util.string.num_uuid(3),
+        roomName: chatRoom.roomName,
         description: chatRoom.description,
+        style: chatRoom.schema,
         owner: chatRoom.owner,
         tags: chatRoom.tags
     }
@@ -254,10 +256,19 @@ MongoDB.isRoomLive = function(id) {
 
 MongoDB.findAllLivesRoom = function(owner_pid) {
     var defer = Q.defer();
-    RoomModel.find({
-        'owner.pid': owner_pid,
-        'status.open': true
-    }).exec((err, findedRoom) => {
+    var queryObject;
+    if (owner_pid) {
+        queryObject = {
+            'owner.pid': owner_pid,
+            'status.open': true
+        };
+    } else {
+        queryObject = {
+            'status.open': true
+        };
+    };
+    
+    RoomModel.find(queryObject).exec((err, findedRoom) => {
         if (err) {
             defer.reject(err);
         } else {
@@ -280,7 +291,7 @@ MongoDB.findAllRooms = function(owner_pid) {
         if (err) {
             defer.reject(err);
         } else {
-        	defer.resolve(findedRoom);
+            defer.resolve(findedRoom);
         }
     })
     return defer.promise;
