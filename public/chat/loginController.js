@@ -74,6 +74,12 @@
                 };
             });
         }
+        $scope.closeWindow = function() {
+            if (sharedDataService.signUpInstance) {
+                sharedDataService.signUpInstance.dismiss()
+            };
+            sharedDataService.loginInstance.dismiss();
+        }
 
         $scope.login = function(user) {
             $scope.$emit('RESET_SOCKET_REQUEST');
