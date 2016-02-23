@@ -66,7 +66,7 @@
     main.config(['$stateProvider',
         '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {
-            // $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise('/');
 
             $stateProvider
                 .state('index', {
