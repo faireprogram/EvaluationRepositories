@@ -21,8 +21,8 @@ var grasp = function(roomId) {
 }
 
 
-var graspAll = function() {
-    var roomIds = [1111, 1123, 1134, 454354, 777, 888];
+var graspAll = function(roomIds) {
+    var roomIds = roomIds;
     var promise;
     roomIds.forEach(function(roomId, i) {
         if (i == 0) {
@@ -41,4 +41,8 @@ var graspAll = function() {
 
 // graspAll();
 
-setTimeout(graspAll, 5 * 1000);
+// setTimeout(graspAll, 5 * 1000);
+module.exports = {
+    grasp: grasp,
+    graspAll : graspAll
+}

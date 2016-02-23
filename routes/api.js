@@ -1,6 +1,8 @@
 var router = require('express').Router();
 var mongodbAPI = require('../db/mongodb.js');
 var $injector = require('../util/injector.js');
+var execFile = require('child_process').execFile;
+
 
 // login
 router.post('/login', function(req, res, next) {
@@ -94,6 +96,13 @@ router.get('/active/:activecode', function(req, res, next) {
 ////  ROOM PART
 
 //// show all rooms
+router.post('/roomInfo', function(req, res, next) {
+    mongodbAPI.findChatRoomById(req.body.rid).then(function(room) {
+        res.json(room);
+    });
+});
+
+//// show all rooms
 router.post('/roomlists', function(req, res, next) {
     mongodbAPI.findAllLivesRoom(req.body.pid).then(function(allLivedRooms) {
         res.json(allLivedRooms);
@@ -103,7 +112,9 @@ router.post('/roomlists', function(req, res, next) {
 //// add Room
 router.post('/addRoom', function(req, res, next) {
     mongodbAPI.createChatRoom(req.body).then(function(savedRoom) {
-        res.json(savedRoom);
+        var child = execFile('./autobash/screenphantom.js', [savedRoom.rid], (error, stdout, stderr) => {
+            res.json(savedRoom);
+        });
     });
 });
 
