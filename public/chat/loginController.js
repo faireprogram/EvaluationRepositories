@@ -30,7 +30,7 @@
         $scope.$on('CHANGE_LOGIN_BUTTON_RES', function(ev, data) {
             $scope.login = data;
         });
-
+        $scope.errormsg = {};
         console.log('$stateParams', $stateParams.roomId);
 
         $scope.openLogin = function() {
@@ -90,6 +90,10 @@
 
                 if (data.status !== 'ok') {
                     // do nothing here
+
+                    $scope.errormsg=data.msg;
+                    console.log(data.msg);
+                    
                 } else {
                     sharedDataService.loginInstance.close();
                 };
