@@ -82,9 +82,19 @@
         }
 
         $scope.login = function(user) {
-            $scope.$emit('RESET_SOCKET_REQUEST');
-            $scope.$emit('REFRESH_VISITOR_REQUEST');
-        }
+            $http.post('/api/login', {user: user}).success(function(data) {
+                //if successful get the data
+                //send the refresh visitor, refresh socket, username
+
+                _send_close_request($scope, data, sharedDataService);
+
+                if (data.status !== 'ok') {
+                    // do nothing here
+                } else {
+                    sharedDataService.loginInstance.close();
+                };
+            });
+        };
 
         $scope.logOut = function() {
             $http.post('/api/loginout').success(function(data) {

@@ -14,7 +14,8 @@ router.post('/login', function(req, res, next) {
         });
 
     } else if (!req.session.user && req.body.user) {
-        var user = req.body;
+        var user = req.body.user;
+        console.log(user);
         mongodbAPI.checklogin(user).then((userFind) => {
             //put it in the session
             req.session.user = userFind;
