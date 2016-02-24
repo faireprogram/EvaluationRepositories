@@ -4,14 +4,16 @@ var Schema = mongoose.Schema;
 var RoomSchema  = new Schema({
 	rid: String,
 
-	description: {
-		description: String
-	},
+	roomName: String,
+
+	description: String,
 
 	owner: {
 		username: String,
 		pid: String
 	},
+
+	style: String,
 
 	tags: [String],
 

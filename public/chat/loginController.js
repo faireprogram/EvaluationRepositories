@@ -9,11 +9,18 @@
     //add: login, register,  
     //session: get the order of name
 
-    var _send_close_request = function($scope, data) {
+    var _send_close_request = function($scope, data, sharedDataService) {
         if (data.status === 'ok') {
+            sharedDataService.login = {
+                pid: data.pid,
+                username: data.username
+            };
             $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', data);
             $scope.$emit('RESET_SOCKET_REQUEST', data);
-            $scope.$emit('REFRESH_VISITOR_REQUEST', {op: 'add', username: data.username});
+            $scope.$emit('REFRESH_VISITOR_REQUEST', {
+                op: 'add',
+                username: data.username
+            });
             global.localStorage.setItem('login', JSON.stringify(data));
         }
     }
@@ -23,7 +30,7 @@
         $scope.$on('CHANGE_LOGIN_BUTTON_RES', function(ev, data) {
             $scope.login = data;
         });
-
+        $scope.errormsg = {};
         console.log('$stateParams', $stateParams.roomId);
 
         $scope.openLogin = function() {
@@ -58,7 +65,7 @@
                 //if successful get the data
                 //send the refresh visitor, refresh socket, username
 
-                _send_close_request($scope, data);
+                _send_close_request($scope, data, sharedDataService);
 
                 if (data.status !== 'ok') {
                     // do nothing here
@@ -67,11 +74,31 @@
                 };
             });
         }
+        $scope.closeWindow = function() {
+            if (sharedDataService.signUpInstance) {
+                sharedDataService.signUpInstance.dismiss()
+            };
+            sharedDataService.loginInstance.dismiss();
+        }
 
         $scope.login = function(user) {
-            $scope.$emit('RESET_SOCKET_REQUEST');
-            $scope.$emit('REFRESH_VISITOR_REQUEST');
-        }
+            $http.post('/api/login', {user: user}).success(function(data) {
+                //if successful get the data
+                //send the refresh visitor, refresh socket, username
+
+                _send_close_request($scope, data, sharedDataService);
+
+                if (data.status !== 'ok') {
+                    // do nothing here
+
+                    $scope.errormsg=data.msg;
+                    console.log(data.msg);
+                    
+                } else {
+                    sharedDataService.loginInstance.close();
+                };
+            });
+        };
 
         $scope.logOut = function() {
             $http.post('/api/loginout').success(function(data) {
@@ -81,16 +108,19 @@
                 };
 
                 $scope.login = {};
-                $scope.$emit('RESET_SOCKET_REQUEST', {logout: true});
+                $scope.$emit('RESET_SOCKET_REQUEST', {
+                    logout: true
+                });
                 $scope.$emit('REFRESH_VISITOR_REQUEST', operation);
                 $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', $scope.login);
                 global.localStorage.setItem('login', JSON.stringify({}));
+                sharedDataService.login = {};
             });
         };
 
     };
 
-    loginCtrl.$inject = ['$scope', '$http', '$uibModal', '$rootScope', '$stateParams' , 'ShareDataService'];
+    loginCtrl.$inject = ['$scope', '$http', '$uibModal', '$rootScope', '$stateParams', 'ShareDataService'];
 
     main_module.controller('LoginCtrl', loginCtrl);
 

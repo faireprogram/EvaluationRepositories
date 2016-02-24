@@ -1,12 +1,69 @@
-<div class="modal-header">
+<head>
+<style>
+  .modal-header, h4, .close {
+      background-color: #5cb85c;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
+  </style>
+</head>
+<div class="modal-content">
+	<div class="modal-header">
 	<h3 class="modal-title">
-	Add a new room
+	Creat a New Room
 	</h3>
 </div>
 <div class="modal-body">
-	<input  ng-model="newRoom.pid">
-	<input ng-model="newRoom.description">
+	<form>
+		<div class="form-group">
+			<label for="newRoom_pid">RoomName</label>
+			<input id="newRoom_pid" class="form-control" ng-model="newRoom.roomName">
+		</div>
+		<div class="form-group">
+			<label for="newRoom_description">Description</label>
+			<input id="newRoom_description" class="form-control" ng-model="newRoom.description">
+		</div>
+		<div class="form-group">
+			<label for="newRoom_style">style Template</label>
+			<div class="dropdown">
+				<input for="newRoom_style"  ng-disabled="true" placeholder="Select Style Sheet" ng-model="newRoom.schema"/>
+				<div class="dropdown-content">
+					<a href="javascript:void(0)" ng-repeat="style in styles"
+					ng-mousedown="select(style)">{{style}}</a>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="newRoom_tags">Tags</label>
+			<div class="labelContainer" ng-repeat="tag in tags">
+				<span class="label label-info">{{tag}}</span>
+				<div ng-click="closeTag(tag)">X</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					
+					<div class="dropdown">
+						<input id="newRoom_tags" class="form-control" ng-model="newRoom.tag">
+						<div class="dropdown-content" 
+						ng-show="potentialTags && potentialTags.length != 0">
+							<a href="javascript:void(0)" 
+							ng-repeat="tag in potentialTags"
+							ng-mousedown="selectTag(tag)">{{tag}}</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<button class="btn btn-primary" ng-click="addTag(newRoom.tag)">Add</button>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-default" ng-click="saveRoom(newRoom)" >Submit</button>
+	<button class="btn btn-primary" ng-click="saveRoom(newRoom)" >Submit</button>
+</div>	
 </div>

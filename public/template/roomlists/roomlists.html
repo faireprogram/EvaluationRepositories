@@ -5,12 +5,11 @@
 				<div class="col-md-4 col-sm-6" ng-repeat="roomInstance in rooms">
 					<div class="wPanel">
 						<a ui-sref="room({'roomId' : '{{roomInstance.rid}}'})">
-							<img src="/resource/screenshots/1111.png"></img>
+							<img src="/resource/screenshots/{{roomInstance.rid}}.png"></img>
 						</a>
 						<div>
-							<p>room owner: {{roomInstance.status.open}}</p>
 							<p>description: {{roomInstance.description}}</p>
-							<p>room owner: {{roomInstance.owner}}</p>
+							<p>room owner: {{roomInstance.owner.username}}</p>
 							<p>tags tags tags</p>
 						</div>
 					</div>

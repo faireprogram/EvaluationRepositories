@@ -45,6 +45,7 @@ var user = {
 
 var chatRoom = {
     description: "it's a room test",
+    roomName: 'test',
     owner: {
         username: '123',
         pid: 'ljfdljslfj'
@@ -69,6 +70,10 @@ var chatRoom = {
 // 	console.log('live', live);
 // });
 
-MongoDB.findAllRooms('ljfdljslfj').then((findRoom) => {
+// MongoDB.findAllRooms('ljfdljslfj').then((findRoom) => {
+//     console.log(findRoom);
+// })
+
+MongoDB.findAllLivesRoom().then((findRoom) => {
     console.log(findRoom);
-})
+});
