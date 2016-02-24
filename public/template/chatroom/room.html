@@ -20,9 +20,7 @@
 				</li>
 			</ul>
 			<div class="leftBottomButton row-xs-1" >
-				<div>
-					<button type="button" class="btn btn-default buttons">Settings</button>
-				</div>
+				
 			</div>
 		</div>
 		<!-- Right -->
@@ -45,10 +43,10 @@
 				</div>
 			</div>
 			<!-- <div class="singlechat">
-										<div class="close">
-																	<span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>
-										</div>
-										<P>Messge!</p>
+											<div class="close">
+																			<span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>
+											</div>
+											<P>Messge!</p>
 			</div> -->
 			<!--right bottom -->
 			
@@ -61,10 +59,19 @@
 							<input type="text" class="form-control" placeholder="What's in your mind ?" ng-model="inputMsg">
 						</div>
 						<div class="col-md-1 row-xs-12">
-							<div class="row-xs-12">
-								<span class="glyphicon glyphicon-plus center close" aria-hidden="true">
+							<div class="row-xs-12 dropup dropdown-toggle">
+								
+								<span class="glyphicon glyphicon-plus center close" data-toggle="dropdown">
 								</span>
+								<ul class="dropdown-menu opts" style="min-width:100%; ">
+									<li><a href="#">Picture</a></li>
+									<li><a href="#">File</a></li>
+									<li><a href="#">Moji</a></li>
+									<li class="divider"></li>
+									<li><a href="#">More</a></li>
+								</ul>
 							</div>
+						
 						</div>
 						<div class="col-md-1 row-xs-12">
 							<div class="row-xs-12">
@@ -73,6 +80,8 @@
 								</span>
 							</div>
 						</div>
+						
+
 					</div>
 				</div>
 			</div>
