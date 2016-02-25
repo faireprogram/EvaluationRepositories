@@ -10,6 +10,9 @@
                 depth: 50
             }
         },
+        colors:[
+            "#2D3E50","#EA2E49","#DAEDE2","#F6F792"
+        ],
         title: {
             text: 'Weekly Chat Traffic Statisitcs'
         },
@@ -40,6 +43,9 @@
         },{
             name:'Room3',
             data: [4,2,2, 4, 1, 5, 3]
+        },{
+            name:'Room4',
+            data: [5,2,2, 4, 1, 5, 3]
         }]
     };
 
