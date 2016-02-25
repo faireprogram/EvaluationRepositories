@@ -14,7 +14,7 @@
             "#2D3E50","#EA2E49","#DAEDE2","#F6F792"
         ],
         title: {
-            text: 'Weekly Chat Traffic Statisitcs'
+            text: 'Weekly Chat Traffic Statistics'
         },
         subtitle: {
             text: 'Take a look, did you study this week?'
