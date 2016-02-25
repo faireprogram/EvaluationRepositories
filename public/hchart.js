@@ -1,33 +1,12 @@
-
-$(function () {
+(function() {
     // Uncomment to style it like Apple Watch
-    if (!Highcharts.theme) {
-        Highcharts.setOptions({
-            chart: {
-                backgroundColor: 'white'
-            },
-            colors: ['#F62366', '#9DFF02', '#0CCDD6'],
-            title: {
-                style: {
-                    color: 'silver'
-                }
-            },
-            tooltip: {
-                style: {
-                    color: 'silver'
-                }
-            }
-        });
-}
-    Highcharts.chart('id_hchart', {
-
+    var opts = {
         chart: {
             type: 'solidgauge',
             marginTop: 50
         },
-
         title: {
-            text: 'My Activity',
+            text: 'Activity',
             style: {
                 fontSize: '24px'
             }
@@ -40,8 +19,8 @@ $(function () {
             style: {
                 fontSize: '16px'
             },
-          pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
-            positioner: function (labelWidth, labelHeight) {
+            pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}%</span>',
+            positioner: function(labelWidth, labelHeight) {
                 return {
                     x: 200 - labelWidth / 2,
                     y: 180
@@ -89,16 +68,16 @@ $(function () {
         },
 
         series: [{
-            name: 'On Line Time',
+            name: 'Message Sum',
             borderColor: Highcharts.getOptions().colors[0],
             data: [{
                 color: Highcharts.getOptions().colors[0],
                 radius: '100%',
                 innerRadius: '100%',
-                y: 8
+                y: 80
             }]
         }, {
-            name: 'Message Amount',
+            name: 'Actived members',
             borderColor: Highcharts.getOptions().colors[1],
             data: [{
                 color: Highcharts.getOptions().colors[1],
@@ -107,7 +86,7 @@ $(function () {
                 y: 65
             }]
         }, {
-            name: 'lalala',
+            name: 'TimeSum',
             borderColor: Highcharts.getOptions().colors[2],
             data: [{
                 color: Highcharts.getOptions().colors[2],
@@ -116,17 +95,14 @@ $(function () {
                 y: 50
             }]
         }]
-    },
+    };
 
-    /**
-     * In the chart load callback, add icons on top of the circular shapes
-     */
     function callback() {
 
         // Move icon
         this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8])
             .attr({
-                'stroke': '#FFCCFF',
+                'stroke': '#FFCC33',
                 'stroke-linecap': 'round',
                 'stroke-linejoin': 'round',
                 'stroke-width': 2,
@@ -136,7 +112,7 @@ $(function () {
             .add(this.series[2].group);
 
         // Exercise icon
-        this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8, 'M', 8, -8, 'L', 16, 0, 8, 8])
+        this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8])//, 'M', 8, -8, 'L', 16, 0, 8, 8])
             .attr({
                 'stroke': '#FFCC33',
                 'stroke-linecap': 'round',
@@ -158,11 +134,51 @@ $(function () {
             })
             .translate(190, 96)
             .add(this.series[2].group);
-    });
-
-
-});
-
-
-
-
+    };
+    angular.module('main')
+        .service('myChartUtil', function() {
+            this.extendDeep = function() {
+                angular.forEach(arguments, function(obj) {
+                    if (obj !== dst) {
+                        angular.forEach(obj, function(value, key) {
+                            if (dst[key] && dst[key].constructor && dst[key].constructor === Object) {
+                                extendDeep(dst[key], value);
+                            } else {
+                                dst[key] = value;
+                            }
+                        });
+                    }
+                });
+                return dst;
+            }
+        })
+        .directive('chartDirective', function(myChartUtil) {
+            return {
+                link: function(scope, element, attr) {
+                    console.log('chart link', angular.element(element));
+                    opts.chart.renderTo = element[0];
+                    if (attr.theme) {
+                        opts = myChartUtil.extendDeep(opts, {
+                            chart: {
+                                backgroundColor: 'white'
+                            },
+                            colors: ['#F62366', '#9DFF02', '#0CCDD6'],
+                            title: {
+                                style: {
+                                    color: 'silver'
+                                }
+                            },
+                            tooltip: {
+                                style: {
+                                    color: 'silver'
+                                }
+                            }
+                        });
+                        console.log(opts);
+                    }
+                    console.log('chart dir init', opts);
+                    Highcharts.chart(opts, callback);
+                }
+            }
+        });
+})();

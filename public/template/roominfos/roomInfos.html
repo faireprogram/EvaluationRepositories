@@ -1,67 +1,54 @@
 <div class="container-fluid" ng-controller="RoomInfosCtl">
-	<div class="row">
-		<div class="col-md-offset-1 col-md-10">
-			<div class="container-fluid">
-				<h1 class="page-header">Dashboard</h1>
-				<div class="row placeholders">
-					<div class="col-xs-6 col-sm-3 placeholder">
-						<img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-						<h4>Label</h4>
-						<span class="text-muted">Something else</span>
-					</div>
-					<div class="col-xs-6 col-sm-3 placeholder">
-						<img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-						<h4>Label</h4>
-						<span class="text-muted">Something else</span>
-					</div>
-					<div class="col-xs-6 col-sm-3 placeholder">
-						<img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-						<h4>Label</h4>
-						<span class="text-muted">Something else</span>
-					</div>
-					<div class="col-xs-6 col-sm-3 placeholder">
-						<img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-						<h4>Label</h4>
-						<span class="text-muted">Something else</span>
-					</div>
-				</div>
-				<div style="position:relative;">
-					<h2 class="sub-header">Section title</h2>
-					<button style="position:absolute ;right :0;top:0;" ng-click="openAddRoom()">Creat a new room</button>
-				</div>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>description</th>
-								<th>create date</th>
-								<th>close date</th>
-								<th>tags</th>
-								<th>status</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="roominfo in rooms">
-								<td>{{roominfo.rid}}</td>
-								<td>{{roominfo.description}}</td>
-								<td>{{roominfo.status.createDate}}</td>
-								<td>{{roominfo.status.closeDate}}</td>
-								<td>
-									
-									<span class="label label-warning" ng-repeat="tag in roominfo.tags">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="container-fluid">
+                <h1 class="page-header">Dashboard</h1>
+                <div class="row placeholders">
+                    <div class="col-xs-12 col-sm-12 placeholder">
+                        <div chart-directive style="width: 400px; height: 400px; margin: 0 auto;"></div>
+                    </div>
+                    </div>
+                <div class="row placeholders">
+                    
+                    <div style="position:relative;">
+                        <h2 class="sub-header">Section title</h2>
+                        <button style="position:absolute ;right :0;top:0;" ng-click="openAddRoom()">Create a new room</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>description</th>
+                                    <th>create date</th>
+                                    <th>close date</th>
+                                    <th>tags</th>
+                                    <th>status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="roominfo in rooms">
+                                    <td>{{roominfo.rid}}</td>
+                                    <td>{{roominfo.description}}</td>
+                                    <td>{{roominfo.status.createDate}}</td>
+                                    <td>{{roominfo.status.closeDate}}</td>
+                                    <td>
+
+                                        <span class="label label-warning" ng-repeat="tag in roominfo.tags">
 										{{tag}}
 
 									</span>
-								</td>
-								<td>{{roominfo.status.open}}</td>
-								<td><button>close chat</button></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+                                    </td>
+                                    <td>{{roominfo.status.open}}</td>
+                                    <td>
+                                        <button>close chat</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
