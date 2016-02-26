@@ -10,6 +10,11 @@
                 $scope.rooms = rooms;
             });
         }
+        $scope.oneAtATime = true;
+        $scope.status = {
+            isFirstOpen: true,
+            isFirstDisabled: false
+        };
         $scope.$on('CHANGE_LOGIN_NAME_RES', function() {
             if (sharedDataService.login.pid) {
                 $http.post('/api/roomlists', {
@@ -117,12 +122,6 @@
         }
     }
     roomInfosCtl.$inject = ['$scope', '$uibModal', '$http', 'ShareDataService'];
-    main_module.controller('RoomInfosCtl', function($scope) {
-        $scope.oneAtATime = true;
-        $scope.status = {
-            isFirstOpen: true,
-            isFirstDisabled: false
-        };
-    });
+    main_module.controller('RoomInfosCtl', roomInfosCtl);
 
 })(this);

@@ -26,7 +26,7 @@
         },
         xAxis: {
             // categories: Highcharts.getOptions().lang.shortWeeks
-            categories: ['Mon', 'Tus', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
+            categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
         },
         yAxis: {

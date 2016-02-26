@@ -1,91 +1,93 @@
-<link href="/stylesheets/{{roomInfo.style}}.css" type="text/css" rel="stylesheet">
 <div class="container-fluid row-xs-11 fix_margin_padding
 	absoluteContainer contentHeight">
-	<div class="row row-xs-12">
-		<!-- Left -->
-		<div class="col-md-2 row-xs-12 hidden-print hidden-xs hidden-sm">
-			<div class="row-xs-1 ">
-				<div class="input-group">
-					<input type="text" class="form-control " placeholder="Search for...">
-					<span class="input-group-btn ">
+    <div class="row row-xs-12">
+        <!-- Left -->
+        <div class="col-md-2 row-xs-12 hidden-print hidden-xs hidden-sm">
+            <div class="row-xs-1 ">
+                <div class="input-group">
+                    <input type="text" class="form-control " placeholder="Search for...">
+                    <span class="input-group-btn ">
 						<button class="btn btn-default " type="button">GO!</button>
 					</span>
-				</div>
-			</div>
-			<ul class="nav nav-sidebar row-xs-10" ng-controller="VisitorController">
-				<li class="active" ng-repeat="vistor in visitors">
-					<a class="list" href="#">
+                </div>
+            </div>
+            <ul class="nav nav-sidebar row-xs-10" ng-controller="VisitorController">
+                <li class="active" ng-repeat="vistor in visitors">
+                    <a class="list" href="#">
 						{{vistor}} <span class="sr-only">(current)</span>
 					</a>
-				</li>
-			</ul>
-			<div class="leftBottomButton row-xs-1" >
-				
-			</div>
-		</div>
-		<!-- Right -->
-		
-		<div class="col-md-10 row-xs-12" ng-controller="ChatWindowCtrl">
-			<!-- Panel -->
-			
-			<div class="row-xs-11">
-				<div class="message">
-					
-					<p>
-						{{id}}
-					</p>
-				</div>
-				<div ng-class="msg_position(msg)" ng-repeat="msg in msgs">
-					
-					<p>
-						{{msg.content}}
-					</p>
-				</div>
-			</div>
-			<!-- <div class="singlechat">
+                </li>
+            </ul>
+            <div class="leftBottomButton row-xs-1">
+
+            </div>
+        </div>
+        <!-- Right -->
+
+        <div class="col-md-10 row-xs-12" ng-controller="ChatWindowCtrl">
+            <!-- Panel -->
+
+            <div class="row-xs-11">
+                <div class="message">
+
+                    <p>
+                        {{id}}
+                    </p>
+                </div>
+                <div ng-class="msg_position(msg)" ng-repeat="msg in msgs">
+
+                    <p>
+                        {{msg.content}}
+                    </p>
+                </div>
+            </div>
+            <!-- <div class="singlechat">
 											<div class="close">
 																			<span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>
 											</div>
 											<P>Messge!</p>
 			</div> -->
-			<!--right bottom -->
-			
-			<div class="row-xs-1 rightbottom">
-				<div class="col-md-8 col-md-push-4 row-xs-12">
-					<!-- Input Box -->
-					<div class="row row-xs-12">
-						<div class="col-md-10 row-xs-12">
-							<!-- <input type="text" class="form-control row-xs-12 rightbottom"> -->
-							<input type="text" class="form-control" placeholder="What's in your mind ?" ng-model="inputMsg">
-						</div>
-						<div class="col-md-1 row-xs-12">
-							<div class="row-xs-12 dropup dropdown-toggle">
-								
-								<span class="glyphicon glyphicon-plus center close" data-toggle="dropdown">
-								</span>
-								<ul class="dropdown-menu opts" style="min-width:100%; ">
-									<li><a href="#">Picture</a></li>
-									<li><a href="#">File</a></li>
-									<li><a href="#">Moji</a></li>
-									<li class="divider"></li>
-									<li><a href="#">More</a></li>
-								</ul>
-							</div>
-						
-						</div>
-						<div class="col-md-1 row-xs-12">
-							<div class="row-xs-12">
-								<span class="glyphicon glyphicon-ok center close" aria-hidden="true"
-									ng-click="sendMsg(inputMsg)" >
-								</span>
-							</div>
-						</div>
-						
+            <!--right bottom -->
 
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- End of  Right-->
-	</div>
+            <div class="row-xs-1 rightbottom">
+                <div class="col-md-8 col-md-push-4 row-xs-12">
+                    <!-- Input Box -->
+                    <div class="row row-xs-12">
+                        <div class="col-md-10 row-xs-12">
+                            <!-- <input type="text" class="form-control row-xs-12 rightbottom"> -->
+                            <input type="text" class="form-control" placeholder="What's in your mind ?" ng-model="inputMsg">
+                        </div>
+                        <div class="col-md-1 row-xs-12">
+                            <div class="row-xs-12 dropup dropdown-toggle">
+
+                                <span class="glyphicon glyphicon-plus center close" data-toggle="dropdown">
+								</span>
+                                <ul class="dropdown-menu opts" style="min-width:100%; ">
+                                    <li><a href="#">Picture</a>
+                                    </li>
+                                    <li><a href="#">File</a>
+                                    </li>
+                                    <li><a href="#">Moji</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">More</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-md-1 row-xs-12">
+                            <div class="row-xs-12">
+                                <span class="glyphicon glyphicon-ok center close" aria-hidden="true" ng-click="sendMsg(inputMsg)">
+								</span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of  Right-->
+    </div>
 </div>
