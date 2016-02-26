@@ -1,8 +1,11 @@
 var util = require('../util/util.js');
+var moment = require('moment');
 
 var HistoryModel = require('../model/History.js');
 var ProfileModel = require('../model/Profile.js');
 var RoomModel = require('../model/Room.js');
+
+var Code = require('mongodb').Code;
 
 var Q = require('q');
 
@@ -70,7 +73,7 @@ MongoDB.register = function(user) {
 
 
     var _default_user = new ProfileModel({
-        pid: util.string.uuid(8),
+        pid: user.pid || util.string.uuid(8),
         username: user.username,
         email: user.email,
         sex: user.sex,
@@ -104,70 +107,263 @@ MongoDB.register = function(user) {
 
 // history
 MongoDB.findByChatID = function(msg) {
+    // var defer = Q.defer();
+    // var _get_chatid = function() {
+    //     if (msg.type === util.constant.MSG_SINGLE) {
+    //         return msg.from > msg.to ? msg.from + msg.to : msg.to + msg.from;
+    //     }
+
+    //     if (msg.type === util.constant.MSG_GROUP) {
+    //         return msg.to;
+    //     }
+    // }
+
+    // var _create_empty_history = function() {
+    //     var defer1 = Q.defer();
+    //     var _default_history = {
+    //         hid: _get_chatid(),
+    //         msgs: []
+    //     };
+
+    //     var historyModel = new HistoryModel(_default_history);
+    //     historyModel.save((err, saveObj) => {
+    //         if (err) {
+    //             defer1.reject(err);
+    //         } else {
+    //             defer1.resolve(saveObj);
+    //         }
+    //     });
+
+    //     return defer1.promise;
+    // }
+
+    // // find history by id
+    // HistoryModel.findOne({
+    //     hid: _get_chatid()
+    // }).exec((error, existingHistory) => {
+    //     if (error || !existingHistory) {
+    //         //if history not exist, create a new one
+    //         _create_empty_history().then((newHisotry) => {
+    //             defer.resolve(newHisotry);
+    //         });
+    //     }
+
+    //     // if history found, then resolve it
+    //     if (existingHistory) {
+    //         defer.resolve(existingHistory);
+    //     }
+    // });
+
+    // return defer.promise;
+}
+
+MongoDB.aggregateDateByUserId = function(rid, dateRange, keyfn) {
     var defer = Q.defer();
-    var _get_chatid = function() {
-        if (msg.type === util.constant.MSG_SINGLE) {
-            return msg.from > msg.to ? msg.from + msg.to : msg.to + msg.from;
-        }
+    // if there's no date range, then use the default DateRange
+    var _default_dateRange;
 
-        if (msg.type === util.constant.MSG_GROUP) {
-            return msg.to;
-        }
-    }
+    var _default_kef;
 
-    var _create_empty_history = function() {
-        var defer1 = Q.defer();
-        var _default_history = {
-            hid: _get_chatid(),
-            msgs: []
+    if (!dateRange) {
+        var now = moment(new Date());
+        var lastSunday = now.day('0').hour(23).minutes(59).seconds(59).format();
+        var nextMonday = now.day('8').day(8).hour(0).minutes(0).seconds(0).format()
+        _default_dateRange = {
+            '$gt': new Date(lastSunday),
+            '$lt': new Date(nextMonday)
         };
+    };
 
-        var historyModel = new HistoryModel(_default_history);
-        historyModel.save((err, saveObj) => {
+    if (!keyfn) {
+        _default_kef = function(doc) {
+            var d = new Date(doc.date);
+            return {
+                key: d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(),
+                rid: doc.hid,
+                year: d.getFullYear(),
+                month: (d.getMonth() + 1),
+                date: d.getDate()
+            };
+        };
+    };
+
+    _default_dateRange = dateRange || _default_dateRange;
+    _default_kef = keyfn || _default_kef;
+
+    var group = {
+        keyf: _default_kef,
+        condition: {
+            hid: rid,
+            date: _default_dateRange
+        },
+        initial: {
+            count: 0
+        },
+        reduce: new Code(function(curr, result) {
+            result.count++;
+        }),
+        finalize: function(result) {},
+        command: true,
+        option: {},
+        callback: function(err, results) {
             if (err) {
-                defer1.reject(err);
+                defer.reject(err);
             } else {
-                defer1.resolve(saveObj);
+                defer.resolve(results);
             }
-        });
-
-        return defer1.promise;
+        }
     }
 
-    // find history by id
-    HistoryModel.findOne({
-        hid: _get_chatid()
-    }).exec((error, existingHistory) => {
-        if (error || !existingHistory) {
-            //if history not exist, create a new one
-            _create_empty_history().then((newHisotry) => {
-                defer.resolve(newHisotry);
-            });
-        }
-
-        // if history found, then resolve it
-        if (existingHistory) {
-            defer.resolve(existingHistory);
-        }
-    });
+    // HistoryModel.match(date : {'$gt' : new Date(lastSunday)}).group()
+    //kef, cond, reduce, finialize, 
+    var groupPromise = HistoryModel.collection.group(group.keyf,
+        group.condition,
+        group.initial,
+        group.reduce,
+        group.finalize,
+        group.command,
+        group.option,
+        group.callback);
 
     return defer.promise;
 }
 
+MongoDB.aggregateMonthDateById = function(rid, year, keyfn) {
+    var lastYear = moment({
+        y: year - 1,
+        M: 11,
+        d: 31,
+        h: 23,
+        m: 59,
+        s: 59
+    });
+
+    var nextYear = moment({
+        y: year + 1,
+        M: 0,
+        d: 1,
+        h: 0,
+        m: 0,
+        s: 0
+    });
+
+    var dateRange = {
+        '$gt': new Date(lastYear.format()),
+        '$lt': new Date(nextYear.format())
+    };
+
+    var default_keyfn = function(doc) {
+        var d = new Date(doc.date);
+        return {
+            key: d.getFullYear() + '-' + (d.getMonth() + 1),
+            rid: doc.hid,
+            month: d.getMonth() + 1,
+            year: d.getFullYear()
+        };
+    };
+
+    default_keyfn = keyfn || default_keyfn;
+
+    return this.aggregateDateByUserId(rid, dateRange, default_keyfn);
+}
+
+MongoDB.aggregateCurrentWeek = function(rid) {
+    return this.aggregateDateByUserId(rid);
+}
+
+MongoDB.aggregateCurrentWeekTotal = function(rid) {
+    var keyf = function(doc) {
+        var d = new Date(doc.date);
+        return {
+            key: doc.hid,
+            rid: doc.hid,
+        };
+    };
+    return this.aggregateDateByUserId(rid, null, keyf);
+}
+
+MongoDB.aggregateMonthTotal = function(rid, year) {
+    var keyf = function(doc) {
+        var d = new Date(doc.date);
+        return {
+            key: doc.hid,
+            rid: doc.hid,
+            year: d.getFullYear()
+        };
+    };
+    return this.aggregateMonthDateById(rid, year, keyf);
+}
+
+MongoDB.groupDefaultByUser = function(pid, year, fn) {
+    var defer = Q.defer();
+    var self = this;
+
+    this.findAllRooms(pid).then(function(rooms) {
+        var promises = [];
+        rooms.forEach(function(room) {
+            promises.push(fn.call(self, room.rid, year));
+        });
+
+        Q.all(promises).then(function(results) {
+            var finalResult = [];
+            results.forEach(function(result) {
+                finalResult = finalResult.concat(result);
+            });
+            defer.resolve(finalResult);
+        }).catch(function(err) {
+            defer.reject(err);
+        });
+    });
+
+    return defer.promise;
+};
+
+MongoDB.groupMonthByUser = function(pid, year) {
+    return this.groupDefaultByUser(pid, year, this.aggregateMonthDateById);
+};
+
+MongoDB.groupWeekByUser = function(pid) {
+    return this.groupDefaultByUser(pid, null, this.aggregateCurrentWeek);
+};
+
+MongoDB.groupMonthTotalByUser = function(pid, year) {
+    return this.groupDefaultByUser(pid, year, this.aggregateMonthTotal);
+};
+
+MongoDB.groupWeekTotalByUser = function(pid) {
+    return this.groupDefaultByUser(pid, null, this.aggregateCurrentWeekTotal);
+};
+
+
 MongoDB.logchat = function(msg) {
+    var _get_chatid = function() {
+        if (msg.msgtype === util.constant.MSG_SINGLE) {
+            return msg.from > msg.to ? msg.from + msg.to : msg.to + msg.from;
+        }
+
+        if (msg.msgtype === util.constant.MSG_GROUP) {
+            return msg.to;
+        }
+    }
+
     var defer = Q.defer();
 
-    this.findByChatID(msg).then((history) => {
-        var msgs = history.msgs.push(msg);
-        history.save((err, savedObj) => {
-            if (err || !savedObj) {
-                defer.reject(err);
-            } else {
-                defer.resolve(savedObj);
-            }
-        });
-    }).catch((err) => {
-        defer.reject(err);
+    var _default_history_msg = {
+        hid: _get_chatid(msg),
+        from: msg.from,
+        to: msg.to,
+        msgtype: msg.msgtype,
+        content: msg.content,
+        date: msg.date
+    }
+
+    var historyModel = new HistoryModel(_default_history_msg);
+    historyModel.save((err, saveObj) => {
+        if (err) {
+            defer.reject(err);
+            return;
+        };
+        defer.resolve(saveObj);
     });
 
     return defer.promise;
@@ -180,7 +376,7 @@ MongoDB.logchat = function(msg) {
 MongoDB.createChatRoom = function(chatRoom) {
     var defer = Q.defer();
     var _default_chatRoom = {
-        rid: util.string.num_uuid(3),
+        rid: chatRoom.rid || util.string.num_uuid(3),
         roomName: chatRoom.roomName,
         description: chatRoom.description,
         style: chatRoom.schema,
@@ -267,7 +463,7 @@ MongoDB.findAllLivesRoom = function(owner_pid) {
             'status.open': true
         };
     };
-    
+
     RoomModel.find(queryObject).exec((err, findedRoom) => {
         if (err) {
             defer.reject(err);

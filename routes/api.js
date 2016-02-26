@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var mongodbAPI = require('../db/mongodb.js');
 var $injector = require('../util/injector.js');
+var staticsService = require('../service/staticticsService.js');
 var execFile = require('child_process').execFile;
 
 
@@ -136,6 +137,62 @@ router.post('/tagsAssist', function(req, res, next) {
     });
 
     res.json(filterArray);
+});
+
+//// statistics
+router.post('/roomStatistics/week', function(req, res, next) {
+    if (req.session.user) {
+        var pid = req.session.user.pid;
+        staticticsService.groupWeekByUser(pid).then(function(data) {
+            res.json(data);
+        });
+    } else {
+        res.json({
+            'err', 'no login'
+        });
+    };
+
+});
+
+router.post('/roomStatistics/weekTotal', function(req, res, next) {
+    if (req.session.user) {
+        var pid = req.session.user.pid;
+        staticticsService.groupWeekTotalByUser(pid).then(function(data) {
+            res.json(data);
+        });
+    } else {
+        res.json({
+            'err', 'no login'
+        });
+    };
+});
+
+router.post('/roomStatistics/month', function(req, res, next) {
+    if (req.session.user) {
+        var pid = req.session.user.pid;
+        var now = new Date().getFullYear();
+        staticticsService.groupMonthByUser(pid, now).then(function(data) {
+            res.json(data);
+        });
+    } else {
+        res.json({
+            'err', 'no login'
+        });
+    };
+});
+
+router.post('/roomStatistics/monthTotal', function(req, res, next) {
+    if (req.session.user) {
+        var pid = req.session.user.pid;
+        var now = new Date().getFullYear();
+        staticticsService.groupMonthTotalByUser(pid, now).then(function(data) {
+            res.json(data);
+        });
+    } else {
+        res.json({
+            'err', 'no login'
+        });
+    };
 });
 
 module.exports = router;

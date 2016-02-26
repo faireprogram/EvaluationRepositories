@@ -154,7 +154,6 @@
 
             // defer work in the function
             defer.futurework = function() {
-                console.log('hhhhhhhhhh');
                 $rootScope.$broadcast('CLOSE_SOCKET_RES');
             };
 

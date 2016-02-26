@@ -13,7 +13,8 @@ var ProfileSchema  = new Schema({
 	username: String,
 	password: String,
 	email: String,
-	sex: String,
+	gender: String,
+	address: String,
 	friends: [Schema.Types.Mixed],
 	likeRooms: [Schema.Types.Mixed],
 	login: {
