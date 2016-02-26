@@ -11,13 +11,13 @@
             }
         },
         colors: [
-            "#f03333", "F6F792", "#436EEE", "#00C5CD", "#00FF00", "#ED9121"
+            "#f03333", "#F6F792", "#436EEE", "#00C5CD", "#00FF00", "#ED9121"
         ],
         title: {
-            text: 'Weekly Chat Traffic Statistics'
+            text: 'Daily Message Data'
         },
         subtitle: {
-            text: 'Take a look, did you study this week?'
+            text:null
         },
         plotOptions: {
             line: {

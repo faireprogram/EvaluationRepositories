@@ -8,10 +8,10 @@
             type: 'pie'
         },
         title: {
-            text: 'weekly message statistics'
+            text: 'Weekly Message Distribution'
         },
         colors: [
-            "#f03333", "F6F792", "#436EEE", "#00C5CD", "#00FF00", "#ED9121"
+            "#f03333", "#F6F792", "#436EEE", "#00C5CD", "#00FF00", "#ED9121"
         ],
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -33,7 +33,7 @@
             name: 'Brands',
             data: [{
                 name: 'room1',
-                y: 56.33
+                y: 36.33
             }, {
                 name: 'room2',
                 y: 24.03
@@ -45,10 +45,10 @@
                 y: 4.77
             }, {
                 name: 'room5',
-                y: 0.91
+                y: 10.91
             }, {
-                name: 'Temp rooms',
-                y: 0.2
+                name: 'room6',
+                y: 10.2
             }]
         }]
     };
