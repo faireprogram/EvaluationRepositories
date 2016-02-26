@@ -4,15 +4,27 @@
             <div class="container-fluid">
                 <h1 class="page-header">Dashboard</h1>
                 <div class="row placeholders">
-                    <div class="col-xs-6 col-sm-6 box-box-without-padding placeholder widget-header clearfix">
-                        <div chart-directive style="width: 400px; height: 400px; margin: 0 auto; border: 0px solid red"></div>
+                    <uib-accordion close-others="oneAtATime">
+                        <uib-accordion-group is-open="status.open">
+                            <uib-accordion-heading>
+                                Weekly statictics
+                                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                            </uib-accordion-heading>
+                            <div class="col-xs-6 col-sm-6 box-box-without-padding placeholder widget-header clearfix">
+                                <div chart-directive style="width: 400px; height: 400px; margin: 0 auto; border: 0px solid red"></div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 box-box-without-padding placeholder widget-header clearfix">
+                                <div chart-second style="min-width:560px; max-width: 600px; height: 400px; margin: 0 auto; border:px solid red"></div>
+                                This is just some content to illustrate fancy headings.
+                        </uib-accordion-group>
+                    </uib-accordion>
+
+
+
                     </div>
-                    <div class="col-xs-6 col-sm-6 box-box-without-padding placeholder widget-header clearfix">
-                        <div chart-second style="min-width:560px; max-width: 600px; height: 400px; margin: 0 auto; border:0px solid red"></div>
-                        </div>
-                    </div>
+                </div>
                 <div class="row placeholders">
-                    
+
                     <div style="position:relative;">
                         <h2 class="sub-header">Section title</h2>
                         <button style="position:absolute ;right :0;top:0;" ng-click="openAddRoom()">Create a new room</button>

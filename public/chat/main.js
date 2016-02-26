@@ -35,7 +35,7 @@
         deferStorageEvent(e);
     });
 
-    var main = angular.module('main', ['ui.bootstrap', 'ui.router']);
+    var main = angular.module('main', ['ui.bootstrap', 'ui.router','ngAnimate','ui.bootstrap']);
 
     main.service('ShareDataService', function() {
         this.loginInstance = null;

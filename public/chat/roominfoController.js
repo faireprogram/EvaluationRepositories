@@ -117,6 +117,12 @@
         }
     }
     roomInfosCtl.$inject = ['$scope', '$uibModal', '$http', 'ShareDataService'];
-    main_module.controller('RoomInfosCtl', roomInfosCtl);
+    main_module.controller('RoomInfosCtl', function($scope) {
+        $scope.oneAtATime = true;
+        $scope.status = {
+            isFirstOpen: true,
+            isFirstDisabled: false
+        };
+    });
 
 })(this);
