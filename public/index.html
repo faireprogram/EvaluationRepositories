@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link href="/libs/bootstrap/dist/css/bootstrap.css"  type="text/css" rel="stylesheet">
-		<link href="stylesheets/chat.css"  type="text/css" rel="stylesheet">
-		<script src="libs/socket.io-client/socket.io.js"> </script>
-		<script type="text/javascript"  src="/libs/angular/angular.js"></script>
-		<script type="text/javascript"  src="/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-		<script type="text/javascript"  src="/libs/angular-ui-router/release/angular-ui-router.js"></script>
-		<script type="text/javascript"  src="/libs/jquery/dist/jquery.js"></script>
-	</head>
-	<body ng-app="main" ng-cloak>
-		
-		<div ng-include="'/template/nav/nav.html'"></div>
-		<div ui-view></div>
 
-		<script type="text/javascript" src="/chat/main.js"></script>
-		<script type="text/javascript" src="/chat/chatController.js"></script>
-		<script type="text/javascript" src="/chat/loginController.js"></script>
-		<script type="text/javascript" src="/chat/loginUserNameController.js"></script>
-		<script type="text/javascript" src="/chat/visitorController.js"></script>
-		<script type="text/javascript" src="/chat/roomListsController.js"></script>
-		<script type="text/javascript" src="/chat/roominfoController.js"></script>
-		<script type="text/javascript" src="/chat/styleController.js"></script>
-		<script type="text/javascript" src="/template/notfound/error.js" > </script>
-	</body>
+<head>
+    <link href="/libs/bootstrap/dist/css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="stylesheets/chat.css" type="text/css" rel="stylesheet">
+    <link type="text/css" href="/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="libs/socket.io-client/socket.io.js"></script>
+    <script type="text/javascript" src="/libs/angular/angular.js"></script>
+    <script type="text/javascript" src="/libs/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="/libs/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="libs/highcharts/highcharts.js"></script>
+    <script src="libs/highcharts/modules/data.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.js"></script>
+</head>
+
+<body ng-app="main">
+    <div ng-include="'/template/nav/nav.html'"></div>
+    <div ui-view></div>
+
+    <script type="text/javascript" src="/chat/main.js"></script>
+    <script type="text/javascript" src="/chat/chatController.js"></script>
+    <script type="text/javascript" src="/chat/loginController.js"></script>
+    <script type="text/javascript" src="/chat/loginUserNameController.js"></script>
+    <script type="text/javascript" src="/chat/visitorController.js"></script>
+    <script type="text/javascript" src="/chat/roomListsController.js"></script>
+    <script type="text/javascript" src="/chat/roominfoController.js"></script>
+    <script type="text/javascript" src="/chat/styleController.js"></script>
+    <script type="text/javascript" src="/template/notfound/error.js"></script>
+    <script type="text/javascript" src="/hchart.js"></script>
+    <script type="text/javascript" src="/hchart1.js"></script>
+
+</body>
+
 </html>

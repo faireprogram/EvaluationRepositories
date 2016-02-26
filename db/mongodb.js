@@ -19,7 +19,7 @@ var MongoDB = {};
 MongoDB.checklogin = function(user) {
     console.log('user', user);
     var defer = Q.defer();
-    ProfileModel.authenticate()(user.input, user.password, (err, status, failedreason) => {
+    ProfileModel.authenticate()(user.username, user.password, (err, status, failedreason) => {
         if (!!status) { // if login failed, print failed
             defer.resolve(status);
         } else { // print success

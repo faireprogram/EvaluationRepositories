@@ -22,6 +22,10 @@
     "angular-mocks": "~1.5.0",
     "angular-bootstrap": "~1.1.2",
     "socket.io-client": "~1.4.5",
+<<<<<<< HEAD
+    "highcharts": "~4.2.3"
+=======
     "angular-ui-router": "~0.2.18"
+>>>>>>> a49a587b6d43fd8820c80461c04940f156d2dd84
   }
 }

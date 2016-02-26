@@ -30,7 +30,7 @@
         $scope.$on('CHANGE_LOGIN_BUTTON_RES', function(ev, data) {
             $scope.login = data;
         });
-
+        $scope.errormsg = {};
         console.log('$stateParams', $stateParams.roomId);
 
         $scope.openLogin = function() {
@@ -82,9 +82,23 @@
         }
 
         $scope.login = function(user) {
-            $scope.$emit('RESET_SOCKET_REQUEST');
-            $scope.$emit('REFRESH_VISITOR_REQUEST');
-        }
+            $http.post('/api/login', {user: user}).success(function(data) {
+                //if successful get the data
+                //send the refresh visitor, refresh socket, username
+
+                _send_close_request($scope, data, sharedDataService);
+
+                if (data.status !== 'ok') {
+                    // do nothing here
+
+                    $scope.errormsg=data.msg;
+                    console.log(data.msg);
+                    
+                } else {
+                    sharedDataService.loginInstance.close();
+                };
+            });
+        };
 
         $scope.logOut = function() {
             $http.post('/api/loginout').success(function(data) {

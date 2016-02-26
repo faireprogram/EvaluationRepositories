@@ -31,7 +31,7 @@
             <span class="glyphicon glyphicon-log-in" ></span > Logout
         </a>
     </li>
-    <li>
+    <li ng-if="login.status == 'ok'">
         <a ui-sref="roominfos">
         <span class="glyphicon glyphicon-log-in" ></span > rooms
     </a>
