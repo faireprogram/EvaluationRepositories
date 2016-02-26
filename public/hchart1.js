@@ -2,56 +2,54 @@
     // Uncomment to style it like Apple Watch
     var opts = {
         chart: {
-            type: 'line',
-            options3d: {
-                enabled: false,
-                alpha: 10,
-                beta: 25,
-                depth: 50
-            }
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'weekly message statistics'
         },
         colors: [
             "#f03333", "F6F792", "#436EEE", "#00C5CD", "#00FF00", "#ED9121"
         ],
-        title: {
-            text: 'Weekly Chat Traffic Statistics'
-        },
-        subtitle: {
-            text: 'Take a look, did you study this week?'
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
-            line: {
-                depth: 25
-            }
-        },
-        xAxis: {
-            // categories: Highcharts.getOptions().lang.shortWeeks
-            categories: ['Mon', 'Tus', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
-
-        },
-        yAxis: {
-            title: {
-                text: 'message  amount'
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
             }
         },
         series: [{
-            name: 'Room1',
-            data: [2, 3, 9, 4, 3, 5, 1]
-        }, {
-            name: 'Room2',
-            data: [4, 2, 1, 4, 1, 2, 1]
-        }, {
-            name: 'Room3',
-            data: [4, 2, 2, 4, 5, 3, 3]
-        }, {
-            name: 'Room4',
-            data: [5, 12, 2, 4, 2, 0, 3]
-        }, {
-            name: 'Room5',
-            data: [9, 8, 9, 6, 4, 15, 11]
-        }, {
-            name: 'Room6',
-            data: [2, 3, 1, 14, 8, 2, 9]
+            name: 'Brands',
+            data: [{
+                name: 'room1',
+                y: 56.33
+            }, {
+                name: 'room2',
+                y: 24.03
+            }, {
+                name: 'room3',
+                y: 10.38
+            }, {
+                name: 'room4',
+                y: 4.77
+            }, {
+                name: 'room5',
+                y: 0.91
+            }, {
+                name: 'Temp rooms',
+                y: 0.2
+            }]
         }]
     };
 
@@ -110,7 +108,7 @@
                 return dst;
             }
         })
-        .directive('chartDirective', function(myChartUtil) {
+        .directive('chartSecond', function(myChartUtil) {
             return {
                 link: function(scope, element, attr) {
                     console.log('chart link', angular.element(element));
