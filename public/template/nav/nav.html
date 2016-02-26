@@ -8,6 +8,9 @@
             </button>
             <a class="navbar-brand" href="#">IChat</a>
         </div>
+        
+        
+        
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right" ng-controller="LoginCtrl">
                 <li ng-if="login.status == 'ok'">
@@ -35,6 +38,14 @@
         <a ui-sref="roominfos">
         <span class="glyphicon glyphicon-log-in" ></span > rooms
     </a>
+    <li class="dropdown dropdown-toggle " ng-if="login.status == 'ok'">
+    <a data-toggle="dropdown"><span class="glyphicon glyphicon-cog"  ></span> Setting</a>
+    <ul class="dropdown-menu " style="min-width:100%; background-color:#101010;color:#fff;">
+        <li style=" background-color:#101010;"><a href="#">Picture</a></li>
+        <li style=" background-color:#101010;"><a href="#">File</a></li>
+        <li style=" background-color:#101010;"><a href="#">Moji</a></li>
+        <li style=" background-color:#101010;"><a href="#">More</a></li>
+    </ul>
 </li>
 </ul>
 </div>
