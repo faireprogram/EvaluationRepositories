@@ -4,11 +4,11 @@
             <div class="container-fluid">
                
                 <h1 class="page-header">Dashboard</h1>
-                    <div class="row">
+                    <div class="row ">
                         <uib-accordion close-others="oneAtATime">
                             <uib-accordion-group is-open="status.open">
-                                <uib-accordion-heading>
-                                Weekly statictics
+                                <uib-accordion-heading >
+                                Weekly Statictics
                                     <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </uib-accordion-heading>
                                     
@@ -27,27 +27,29 @@
                 <div class="row placeholders">
 
                     <div style="position:relative;">
-                        <h2 class="sub-header">Section title</h2>
-                        <button style="position:absolute ;right :0;top:0;" ng-click="openAddRoom()">Create a new room</button>
+                        <h2 class="sub-header">Section Title</h2>
+                        <button class="btn btn-success"style="position:absolute ;right :0;top:0;" ng-click="openAddRoom()">Create a new room</button>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>description</th>
-                                    <th>create date</th>
-                                    <th>close date</th>
-                                    <th>tags</th>
-                                    <th>status</th>
+                                    <th>Room Name</th>
+                                    <th>Room No.</th>
+                                    <th>Description</th>
+                                    <th>Created Date</th>
+                                    <th>Close Date</th>
+                                    <th>Tags</th>
+                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="roominfo in rooms">
+                                    <td>{{roominfo.roomName}}</td>
                                     <td>{{roominfo.rid}}</td>
                                     <td>{{roominfo.description}}</td>
-                                    <td>{{roominfo.status.createDate}}</td>
+                                    <td>{{roominfo.status.createDate|date:'medium'}}</td>
                                     <td>{{roominfo.status.closeDate}}</td>
                                     <td>
 
@@ -56,9 +58,10 @@
 
 									</span>
                                     </td>
-                                    <td>{{roominfo.status.open}}</td>
+                                    <td ng-if="roominfo.status.open">Alive</td>
+                                    <td ng-if="!roominfo.status.open">Closed</td>
                                     <td>
-                                        <button>close chat</button>
+                                        <button class="btn btn-danger">Close Chat</button>
                                     </td>
                                 </tr>
                             </tbody>

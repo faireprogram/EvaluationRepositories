@@ -136,6 +136,7 @@ form > div {
 
 .realContainer {
   position: relative;
+  overflow-y:auto; 
 }
 
 .absoluteContainer {
@@ -193,9 +194,9 @@ form > div {
 .message > p:before {
     content: "";
     position: absolute;
-    bottom: -20px;
-    left: 40px;
-    border-width: 20px 20px 0;
+    bottom: -18px;
+    left: -3px;
+    border-width: 18px 18px 0;
     border-style: solid;
     border-color: #5a8f00 transparent;
     display: block;
@@ -205,9 +206,9 @@ form > div {
 .message > p:after {
     content: "";
     position: absolute;
-    bottom: -13px;
-    left: 47px;
-    border-width: 13px 13px 0;
+    bottom: -10px;
+    left: 3px;
+    border-width: 11px 11px 0;
     border-style: solid;
     border-color: #fff transparent;
     display: block;
@@ -320,9 +321,9 @@ form > div {
 
 
 .mogiContainer {
-    position: absolute;
+    position: fixed;
     right: 0;
-    bottom: 0;
+    bottom: 8.3%;
     border-radius: 4px;
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
     background-clip: padding-box;
@@ -357,6 +358,24 @@ form > div {
   display: table;
   content: '';
   clear: both;
+}
+.wrap{
+    background-color: #d7d8d9;
+    color: #333;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px ;
+}
+.listuser{
+    color: #fff;
+    text-align: center;
+    padding: 5px ;
+
+
+}
+.chart{
+  background-color: #68D7FC;
+
 }
 /*
 .graphContainer .highcharts-container{
