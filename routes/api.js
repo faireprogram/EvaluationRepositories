@@ -144,12 +144,12 @@ router.post('/tagsAssist', function(req, res, next) {
 router.post('/roomStatistics/week', function(req, res, next) {
     if (req.session.user) {
         var pid = req.session.user.pid;
-        staticticsService.groupWeekByUser(pid).then(function(data) {
+        staticsService.groupWeekByUser(pid).then(function(data) {
             res.json(data);
         });
     } else {
         res.json({
-            'err', 'no login'
+            'err': 'no login'
         });
     };
 
@@ -158,12 +158,12 @@ router.post('/roomStatistics/week', function(req, res, next) {
 router.post('/roomStatistics/weekTotal', function(req, res, next) {
     if (req.session.user) {
         var pid = req.session.user.pid;
-        staticticsService.groupWeekTotalByUser(pid).then(function(data) {
+        staticsService.groupWeekTotalByUser(pid).then(function(data) {
             res.json(data);
         });
     } else {
         res.json({
-            'err', 'no login'
+            'err': 'no login'
         });
     };
 });
@@ -172,12 +172,12 @@ router.post('/roomStatistics/month', function(req, res, next) {
     if (req.session.user) {
         var pid = req.session.user.pid;
         var now = new Date().getFullYear();
-        staticticsService.groupMonthByUser(pid, now).then(function(data) {
+        staticsService.groupMonthByUser(pid, now).then(function(data) {
             res.json(data);
         });
     } else {
         res.json({
-            'err', 'no login'
+            'err': 'no login'
         });
     };
 });
@@ -186,12 +186,12 @@ router.post('/roomStatistics/monthTotal', function(req, res, next) {
     if (req.session.user) {
         var pid = req.session.user.pid;
         var now = new Date().getFullYear();
-        staticticsService.groupMonthTotalByUser(pid, now).then(function(data) {
+        staticsService.groupMonthTotalByUser(pid, now).then(function(data) {
             res.json(data);
         });
     } else {
         res.json({
-            'err', 'no login'
+            'err': 'no login'
         });
     };
 });

@@ -35,7 +35,7 @@
         deferStorageEvent(e);
     });
 
-    var main = angular.module('main', ['ui.bootstrap', 'ui.router','ngAnimate','ui.bootstrap']);
+    var main = angular.module('main', ['ui.bootstrap', 'ui.router', 'ngAnimate', 'ui.bootstrap']);
 
     main.service('ShareDataService', function() {
         this.loginInstance = null;
@@ -43,8 +43,32 @@
         this.login = {};
     });
 
-    main.service('RoomService', ['$http', '$q', '$templateCache', 
-        function($http, $q,  $templateCache) {
+    main.filter('mojoFilter', ['$sce', function($sce) {
+        return function(input) {
+            var imgTempate = '<img src="/resource/expression/$1.gif"></img>';
+            return $sce.trustAsHtml(input.replace(/\[#(\d{1,2})\]/g, imgTempate));
+        }
+    }]);
+
+    main.service('UtilService', function() {
+        this.extendDeep = function() {
+            angular.forEach(arguments, function(obj) {
+                if (obj !== dst) {
+                    angular.forEach(obj, function(value, key) {
+                        if (dst[key] && dst[key].constructor && dst[key].constructor === Object) {
+                            extendDeep(dst[key], value);
+                        } else {
+                            dst[key] = value;
+                        }
+                    });
+                }
+            });
+            return dst;
+        }
+    })
+
+    main.service('RoomService', ['$http', '$q', '$templateCache',
+        function($http, $q, $templateCache) {
             this.isRoomExist = function(id) {
                 var defer = $q.defer();
                 $http.post('/api/roomExist', {
@@ -56,7 +80,9 @@
             };
 
             this.getTempate = function(url) {
-                return $http.get(url, {cache: $templateCache}).then(function(response) {
+                return $http.get(url, {
+                    cache: $templateCache
+                }).then(function(response) {
                     return response.data;
                 });
             };
@@ -80,7 +106,7 @@
                         }
                     },
                     templateProvider: function($stateParams, RoomService, roomExist) {
-                        if(roomExist.status) {
+                        if (roomExist.status) {
                             return RoomService.getTempate('/template/chatroom/room.html');
                         } else {
                             return RoomService.getTempate('/template/notfound/404.html');

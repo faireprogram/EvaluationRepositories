@@ -2,28 +2,28 @@
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
             <div class="container-fluid">
+               
                 <h1 class="page-header">Dashboard</h1>
-                <div class="row placeholders">
-                    <uib-accordion close-others="oneAtATime">
-                        <uib-accordion-group is-open="status.open">
-                            <uib-accordion-heading>
-                            Weekly statictics
-                                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-                            </uib-accordion-heading>
-                            <div class="col-xs-5 col-sm-5 placeholder i">
-                                <div chart-directive style="width: 380px; height: 400px; margin: 0 auto;">
-                                
+                    <div class="row">
+                        <uib-accordion close-others="oneAtATime">
+                            <uib-accordion-group is-open="status.open">
+                                <uib-accordion-heading>
+                                Weekly statictics
+                                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                </uib-accordion-heading>
+                                    
+                                <div class="col-xs-6 col-sm-6 graphContainer">
+                                        <div chart-directive width="80%"></div>
                                 </div>
-                            </div>
-                            <div class="col-xs-7 col-sm-7 placeholder i">
-                                <div chart-second style="min-width:500px; max-width: 580px; height: 400px; margin: 0 auto "></div>
-                        </uib-accordion-group>
-                    </uib-accordion>
-
-
-
+                                <div class="col-xs-6 col-sm-6 graphContainer">
+                                        <div chart-second width="80%"></div>
+                                </div>
+                            </uib-accordion-group>
+                        </uib-accordion>
                     </div>
                 </div>
+                 <!-- <div chart-second ></div> -->
+
                 <div class="row placeholders">
 
                     <div style="position:relative;">

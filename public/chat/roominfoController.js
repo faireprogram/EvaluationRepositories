@@ -9,12 +9,14 @@
             }).success(function(rooms) {
                 $scope.rooms = rooms;
             });
-        }
+        };
+
         $scope.oneAtATime = true;
         $scope.status = {
             isFirstOpen: true,
             isFirstDisabled: false
         };
+
         $scope.$on('CHANGE_LOGIN_NAME_RES', function() {
             if (sharedDataService.login.pid) {
                 $http.post('/api/roomlists', {
@@ -62,7 +64,7 @@
             };
         };
 
-        $scope.styles = ['blueOcean', 'orangeGreen', 'pinkGirl', 'purpleMagic', 'redChristmas', 'whiteJoey', 'yellowFruit'];
+        $scope.styles = ['BlueOcean', 'OrangeGreen', 'PinkGirl', 'PurpleMagic', 'RedChristmas', 'WhiteJoey', 'YellowFruit'];
 
         $scope.$watch('newRoom.tag', function(n, o) {
             if (n) {

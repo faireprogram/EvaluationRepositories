@@ -354,7 +354,7 @@ MongoDB.logchat = function(msg) {
         to: msg.to,
         msgtype: msg.msgtype,
         content: msg.content,
-        date: msg.date
+        date: msg.date || new Date()
     }
 
     var historyModel = new HistoryModel(_default_history_msg);

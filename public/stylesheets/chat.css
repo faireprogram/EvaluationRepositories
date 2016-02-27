@@ -76,7 +76,7 @@
 .sendbutton:hovar{
    opacity: 70%;
 }
-.fix_margin_padding {
+.fix_margin_padding, .fix_margin_padding.container-fluid {
 	margin: 0;
 	padding: 0;
 }
@@ -318,3 +318,48 @@ form > div {
   cursor: pointer;
   font-size: 9px;
 }
+
+
+.mogiContainer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    background-clip: padding-box;
+    list-style: none;
+    background-color: #fff;
+    padding: 0px 5px;
+    margin: 0px 0px 3px 0px;
+}
+
+.mogiContainer > ul {
+  list-style: none;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.mogiContainer > ul > li{
+  float: left;
+  border: 1px solid #e8e8e8;
+  padding: 3px;
+}
+
+.mogiContainer > ul > li > img{
+  
+}
+
+.mogiContainer > ul > li:hover{
+  border: 1px solid #eb7350;
+}
+
+.mogiContainer > ul:after {
+  display: table;
+  content: '';
+  clear: both;
+}
+/*
+.graphContainer .highcharts-container{
+  padding: 25px;
+}*/
