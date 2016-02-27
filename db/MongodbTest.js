@@ -116,64 +116,81 @@ var user = {
 //     console.log(err);
 // });
 
-MongoDB.groupWeekByUser('00001').then(function(results) {
-    var week = ['Monday', 'Tuesday', 'WensDady', 'Turesday', 'Friday', 'Saturday', 'Sunday'];
-    var monday = moment(new Date()).day(1).date();
-    var sunday = moment(new Date()).day(7).date();
-    var rooms = {};
+// MongoDB.groupWeekByUser('00001').then(function(results) {
+//     var week = ['Monday', 'Tuesday', 'WensDady', 'Turesday', 'Friday', 'Saturday', 'Sunday'];
+//     var monday = moment(new Date()).day(1).date();
+//     var sunday = moment(new Date()).day(7).date();
+//     var rooms = {};
 
-    results.forEach(function(result) {
-        if (!rooms[result.rid]) {
-            rooms[result.rid] = [];
-        }
-        rooms[result.rid].push(result);
-    });
+//     results.forEach(function(result) {
+//         if (!rooms[result.rid]) {
+//             rooms[result.rid] = [];
+//         }
+//         rooms[result.rid].push(result);
+//     });
 
-    // rooms.forEach(function(room) {
+//     // rooms.forEach(function(room) {
 
-    // });
+//     // });
 
-    var _create_weekmap = function() {
-        var map = {};
-        var d = moment(new Date());
-        for (var i = 1; i <= 7; i++) {
-           map[d.day(i).format('YYYY-M-D')] = true;
-        };
-        return map;
-    }
+//     var _create_weekmap = function() {
+//         var map = {};
+//         var d = moment(new Date());
+//         for (var i = 1; i <= 7; i++) {
+//            map[d.day(i).format('YYYY-M-D')] = true;
+//         };
+//         return map;
+//     }
 
-    for (var roomId in rooms) {
-        var week = _create_weekmap();
-        rooms[roomId].forEach(function(roomstatics) {
-            if (roomstatics.key in week) {
-                delete week[roomstatics.key];
-            };
-        });
+//     for (var roomId in rooms) {
+//         var week = _create_weekmap();
+//         rooms[roomId].forEach(function(roomstatics) {
+//             if (roomstatics.key in week) {
+//                 delete week[roomstatics.key];
+//             };
+//         });
 
-        for(var i in week) {
-            var da = moment(i, 'YYYY-M-D');
-            var emptyWeek = {
-                key : i,
-                rid : roomId,
-                year : da.year(),
-                date : da.date(),
-                count : 0
-            }
-            rooms[roomId].push(emptyWeek);
-        }
-        var sortedRoom = rooms[roomId].sort(function(r1, r2) {
-           return r1.key > r2.key ?   1 : (r1.key === r2.key ? 0 : -1);
-        });
+//         for(var i in week) {
+//             var da = moment(i, 'YYYY-M-D');
+//             var emptyWeek = {
+//                 key : i,
+//                 rid : roomId,
+//                 year : da.year(),
+//                 date : da.date(),
+//                 count : 0
+//             }
+//             rooms[roomId].push(emptyWeek);
+//         }
+//         var sortedRoom = rooms[roomId].sort(function(r1, r2) {
+//            return r1.key > r2.key ?   1 : (r1.key === r2.key ? 0 : -1);
+//         });
 
-        rooms[roomId] = sortedRoom;
-    };
+//         rooms[roomId] = sortedRoom;
+//     };
 
-}).catch(function(err) {
-    console.log(err);
-});
+// }).catch(function(err) {
+//     console.log(err);
+// });
 
-MongoDB.groupWeekTotalByUser('00001').then(function(result) {
+// MongoDB.groupWeekTotalByUser('00001').then(function(result) {
+//     console.log(result);
+// }).catch(function(err) {
+//     console.log(err);
+// });
+
+
+// var search = {
+//     username: 'fds'
+// };
+
+// var search = {
+//     tag: 'fd'
+// };
+
+var search = {
+    roomName: 'fd'
+};
+
+MongoDB.findRoomByMulitpleConditons(search).then(function(result) {
     console.log(result);
-}).catch(function(err) {
-    console.log(err);
 });

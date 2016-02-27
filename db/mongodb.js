@@ -493,6 +493,54 @@ MongoDB.findAllRooms = function(owner_pid) {
     return defer.promise;
 }
 
+MongoDB.findRoomByMulitpleConditons = function(search) {
+    var defer = Q.defer();
+
+    var query = [];
+    // owner.username
+    if (search.username) {
+        query.push({
+            'owner.username': {
+                $regex: new RegExp(search.username),
+                $options: 'i'
+            },
+            'status.open': true
+        });
+    }
+
+    // tags []
+    if (search.tag) {
+        query.push({
+            'tags': {
+                $in: [new RegExp(search.tag, 'i')]
+            },
+            'status.open': true
+        });
+    }
+
+    // // roomName
+    if (search.roomName) {
+        query.push({
+            'roomName': {
+                $regex: new RegExp(search.roomName),
+                $options: 'i'
+            },
+            'status.open': true
+        });
+    }
+
+    RoomModel.find({
+        $or: query
+    }).exec((err, findedRoom) => {
+        if (err) {
+            defer.reject(err);
+        } else {
+            defer.resolve(findedRoom);
+        }
+    })
+    return defer.promise;
+}
+
 
 
 module.exports = MongoDB;

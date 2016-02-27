@@ -264,7 +264,6 @@ form > div {
 
 /**[ng-controller='RoomInfosCtl']  .label {
   margin: 5px;
-<<<<<<< HEAD
 }*/
 
 .label {
@@ -363,3 +362,8 @@ form > div {
 .graphContainer .highcharts-container{
   padding: 25px;
 }*/
+
+.searchPanel {
+  position: absolute;
+  padding: 8px 10px;
+}
