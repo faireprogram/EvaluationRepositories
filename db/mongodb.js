@@ -450,7 +450,7 @@ MongoDB.isRoomLive = function(id) {
     return defer.promise;
 }
 
-MongoDB.findAllLivesRoom = function(owner_pid) {
+MongoDB.findAllLivesRoom = function(owner_pid, pagination) {
     var defer = Q.defer();
     var queryObject;
     if (owner_pid) {
@@ -464,7 +464,14 @@ MongoDB.findAllLivesRoom = function(owner_pid) {
         };
     };
 
-    RoomModel.find(queryObject).exec((err, findedRoom) => {
+    //pagination
+    var pros = RoomModel.find(queryObject);
+
+    if (pagination && util.num.isNum(pagination.currentRecords) && util.num.isNum(pagination.maxPer)) {
+        pros = pros.skip(pagination.currentRecords).limit(pagination.maxPer);
+    }
+
+    pros.exec((err, findedRoom) => {
         if (err) {
             defer.reject(err);
         } else {
@@ -493,51 +500,74 @@ MongoDB.findAllRooms = function(owner_pid) {
     return defer.promise;
 }
 
-MongoDB.findRoomByMulitpleConditons = function(search) {
+MongoDB.findRoomByMulitpleConditons = function(search, pagination) {
     var defer = Q.defer();
 
-    var query = [];
-    // owner.username
-    if (search.username) {
-        query.push({
-            'owner.username': {
-                $regex: new RegExp(search.username),
+    var andQuery = [];
+    var orQuery = [];
+    if (!search) {
+        search = {};
+    }
+
+    if (search.name) {
+        // owner.username
+        orQuery.push({
+            'rid': {
+                $regex: new RegExp(search.name),
                 $options: 'i'
             },
             'status.open': true
         });
-    }
+
+        // // roomName
+        orQuery.push({
+            'roomName': {
+                $regex: new RegExp(search.name),
+                $options: 'i'
+            },
+            'status.open': true
+        });
+
+        var or = {
+            $or: orQuery
+        };
+        andQuery.push(or);
+    };
 
     // tags []
     if (search.tag) {
-        query.push({
+        andQuery.push({
             'tags': {
                 $in: [new RegExp(search.tag, 'i')]
             },
             'status.open': true
         });
-    }
+    };
 
-    // // roomName
-    if (search.roomName) {
-        query.push({
-            'roomName': {
-                $regex: new RegExp(search.roomName),
-                $options: 'i'
-            },
-            'status.open': true
+    // if (!search || (!search.name && !search.tag)) {
+    //     defer.resolve(null);
+    // } else {
+    var pros;
+    if (andQuery.length) {
+        pros = RoomModel.find({
+            $and: andQuery
         });
+    } else {
+        pros = RoomModel.find({});
     }
 
-    RoomModel.find({
-        $or: query
-    }).exec((err, findedRoom) => {
+    if (pagination && util.num.isNum(pagination.currentRecords) && util.num.isNum(pagination.maxPer)) {
+        pros = pros.skip(pagination.currentRecords).limit(pagination.maxPer);
+    }
+    pros.exec((err, findedRoom) => {
         if (err) {
             defer.reject(err);
         } else {
             defer.resolve(findedRoom);
         }
-    })
+    });
+    // }
+
     return defer.promise;
 }
 

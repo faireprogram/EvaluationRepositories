@@ -187,10 +187,15 @@ var user = {
 //     tag: 'fd'
 // };
 
-var search = {
-    roomName: 'fd'
-};
+// var search = {
+//     name: 'Qipa'
+// };
 
-MongoDB.findRoomByMulitpleConditons(search).then(function(result) {
+search = null;
+var page = {
+    currentRecords: 0,
+    maxPer: 3
+}
+MongoDB.findRoomByMulitpleConditons(search, page).then(function(result) {
     console.log(result);
 });

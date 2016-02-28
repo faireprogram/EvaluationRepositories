@@ -1,13 +1,13 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" ng-controller="NavCtrl" id="navId">
     <div class="container-fluid">
         <!-- search button pannel -->
         <div class="row">
             <div class="col-md-offset-1 col-md-3 hidden-xs" style="position:relative;">
                 <div class="searchPanel">
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search for room">
+                      <input type="text" class="form-control" placeholder="Search for room" ng-model="searchString">
                       <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
+                        <button class="btn btn-default" type="button" ng-click="search(searchString)">Go!</button>
                       </span>
                     </div>
                 </div>

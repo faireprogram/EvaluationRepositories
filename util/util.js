@@ -2,6 +2,7 @@ var util = {};
 util.msg = {};
 util.args = {};
 util.string = {};
+util.num = {};
 util.constant = {};
 util.fn = {};
 
@@ -68,6 +69,19 @@ util.string.in = function(targetStr, groups) {
 		}
 	});
 	return find;
+}
+
+util.num.isNum = function(num) {
+	if(num === undefined) {
+		return false;
+	}
+	if(typeof num === 'object') {
+		return false;
+	}
+	if(parseInt(num).toString() !== num.toString()) {
+		return false;
+	}
+	return true
 }
 
 // n = 4, the length output is 16

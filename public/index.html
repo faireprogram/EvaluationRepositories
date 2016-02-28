@@ -17,10 +17,11 @@
 </head>
 
 <body ng-app="main">
-    <div ng-include="'/template/nav/nav.html'"></div>
+    <div ng-include="'/template/nav/nav.html'" class="navclude"></div>
     <div ui-view></div>
 
     <script type="text/javascript" src="/chat/main.js"></script>
+    <script type="text/javascript" src="/chat/navCtrl.js"></script>
     <script type="text/javascript" src="/chat/chatController.js"></script>
     <script type="text/javascript" src="/chat/loginController.js"></script>
     <script type="text/javascript" src="/chat/loginUserNameController.js"></script>
@@ -28,6 +29,9 @@
     <script type="text/javascript" src="/chat/roomListsController.js"></script>
     <script type="text/javascript" src="/chat/roominfoController.js"></script>
     <script type="text/javascript" src="/chat/styleController.js"></script>
+    <script type="text/javascript" src="/chat/roomSearchController.js"></script>
+
+    <!-- error -->
     <script type="text/javascript" src="/template/notfound/error.js"></script>
 
     <!-- directive js -->

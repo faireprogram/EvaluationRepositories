@@ -86,6 +86,7 @@
                     return response.data;
                 });
             };
+
         }
     ]);
 
@@ -122,9 +123,9 @@
                         defer();
                     },
                     controller: 'StyleCtrl'
-                }).state('statistics', {
-                    url: '/statistics',
-                    templateUrl: '/template/'
+                }).state('search', {
+                    url: '/search?name&&tag&&page',
+                    templateUrl: '/template/search/roomSearchLists.html'
                 }).state('roominfos', {
                     url: '/roominfos',
                     templateUrl: 'template/roominfos/roomInfos.html'

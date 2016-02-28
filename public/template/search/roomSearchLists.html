@@ -1,4 +1,8 @@
-<div class="container-fluid" ng-controller="RoomListsCtrl">
+<div class="container-fluid" ng-controller="RoomSearchCtrl">
+	<div class="sideLayer">
+	    <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged(currentPage)"  items-per-page="maxPer" max-size="10" previous-text="up" next-text="down">
+	    </uib-pagination>
+	</div>
 	<div class="row">
 		<div class="col-md-offset-1 col-md-10" >
 			<div class="row">

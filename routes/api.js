@@ -1,4 +1,5 @@
 var router = require('express').Router();
+var util = require('../util/util.js');
 var mongodbAPI = require('../db/mongodb.js');
 var $injector = require('../util/injector.js');
 var staticsService = require('../service/staticticsService.js');
@@ -195,5 +196,30 @@ router.post('/roomStatistics/monthTotal', function(req, res, next) {
         });
     };
 });
+
+/////////////////////////////////////////////////////////////////
+////  Search PART
+
+router.post('/search/', function(req, res, next) {
+    var query = req.body.query;
+    var page = req.body.page;
+    var pageNation;
+    if (page && util.num.isNum(page.currentPage) && util.num.isNum(page.maxPer)) {
+        var currentRecords = parseInt(page.currentPage) * parseInt(page.maxPer);
+        pageNation = {
+            currentRecords: currentRecords,
+            maxPer: parseInt(page.maxPer)
+        };
+    };
+
+    mongodbAPI.findRoomByMulitpleConditons(query, pageNation).then(function(result) {
+        if (result) {
+            res.json(result);
+        } else {
+            res.json({});
+        }
+    });
+});
+
 
 module.exports = router;
