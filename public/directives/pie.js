@@ -36,7 +36,7 @@
         }
     };
 
-    main_module.directive('chartSecond', function(UtilService) {
+    main_module.directive('chartSecond', function() {
         return {
             controller: ['$scope', '$http', '$q',
                 function($scope, $http, $q) {

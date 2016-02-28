@@ -30,7 +30,7 @@
         },
         xAxis: {
             // categories: Highcharts.getOptions().lang.shortWeeks
-            categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
         },
         yAxis: {
@@ -59,7 +59,7 @@
         // }]
     };
 
-    main_module.directive('chartDirective', function(UtilService) {
+    main_module.directive('chartDirective', function() {
         return {
             controller: ['$scope', '$http', '$q',
                 function($scope, $http, $q) {

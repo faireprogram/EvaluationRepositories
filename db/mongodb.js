@@ -166,11 +166,13 @@ MongoDB.aggregateDateByUserId = function(rid, dateRange, keyfn) {
 
     if (!dateRange) {
         var now = moment(new Date());
-        var lastSunday = now.day('0').hour(23).minutes(59).seconds(59).format();
-        var nextMonday = now.day('8').day(8).hour(0).minutes(0).seconds(0).format()
+        // var lastSunday = now.day('0').hour(23).minutes(59).seconds(59).format();
+        // var nextMonday = now.day('8').day(8).hour(0).minutes(0).seconds(0).format()
+        var lastSunday = moment().startOf('week').format();
+        var nextSunday = moment().endOf('week').format();
         _default_dateRange = {
-            '$gt': new Date(lastSunday),
-            '$lt': new Date(nextMonday)
+            '$gte': new Date(lastSunday),
+            '$lte': new Date(nextSunday)
         };
     };
 

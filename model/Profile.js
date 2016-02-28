@@ -37,7 +37,10 @@ var ProfileSchema  = new Schema({
 	preference: {
 		schema: String
 	},
-	profileImg: String
+	profileImg: {
+		data: Buffer,
+		contentType: String
+	}
 });
 
 ProfileSchema.plugin(lpm, {usernameQueryFields : ['email']});

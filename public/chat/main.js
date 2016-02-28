@@ -35,7 +35,7 @@
         deferStorageEvent(e);
     });
 
-    var main = angular.module('main', ['ui.bootstrap', 'ui.router', 'ngAnimate', 'ui.bootstrap']);
+    var main = angular.module('main', ['ui.bootstrap', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'ngFileUpload']);
 
     main.service('ShareDataService', function() {
         this.loginInstance = null;
@@ -43,29 +43,33 @@
         this.login = {};
     });
 
-    main.filter('mojoFilter', ['$sce', function($sce) {
-        return function(input) {
-            var imgTempate = '<img src="/resource/expression/$1.gif"></img>';
-            return $sce.trustAsHtml(input.replace(/\[#(\d{1,2})\]/g, imgTempate));
+    main.filter('mojoFilter', ['$sce',
+        function($sce) {
+            return function(input) {
+                var imgTempate = '<img src="/resource/expression/$1.gif"></img>';
+                return $sce.trustAsHtml(input.replace(/\[#(\d{1,2})\]/g, imgTempate));
+            }
         }
-    }]);
+    ]);
 
-    main.service('UtilService', function() {
-        this.extendDeep = function() {
-            angular.forEach(arguments, function(obj) {
-                if (obj !== dst) {
-                    angular.forEach(obj, function(value, key) {
-                        if (dst[key] && dst[key].constructor && dst[key].constructor === Object) {
-                            extendDeep(dst[key], value);
-                        } else {
-                            dst[key] = value;
-                        }
-                    });
-                }
-            });
-            return dst;
+    main.service('fileUpload', ['$http',
+        function($http) {
+            this.uploadFileToUrl = function(file, uploadUrl) {
+                var fd = new FormData();
+                fd.append('file', file);
+                $http.post(uploadUrl, fd, {
+                    transformRequest: angular.identity,
+                    headers: {
+                        'Content-Type': undefined
+                    }
+                }).success(function() {
+                    console.log('sss');
+                }).error(function() {
+
+                });
+            };
         }
-    })
+    ]);
 
     main.service('RoomService', ['$http', '$q', '$templateCache',
         function($http, $q, $templateCache) {
@@ -129,6 +133,9 @@
                 }).state('roominfos', {
                     url: '/roominfos',
                     templateUrl: 'template/roominfos/roomInfos.html'
+                }).state('profile', {
+                    url: '/profile',
+                    templateUrl: 'template/profile/profile.html'
                 });
         }
     ]);

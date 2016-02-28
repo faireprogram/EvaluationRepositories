@@ -1,0 +1,41 @@
+<div class="container-fluid" ng-controller="ProfileCtrl">
+	<div class="row">
+		<div class="col-md-8 col-md-push-2">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Personal Setting</div>
+						<div class="panel-body">
+						    <div class="form-group row">
+						    	<label for="nameInput" class="col-sm-2 form-control-label">Name: </label>
+						    	<div class="col-sm-10">
+						    		<input id="nameInput" readonly ng-bind="user.name"/>
+							    </div>
+						    </div>
+						     <div class="form-group row">
+						    	<label for="nameInput" class="col-sm-2 form-control-label">Name: </label>
+						    	<div class="col-sm-10">
+						    		<p class="input-group">
+							          <input type="text" class="form-control" uib-datepicker-popup="" ng-model="dt" is-open="pop.show"  ng-required="true" close-text="Close"/>
+							          <span class="input-group-btn">
+							            <button type="button" class="btn btn-default" ng-click="openCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
+							          </span>
+							        </p>
+							    </div>
+						    </div>
+						 </div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">Person Image</div>
+						<div class="panel-body">
+						    <div file-model>
+							</div>
+						 </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

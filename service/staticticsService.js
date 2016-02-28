@@ -11,8 +11,6 @@ staticService.groupWeekByUser = function(pid) {
 
     MongoDB.groupWeekByUser(pid).then(function(results) {
         var weekNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        var monday = moment(new Date()).day(1).date();
-        var sunday = moment(new Date()).day(7).date();
         var rooms = {};
 
         results.forEach(function(result) {
@@ -24,8 +22,8 @@ staticService.groupWeekByUser = function(pid) {
 
         var _create_weekmap = function() {
             var map = {};
-            var d = moment(new Date());
-            for (var i = 1; i <= 7; i++) {
+            var d = moment().startOf('week');
+            for (var i = 0; i <= 6; i++) {
                 map[d.day(i).format('YYYY-M-D')] = true;
             };
             return map;
@@ -49,8 +47,8 @@ staticService.groupWeekByUser = function(pid) {
                     year: da.year(),
                     date: da.date(),
                     count: 0,
-                    week: weekNames[da.day() - 1]
-                }
+                    week: weekNames[da.day()]
+                };
                 rooms[roomId].push(emptyWeek);
             };
 

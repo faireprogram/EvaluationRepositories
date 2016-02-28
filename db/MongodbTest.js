@@ -80,11 +80,11 @@ var user = {
 //     console.log(findRoom);
 // });
 
-// MongoDB.aggregateDateByUserId('xxxxx2').then(function(result) {
-//     console.log(result);
-// }).catch(function(err) {
-//     console.log(err);
-// });
+MongoDB.aggregateDateByUserId('504947123706').then(function(result) {
+    console.log(result);
+}).catch(function(err) {
+    console.log(err);
+});
 
 // MongoDB.aggregateMonthDateById('xxxxx2', 2016).then(function(result) {
 //     console.log(result);
@@ -191,11 +191,11 @@ var user = {
 //     name: 'Qipa'
 // };
 
-search = null;
-var page = {
-    currentRecords: 0,
-    maxPer: 3
-}
-MongoDB.findRoomByMulitpleConditons(search, page).then(function(result) {
-    console.log(result);
-});
+// search = null;
+// var page = {
+//     currentRecords: 0,
+//     maxPer: 3
+// }
+// MongoDB.findRoomByMulitpleConditons(search, page).then(function(result) {
+//     console.log(result);
+// });
