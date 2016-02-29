@@ -50,6 +50,21 @@ MongoDB.findUserByEmailOrUserName = function(user) {
     return defer.promise;
 }
 
+MongoDB.findUserByPID = function(pid) {
+    var defer = Q.defer();
+    ProfileModel.findOne({
+        'pid': pid
+    }).exec((error, existingUser) => {
+        // if 
+        if (!!error || !existingUser) {
+            defer.reject(error);
+        } else {
+            defer.resolve(existingUser);
+        }
+    });
+    return defer.promise;
+}
+
 /**
  *	user : {id, username, email, balance{credit, balance}}
  **/
@@ -101,61 +116,43 @@ MongoDB.register = function(user) {
     return defer.promise;
 }
 
+MongoDB.changeImg = function(pid, img) {
+    var defer = Q.defer();
+    this.findUserByPID(pid).then(function(user) {
+        if(user) {
+            user.profileImg = img;
+            user.save(function(err, successfulObj) {
+                if(err) {
+                    defer.reject(err);
+                } else {
+                    defer.resolve(true);
+                }
+            });
+        };
+
+    }).catch(function(err) {
+        defer.reject(err);
+    });
+    return defer.promise;
+}
+
+MongoDB.findImg = function(pid) {
+    var defer = Q.defer();
+    this.findUserByPID(pid).then(function(user) {
+        if(user) {
+            defer.resolve(user.profileImg);
+        } else {
+            defer.resolve({});
+        };
+    }).catch(function(err) {
+        defer.reject(err);
+    });
+    return defer.promise;
+}
+
 ///////////////////////////////////////////////////////////////////////
 ///  Chat History Part
 ///////////////////////////////////////////////////////////////////////
-
-// history
-MongoDB.findByChatID = function(msg) {
-    // var defer = Q.defer();
-    // var _get_chatid = function() {
-    //     if (msg.type === util.constant.MSG_SINGLE) {
-    //         return msg.from > msg.to ? msg.from + msg.to : msg.to + msg.from;
-    //     }
-
-    //     if (msg.type === util.constant.MSG_GROUP) {
-    //         return msg.to;
-    //     }
-    // }
-
-    // var _create_empty_history = function() {
-    //     var defer1 = Q.defer();
-    //     var _default_history = {
-    //         hid: _get_chatid(),
-    //         msgs: []
-    //     };
-
-    //     var historyModel = new HistoryModel(_default_history);
-    //     historyModel.save((err, saveObj) => {
-    //         if (err) {
-    //             defer1.reject(err);
-    //         } else {
-    //             defer1.resolve(saveObj);
-    //         }
-    //     });
-
-    //     return defer1.promise;
-    // }
-
-    // // find history by id
-    // HistoryModel.findOne({
-    //     hid: _get_chatid()
-    // }).exec((error, existingHistory) => {
-    //     if (error || !existingHistory) {
-    //         //if history not exist, create a new one
-    //         _create_empty_history().then((newHisotry) => {
-    //             defer.resolve(newHisotry);
-    //         });
-    //     }
-
-    //     // if history found, then resolve it
-    //     if (existingHistory) {
-    //         defer.resolve(existingHistory);
-    //     }
-    // });
-
-    // return defer.promise;
-}
 
 MongoDB.aggregateDateByUserId = function(rid, dateRange, keyfn) {
     var defer = Q.defer();

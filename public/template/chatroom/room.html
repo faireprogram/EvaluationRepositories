@@ -9,15 +9,16 @@
                 <div class="input-group">
                     <input type="text" class="form-control " placeholder="Search for...">
                     <span class="input-group-btn ">
-						<button class="btn btn-default " type="button">GO!</button>
-					</span>
+                        <button class="btn btn-default " type="button">GO!</button>
+                    </span>
                 </div>
             </div>
             <ul class="nav nav-sidebar row-xs-10" ng-controller="VisitorController">
-                <li class="listuser" ng-repeat="vistor in visitors">
-                    
-						{{vistor}} 
-					
+                <li class="listuser row" ng-repeat="vistor in visitors">
+                    <div class="col-md-8 col-md-push-2">
+                        <img ng-src="/api/profileImg/{{vistor.pid}}"></img>
+                        <span>{{vistor.username}}</span>
+                    </div>                      
                 </li>
             </ul>
             <div class="leftBottomButton row-xs-1">
@@ -34,6 +35,12 @@
                     </ul>
                 </div>
                 <div ng-class="msg_position(msg)" ng-repeat="msg in msgs">
+                    <div class="wrapper">
+                        <span>
+                            {{msg.from}}
+                        </span>
+                        <img ng-src="/api/profileImg/{{msg.pid}}" />
+                    </div>
                     <p ng-bind-html="msg.content | mojoFilter">
                     </p>
                 </div>
@@ -50,14 +57,14 @@
                         <div class="col-md-1 row-xs-12">
                             <div class="row-xs-12">
                                 <span class="glyphicon glyphicon-plus center close">
-								</span>
+                                </span>
                             </div>
 
                         </div>
                         <div class="col-md-1 row-xs-12">
                             <div class="row-xs-12">
                                 <span class="glyphicon glyphicon-ok center close" aria-hidden="true" ng-click="sendMsg(inputMsg)">
-								</span>
+                                </span>
                             </div>
                         </div>
 

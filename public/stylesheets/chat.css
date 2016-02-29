@@ -144,7 +144,7 @@ form > div {
 }
 
 .navclude {
-  min-height: 50px;
+  max-height: 50px;
   width: 100%;
   z-index: 9999;
 }
@@ -184,7 +184,12 @@ form > div {
 
 .message {
   padding: 10px;
+}
 
+.message:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 .message > p{
@@ -197,7 +202,7 @@ form > div {
     opacity: 0.7;
 }
 
-.message > p:before {
+/*.message > p:before {
     content: "";
     position: absolute;
     bottom: -18px;
@@ -208,7 +213,7 @@ form > div {
     display: block;
     width: 0;
 }
-
+*/
 .message > p:after {
     content: "";
     position: absolute;
@@ -221,14 +226,107 @@ form > div {
     width: 0;
 }
 
+.message > p:before,  .message.me > p:before{
+    content: "";
+    position: absolute;
+    border-width: 18px 18px 0;
+    border-style: solid;
+    border-color: #5a8f00 transparent;
+    display: block;
+    width: 0;
+}
+
+
+/*.message > p:after, .message.me > p:before{
+    content: "";
+    position: absolute;
+    border-width: 11px 11px 0;
+    border-style: solid;
+    border-color: #fff transparent;
+    display: block;
+    width: 0;
+}*/
+
+/**
+ * others
+ **/
+
+.message > p:after {
+    bottom: -10px;
+    left: 3px;
+    right: auto;
+}
+
+.message > p:before {
+    bottom: -18px;
+    left: -3px;
+    right: auto;
+}
+
+/**
+ * me
+ **/
+
+.message.me > p:after {
+    bottom: -10px;
+    left: calc(100%- 25px);
+    right: auto;
+}
+
+.message.me > p:before {
+    bottom: -18px;
+    right: -3px;
+    left: auto;
+}
+
+.message .wrapper img {
+  width: 75px;
+  height: 75px;
+  padding: 0 10px 20px 10px;
+  position: relative;
+}
+
+
+.message.me .wrapper, .message .wrapper {
+  padding: 20px 0 0 0;
+}
+
+/**
+ * right
+ **/
+.message.me .wrapper {
+  float:right;
+  position: relative;
+}
+
+.message.me .wrapper span, .message .wrapper span {
+  position: absolute;
+  margin-top: -20px;
+  width: 100%;
+  text-align: center;
+  bottom: 0;
+}
+
 .message.me > p {
   float: right;
 }
 
 .message.me:after {
-      content: "";
-      display: table;
-      clear: both;
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/**
+ * left
+ */
+.message .wrapper {
+  float: left;
+  position: relative;
+}
+
+.message > p {
+  float: left;
 }
 
 
@@ -281,7 +379,7 @@ form > div {
 }
 
 .contentHeight {
-  height: calc(100% - 52px);
+  height: calc(100% - 50px);
 }
 
 .contentHeight .row {
@@ -367,6 +465,7 @@ form > div {
     background-color: #fff;
     padding: 0px 5px;
     margin: 0px 0px 3px 0px;
+    z-index: 9999;
 }
 
 .mogiContainer > ul {
@@ -403,13 +502,19 @@ form > div {
     border-radius: 6px;
     padding: 5px ;
 }
+
 .listuser{
     color: #fff;
-    text-align: center;
-    padding: 5px ;
-
-
+    display: block;
+    position: relative;
+    border: 1px white solid;
 }
+
+.listuser img {
+  width: 50px;
+  height: 50px;
+}
+
 .chart{
   background-color: #68D7FC;
 

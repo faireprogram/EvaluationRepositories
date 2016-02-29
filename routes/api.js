@@ -4,6 +4,9 @@ var mongodbAPI = require('../db/mongodb.js');
 var $injector = require('../util/injector.js');
 var staticsService = require('../service/staticticsService.js');
 var execFile = require('child_process').execFile;
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' });
+var fs = require('fs');
 
 
 // login
@@ -86,6 +89,18 @@ router.post('/loginout', function(req, res, next) {
         });
     }
 
+});
+
+
+router.get('/profileImg/:pid', function(req, res, next) {
+    var pid = req.params.pid;
+    mongodbAPI.findImg(pid).then(function(img) {
+
+        res.header({
+        'Content-Type': img.mimetype
+        });
+        res.send(img.data);
+    });
 });
 
 
@@ -219,6 +234,31 @@ router.post('/search/', function(req, res, next) {
             res.json({});
         }
     });
+});
+
+/////////////////////////////////////////////////////////////////
+////  Profile Image Part
+
+router.post('/modify/changeimg', upload.single('avatar'), function(req, res, next) {
+    if (req.session.user) {
+        var path = req.file.path;
+        var mimetype = req.file.mimetype;
+        fs.readFile(path, function(err, content) {
+            var img = {
+                mimetype: mimetype,
+                data:  content
+            };
+            mongodbAPI.changeImg(req.session.user.pid, img).then(function(succes) {
+                res.json({'save' : 'success'});
+            }).catch(function(err) {
+                res.json({'save' : 'failed'});
+            });
+        });
+    } else {
+        res.json({
+            'err': 'no login'
+        });
+    };
 });
 
 

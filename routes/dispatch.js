@@ -30,8 +30,10 @@ var dispatch = function(server) {
         //notify the client, I've successful connect to your device
         var session = socket.handshake.session ? socket.handshake.session : null;
         var username = session ? (session.user ? session.user.username : null) : null;
+        var pid = session ? (session.user ? session.user.pid : null) : null;
         socket.emit('connected', {
-            username: username
+            username: username,
+            pid: pid
         });
 
         console.log('re build connected', socket.client.id)
@@ -56,7 +58,10 @@ var dispatch = function(server) {
             subjectManagers.add(roomInstance);
 
             if (username) {
-                roomInstance.addClient(username);
+                roomInstance.addClient({
+                    username: username,
+                    pid: pid
+                });
             };
 
             socket.emit('init_visitor', roomInstance.clients);
@@ -107,7 +112,10 @@ var dispatch = function(server) {
                 // otherwise judge all the socket in the room whether has been closed
 
                 if (roomInstance.count(username) == 1) {
-                    roomInstance.removeClient(username);
+                    roomInstance.removeClient({
+                        username: username,
+                        pid: pid
+                    });
                     roomInstance.dispatchMsg(default_msg);
                 };
 

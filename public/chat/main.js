@@ -52,20 +52,17 @@
         }
     ]);
 
-    main.service('fileUpload', ['$http',
+    main.service('FileUploadService', ['$http',
         function($http) {
             this.uploadFileToUrl = function(file, uploadUrl) {
                 var fd = new FormData();
-                fd.append('file', file);
-                $http.post(uploadUrl, fd, {
+                var defaultUploadUrl  = uploadUrl || '/api/modify/changeimg';
+                fd.append('avatar', file);
+                return $http.post(defaultUploadUrl, fd, {
                     transformRequest: angular.identity,
                     headers: {
                         'Content-Type': undefined
                     }
-                }).success(function() {
-                    console.log('sss');
-                }).error(function() {
-
                 });
             };
         }
@@ -163,7 +160,8 @@
                 if (m.type === 'update_visitor') {
                     $rootScope.$broadcast('UPDATE_VISITOR_RES', {
                         operate: m.message.op,
-                        username: m.message.from
+                        username: m.message.from,
+                        pid: m.message.pid
                     });
                 }
 

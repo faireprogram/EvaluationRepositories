@@ -6,7 +6,7 @@
 
     //controller define
 
-    var profileCtrl = function($scope, Upload, $timeout) {
+    var profileCtrl = function($scope, fileUploadService) {
         $scope.pop = {
             show: false
         };
@@ -15,9 +15,18 @@
                 show : true
             };
         }
+
+        $scope.test = function() {
+            var promise = fileUploadService.uploadFileToUrl($scope.myfile);
+            promise.success(function(success) {
+                console.log(success);
+            }).error(function(err) {
+
+            });
+        }
     }
 
-    profileCtrl.$inject = ['$scope', 'Upload', '$timeout'];
+    profileCtrl.$inject = ['$scope', 'FileUploadService'];
 
     main_module.controller('ProfileCtrl', profileCtrl);
 

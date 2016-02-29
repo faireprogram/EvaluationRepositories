@@ -57,22 +57,22 @@ var C2SSubject = function(roomName) {
 C2SObserver.prototype = Object.create(AbstractObserver.prototype);
 C2SSubject.prototype = Object.create(AbstractSubject.prototype);
 
-C2SSubject.prototype.addClient = function(clientName) {
+C2SSubject.prototype.addClient = function(clientDst) {
     var ind = -1;
     this.clients.forEach(function(client, i) {
-        if (client === clientName) {
+        if (client.pid === clientDst.pid) {
             ind = i;
         };
     });
     if (ind == -1) {
-        this.clients.push(clientName);
+        this.clients.push(clientDst);
     }
 }
 
-C2SSubject.prototype.removeClient = function(clientName) {
+C2SSubject.prototype.removeClient = function(clientDst) {
     var ind = -1;
     this.clients.forEach(function(client, i) {
-        if (client === clientName) {
+        if (client.pid === clientDst.pid) {
             ind = i;
         };
     });

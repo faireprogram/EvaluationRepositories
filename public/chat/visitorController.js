@@ -7,7 +7,7 @@
     var _find = function(arr, username, callback) {
         var ind = -1;
         arr.forEach(function(visitor, index) {
-            if (visitor === username) {
+            if (visitor.username === username) {
                 ind = index;
             }
         });
@@ -33,7 +33,7 @@
                     find = true;
                 });
                 if (!find) {
-                    $scope.visitors.push(operation.username);
+                    $scope.visitors.push(operation);
                 }
             };
 

@@ -15,6 +15,7 @@
         var socket0 = io.connect('http://localhost:8090');
         var ready = false;
         var username = null;
+        var pid = null;
 
         global.$stateParams = $stateParams;
 
@@ -32,6 +33,7 @@
 
                 ready = true;
                 username = data.username;
+                pid = data.pid;
                 if (username != null) {
                     var operation = {
                         operate: 'add',
@@ -42,7 +44,8 @@
                         'msgtype': 'MSG_GROUP',
                         'from': username,
                         'to': $stateParams.roomId,
-                        'op': 'add'
+                        'op': 'add',
+                        'pid': pid
                     }
 
                     socket0.emit('visitor', msg);
@@ -106,8 +109,9 @@
                     'msgtype': 'MSG_GROUP',
                     'from': username,
                     'to': $stateParams.roomId,
-                    'content': content
-                }
+                    'content': content,
+                    'pid': pid
+                };
 
                 socket0.emit('msg', msg);
             }

@@ -39,7 +39,7 @@ var ProfileSchema  = new Schema({
 	},
 	profileImg: {
 		data: Buffer,
-		contentType: String
+		mimetype: String
 	}
 });
 

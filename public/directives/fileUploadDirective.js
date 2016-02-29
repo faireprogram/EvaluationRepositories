@@ -58,11 +58,11 @@
                        if (files) {
                             readAndPreview(files[0], preview[0]);
                         };
+
+                        scope.$apply(function(){
+                            modelSetter(scope, files[0]);
+                        });
                     });
-
-
-                    
-
 
                     // element.bind('change', function() {
                     //     scope.$apply(function() {
