@@ -107,6 +107,14 @@ router.get('/profileImg/:pid', function(req, res, next) {
 // //active login status
 router.get('/active/:activecode', function(req, res, next) {
 
+    var activeid = req.params.activecode;
+    mongodbAPI.activateByParams(activeid).then(function(effectNum) {
+        if(effectNum >= 1) {
+            res.redirect('/');
+        } else {
+            res.redirect('/notInvalidActiveCode.html');
+        }
+    });
 });
 
 

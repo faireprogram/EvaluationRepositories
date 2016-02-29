@@ -1,9 +1,10 @@
-var util = require('../util/util.js');
 var moment = require('moment');
 
 var HistoryModel = require('../model/History.js');
 var ProfileModel = require('../model/Profile.js');
 var RoomModel = require('../model/Room.js');
+var mail = require('../email/mail.js');
+var util = require('../util/util.js');
 
 var Code = require('mongodb').Code;
 
@@ -105,12 +106,42 @@ MongoDB.register = function(user) {
         defer.reject(util.constant.ERROR_EXISTING_ACCOUNT);
     }, () => {
         ProfileModel.register(_default_user, user.password, (err, user) => {
+            util.fn.defer(() => {
+                mail.sendMail(user.email, 'http://localhost:8090/api/active/' + user.verify.code);
+            });
+
             if (!!err) {
                 defer.reject(err);
             } else {
                 defer.resolve(user);
             }
         });
+    });
+
+    return defer.promise;
+}
+
+MongoDB.activateByParams = function(code) {
+    var defer = Q.defer();
+    var query = {
+        'verify.code': code
+    };
+    ProfileModel.findOne(query).exec(function(err, person) {
+        //IF the person is find, and the status is false, then
+        //try to set its status 
+        if (person && !person.verify.status) {
+            Account.update(query, {
+                $set: {
+                    'verify.status': true
+                }
+            }, {
+                multi: true
+            }, function(err, numAffected) {
+                defer.resolve(numAffected);
+            });
+        } else {
+            defer.resolve(0);
+        };
     });
 
     return defer.promise;
