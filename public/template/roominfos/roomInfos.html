@@ -6,10 +6,10 @@
                 <h1 class="page-header">Dashboard</h1>
                     <div class="row ">
                         <uib-accordion close-others="oneAtATime">
-                            <uib-accordion-group is-open="status.open">
+                            <uib-accordion-group   is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
                                 <uib-accordion-heading >
                                 Weekly Statictics
-                                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                   <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
                                 </uib-accordion-heading>
                                     
                                 <div class="col-xs-6 col-sm-6 graphContainer">
