@@ -16,7 +16,7 @@
             text: 'Weekly Message Distribution'
         },
         colors: [
-            "#f03333", "#F6F792", "#436EEE", "#00C5CD", "#00FF00", "#ED9121"
+            "#f03333", "#445878","#F6F792", "#436EEE", "#00C5CD","#8A0917", "#00FF00", "#ED9121"
         ],
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
