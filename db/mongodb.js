@@ -68,7 +68,7 @@ MongoDB.findUserByPID = function(pid) {
 
 MongoDB.updateRoomstatus = function(rid, status) {
     var defer = Q.defer();
-    console.log(rid,status);
+    
     this.findChatRoomById(rid).then(function(findedRoom) {
         console.log(findedRoom);
         if(findedRoom) {
@@ -423,10 +423,10 @@ MongoDB.createChatRoom = function(chatRoom) {
     return defer.promise;
 }
 
-MongoDB.findChatRoomById = function(id) {
+MongoDB.findChatRoomById = function(rid) {
     var defer = Q.defer();
     RoomModel.findOne({
-        rid: id
+        rid: rid
     }).exec((err, findedRoom) => {
         if (err) {
             defer.reject(err);

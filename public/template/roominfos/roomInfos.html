@@ -56,11 +56,11 @@
                                         {{tag}}
                                     </span>
                                 </td>
-                                <td ng-if="roominfo.status.open">Alive</td>
+                                <td ng-if="roominfo.status.open">Alive </td>
                                 <td ng-if="!roominfo.status.open">Closed</td>
                                 <td>
                                     <div class="switch">
-                                        <input id="cmn-toggle-{{roominfo.rid}}" class="cmn-toggle cmn-toggle-round" type="checkbox" ng-model="roominfo.status.open" ng-change="changestatus(roominfo.status.open, roominfo.rid)">
+                                        <input id="cmn-toggle-{{roominfo.rid}}" class="cmn-toggle cmn-toggle-round" type="checkbox" ng-model="roominfo.status.open" ng-change="changestatus(roominfo.rid, roominfo.status.open)">
                                         <label for="cmn-toggle-{{roominfo.rid}}"></label>
                                     </div>                                   
                                  </td>

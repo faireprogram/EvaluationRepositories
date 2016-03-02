@@ -127,6 +127,12 @@ router.post('/roomlists', function(req, res, next) {
     });
 });
 
+router.post('/roomlistsofuser', function(req, res, next) {
+    mongodbAPI.findAllRooms(req.body.pid).then(function(allRooms) {
+        res.json(allRooms);
+    });
+});
+
 //// add Room
 router.post('/addRoom', function(req, res, next) {
     mongodbAPI.createChatRoom(req.body).then(function(savedRoom) {
@@ -156,13 +162,11 @@ router.post('/tagsAssist', function(req, res, next) {
     res.json(filterArray);
 });
 
+//
 router.post('/updateRoomstatus',function(req,res,next){
-   
-    mongodbAPI.updateRoomstatus(req.body.rid, req.body.status).then(function(){
-        res.json({
-            'msg':'update successed'
-        })
-    })
+    mongodbAPI.updateRoomstatus(req.body.rid, req.body.status).then(function(room){
+        res.json(room);
+    });
 })
 
 //// statistics
@@ -258,7 +262,7 @@ router.post('/modify/changeimg', upload.single('avatar'), function(req, res, nex
                 data:  content
             };
             mongodbAPI.changeImg(req.session.user.pid, img).then(function(succes) {
-                res.json({'save' : 'success'});
+                res.json({room : succes});
             }).catch(function(err) {
                 res.json({'save' : 'failed'});
             });

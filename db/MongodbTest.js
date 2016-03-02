@@ -80,11 +80,11 @@ var user = {
 //     console.log(findRoom);
 // });
 
-MongoDB.aggregateDateByUserId('504947123706').then(function(result) {
-    console.log(result);
-}).catch(function(err) {
-    console.log(err);
-});
+// MongoDB.aggregateDateByUserId('504947123706').then(function(result) {
+//     console.log(result);
+// }).catch(function(err) {
+//     console.log(err);
+// });
 
 // MongoDB.aggregateMonthDateById('xxxxx2', 2016).then(function(result) {
 //     console.log(result);
@@ -199,3 +199,12 @@ MongoDB.aggregateDateByUserId('504947123706').then(function(result) {
 // MongoDB.findRoomByMulitpleConditons(search, page).then(function(result) {
 //     console.log(result);
 // });
+
+
+// MongoDB.updateRoomstatus('854115159618', true).then(function(result) {
+//     console.log(result.status);
+// })
+
+MongoDB.findAllLivesRoom('424b0176f6f101f4d2c84279dffbf223').then(function(result) {
+    console.log(result.length);
+})
