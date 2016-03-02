@@ -151,13 +151,17 @@ section p {
 .fake-content {
 	display: block;
 	position: absolute;
-	z-index: 1;
+	/*z-index: 1;*/
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
 	border-bottom: 1px #707070 solid;
 }
+.fake-content {
+	z-index: 5;
+}
+
 .copy-container {
 	position: absolute;
 	top: 50%;
@@ -183,15 +187,15 @@ section p {
 	overflow: hidden;
 }
 	#fadeInAnim .copy-container {
-		margin-top: -162px;
-		margin-left: 200px;
-		width: 300px;
+		margin-top: -96px;
+		margin-left: 50px;
+		width: 400px;
 	}
 	#fadeInAnim img {
 		position: absolute;
 		left: 50%;
 		bottom: 80px;
-		margin-left: -530px;
+		margin-left: -560px;
 	}
 	.fadeIn {
 		
@@ -299,8 +303,8 @@ section p {
 
 #betweenSlidesAnimEnd .images-container {
 	width: 860px;
-	margin-top: -10px;
-	margin-left: -96px;
+	margin-top: 25px;
+	margin-left: -593px;
 }
 	#betweenSlidesAnimEnd .copy-container {
 		width: 760px;
@@ -356,6 +360,7 @@ section p {
 	}
 	.green{
 		margin-left:20px;
+		z-index: 5 !important;
 	}
 
 /* ==========================================================================
