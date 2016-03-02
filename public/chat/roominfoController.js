@@ -122,10 +122,19 @@
                 $scope.tags.remove(index);
             }
         }
-        $scope.changestatus = function(status,rid,pid){
-            console.log('return',status,rid,pid)
+
+        $scope.changestatus = function(rid, roomstatus) {
+            console.log('sent', roomstatus, rid);
+            $http.post('/api/updateRoomstatus', {
+                rid: rid,
+                status: roomstatus
+            }).success(function(data) {
+                // console.log(data);
+                console.log('sent to backend')
+            }).error(function(err) {
+                console.log(err);
+            });
         }
-      
     }
     roomInfosCtl.$inject = ['$scope', '$uibModal', '$http', 'ShareDataService'];
     main_module.controller('RoomInfosCtl', roomInfosCtl);

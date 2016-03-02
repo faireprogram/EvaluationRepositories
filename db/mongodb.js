@@ -68,16 +68,17 @@ MongoDB.findUserByPID = function(pid) {
 
 MongoDB.updateRoomstatus = function(rid, status) {
     var defer = Q.defer();
-
-    this.findChatRoomById(rid).then(function(room) {
-        if(room) {
-            room.status.open = status;
+    console.log(rid,status);
+    this.findChatRoomById(rid).then(function(findedRoom) {
+        console.log(findedRoom);
+        if(findedRoom) {
+            findedRoom.status.open = status;
             if(status) {
-                room.status.closeDate = null;
+                findedRoom.status.closeDate = null;
             }else{
-                room.status.closeDate = new Date();
+                findedRoom.status.closeDate = new Date();
             }
-            user.save(function(err, successfulObj) {
+            findedRoom.save(function(err, successfulObj) {
                 if(err) {
                     defer.reject(err);
                 } else {

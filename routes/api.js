@@ -157,15 +157,12 @@ router.post('/tagsAssist', function(req, res, next) {
 });
 
 router.post('/updateRoomstatus',function(req,res,next){
-  
+   
     mongodbAPI.updateRoomstatus(req.body.rid, req.body.status).then(function(){
         res.json({
-            'msg':'update success'
+            'msg':'update successed'
         })
     })
-
-
-
 })
 
 //// statistics
