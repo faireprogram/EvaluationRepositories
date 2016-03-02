@@ -99,7 +99,7 @@
             $stateProvider
                 .state('index', {
                     url: '/',
-                    templateUrl: '/template/roomlists/roomlists.html'
+                    templateUrl:'template/roomlists/roomlists.html'
                 }).state('room', {
                     url: '/room/:roomId',
                     resolve: {
@@ -133,6 +133,9 @@
                 }).state('profile', {
                     url: '/profile',
                     templateUrl: 'template/profile/profile.html'
+                }).state('roomlists',{
+                    url:'/roomlist',
+                    templateUrl:'template/roomlists/roomlists.html'
                 });
         }
     ]);

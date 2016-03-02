@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html>
+    <head>
+         <title>Ichat</title>
+        <link href="/libs/bootstrap/dist/css/bootstrap.css" type="text/css" rel="stylesheet">
+        <link href="stylesheets/chat.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="stylesheets/normalize.css">
+        <link rel="stylesheet" href="stylesheets/main.css">
+        <link href="../stylesheets/style.css" rel="stylesheet">
+        <link href='js/onepagescroll/onepage-scroll.css' rel='stylesheet' type='text/css'>
+        
+        <script src="libs/socket.io-client/socket.io.js"></script>
 
-<head>
-    <link href="/libs/bootstrap/dist/css/bootstrap.css" type="text/css" rel="stylesheet">
-    <link href="stylesheets/chat.css" type="text/css" rel="stylesheet">
-    <script src="libs/socket.io-client/socket.io.js"></script>
-    <script type="text/javascript" src="/libs/angular/angular.js"></script>
-    <script type="text/javascript" src="/libs/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="/libs/angular-bootstrap/ui-bootstrap-tpls.js">
-    </script>
-    <script type="text/javascript" 
-            src="/libs/angular-ui-router/release/angular-ui-router.js">
-    </script>
-    <script type="text/javascript" src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/libs/highcharts/highcharts.js"></script>
-    <script src="/libs/highcharts/modules/data.js"></script>
-    <script src="/libs/angular-animate/angular-animate.js"></script>
-    <script src="/libs/ng-file-upload/ng-file-upload-shim.js"></script>
-    <script src="/libs/ng-file-upload/ng-file-upload.js"></script>
-</head>
-
-<body ng-app="main">
-    <div ng-include="'/template/nav/nav.html'" class="navclude"></div>
-    <div ui-view></div>
-
-    <script type="text/javascript" src="/chat/main.js"></script>
-    <script type="text/javascript" src="/chat/navCtrl.js"></script>
-    <script type="text/javascript" src="/chat/chatController.js"></script>
-    <script type="text/javascript" src="/chat/loginController.js"></script>
-    <script type="text/javascript" src="/chat/loginUserNameController.js"></script>
-    <script type="text/javascript" src="/chat/visitorController.js"></script>
-    <script type="text/javascript" src="/chat/roomListsController.js"></script>
-    <script type="text/javascript" src="/chat/roominfoController.js"></script>
-    <script type="text/javascript" src="/chat/styleController.js"></script>
-    <script type="text/javascript" src="/chat/roomSearchController.js"></script>
-    <script type="text/javascript" src="/chat/profileController.js"></script>
-
-    <!-- error -->
-    <script type="text/javascript" src="/template/notfound/error.js"></script>
-
-    <!-- directive js -->
-    <script type="text/javascript" src="/directives/line.js"></script>
-    <script type="text/javascript" src="/directives/pie.js"></script>
-    <script type="text/javascript" src="/directives/fileUploadDirective.js"></script>
-
-</body>
-
+        <script type="text/javascript" src="/libs/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="/libs/angular/angular.js"></script>
+        <script type="text/javascript" src="/libs/angular-bootstrap/ui-bootstrap-tpls.js">
+        </script>
+        <script type="text/javascript"
+        src="/libs/angular-ui-router/release/angular-ui-router.js">
+        </script>
+        <script type="text/javascript" src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/libs/highcharts/highcharts.js"></script>
+        <script src="/libs/highcharts/modules/data.js"></script>
+        <script src="/libs/angular-animate/angular-animate.js"></script>
+        <script src="/libs/ng-file-upload/ng-file-upload-shim.js"></script>
+        <script src="/libs/ng-file-upload/ng-file-upload.js"></script>
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body ng-app="main">
+        <div ng-include="'/template/nav/nav.html'" class="navclude"></div>
+        <div ui-view></div>
+        <script type="text/javascript" src="/chat/main.js"></script>
+        <script type="text/javascript" src="/chat/navCtrl.js"></script>
+        <script type="text/javascript" src="/chat/chatController.js"></script>
+        <script type="text/javascript" src="/chat/loginController.js"></script>
+        <script type="text/javascript" src="/chat/loginUserNameController.js"></script>
+        <script type="text/javascript" src="/chat/visitorController.js"></script>
+        <script type="text/javascript" src="/chat/roomListsController.js"></script>
+        <script type="text/javascript" src="/chat/roominfoController.js"></script>
+        <script type="text/javascript" src="/chat/styleController.js"></script>
+        <script type="text/javascript" src="/chat/roomSearchController.js"></script>
+        <script type="text/javascript" src="/chat/profileController.js"></script>
+        <!-- error -->
+        <script type="text/javascript" src="/template/notfound/error.js"></script>
+        <!-- directive js -->
+        <script type="text/javascript" src="/directives/line.js"></script>
+        <script type="text/javascript" src="/directives/pie.js"></script>
+        <script type="text/javascript" src="/directives/fileUploadDirective.js"></script>  
+        <script type="text/javascript" src="js/onepagescroll/jquery.onepage-scroll.js"></script>  
+        <script src="js/main.js"></script>
+    </body>
 </html>

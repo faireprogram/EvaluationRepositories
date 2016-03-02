@@ -3,10 +3,10 @@
 	    <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged(currentPage)"  items-per-page="maxPer" max-size="10" previous-text="up" next-text="down">
 	    </uib-pagination>
 	</div>
-	<div class="row">
+	<div class="row" ng-claok>
 		<div class="col-md-offset-1 col-md-10" >
 			<div class="row">
-				<div class="col-md-4 col-sm-6" ng-repeat="roomInstance in rooms">
+				<div class="col-md-4 col-sm-6" ng-if="rooms.length" ng-repeat="roomInstance in rooms">
 					<div class="wPanel">
 						<a ui-sref="room({'roomId' : '{{roomInstance.rid}}'})">
 							<div class="wPaneLayer">
@@ -36,6 +36,7 @@
 						</div>
 					</div>
 				</div>
+				<div ng-if="!rooms.length"><h2 style="color:red; ">Sorry, no matched room. Please check your input ! </h2> 
 			</div>
 		</div>
 	</div>

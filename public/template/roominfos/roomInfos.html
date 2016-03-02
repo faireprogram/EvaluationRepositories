@@ -1,68 +1,69 @@
+
 <div class="container-fluid" ng-controller="RoomInfosCtl">
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
             <div class="container-fluid">
-               
+                
                 <h1 class="page-header">Dashboard</h1>
-                    <div class="row ">
-                        <uib-accordion close-others="oneAtATime">
-                            <uib-accordion-group   is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                                <uib-accordion-heading >
-                                Weekly Statictics
-                                   <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
-                                </uib-accordion-heading>
-                                    
-                                <div class="col-xs-6 col-sm-6 graphContainer">
-                                        <div chart-directive width="80%"></div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 graphContainer">
-                                        <div chart-second width="80%"></div>
-                                </div>
-                            </uib-accordion-group>
-                        </uib-accordion>
+                <div class="row ">
+                    <uib-accordion close-others="oneAtATime">
+                    <uib-accordion-group   is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                    <uib-accordion-heading >
+                    Weekly Statictics
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
+                    </uib-accordion-heading>
+                    
+                    <div class="col-xs-6 col-sm-6 graphContainer">
+                        <div chart-directive width="80%"></div>
                     </div>
+                    <div class="col-xs-6 col-sm-6 graphContainer">
+                        <div chart-second width="80%"></div>
+                    </div>
+                    </uib-accordion-group>
+                    </uib-accordion>
                 </div>
-                 <!-- <div chart-second ></div> -->
-
-                <div class="row placeholders">
-
-                    <div style="position:relative;">
-                        <h2 class="sub-header">Section Title</h2>
-                        <button class="btn btn-success"style="position:absolute ;right :0;top:0;" ng-click="openAddRoom()">Create a new room</button>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Room Name</th>
-                                    <th>Room No.</th>
-                                    <th>Description</th>
-                                    <th>Created Date</th>
-                                    <th>Close Date</th>
-                                    <th>Tags</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="roominfo in rooms">
-                                    <td>{{roominfo.roomName}}</td>
-                                    <td>{{roominfo.rid}}</td>
-                                    <td>{{roominfo.description}}</td>
-                                    <td>{{roominfo.status.createDate|date:'medium'}}</td>
-                                    <td>{{roominfo.status.closeDate}}</td>
-                                    <td>
-
-                                        <span class="label label-warning" ng-repeat="tag in roominfo.tags">
-										{{tag}}
-
-									</span>
-                                    </td>
-                                    <td ng-if="roominfo.status.open">Alive</td>
-                                    <td ng-if="!roominfo.status.open">Closed</td>
-                                    <td>
-                                        <button class="btn btn-danger">Close Chat</button>
-                                    </td>
+            </div>
+            <!-- <div chart-second ></div> -->
+            
+            <div class="row placeholders">
+                <div style="position:relative;">
+                    <h2 class="sub-header">Section Title</h2>
+                    <button class="btn btn-success"style="position:absolute ;right :0;top:0;" ng-click="openAddRoom()">Create a new room</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Room Name</th>
+                                <th>Room No.</th>
+                                <th>Description</th>
+                                <th>Created Date</th>
+                                <th>Close Date</th>
+                                <th>Tags</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="roominfo in rooms">
+                                <td>{{roominfo.roomName}}</td>
+                                <td>{{roominfo.rid}}</td>
+                                <td>{{roominfo.description}}</td>
+                                <td>{{roominfo.status.createDate|date:'medium'}}</td>
+                                <td>{{roominfo.status.closeDate}}</td>
+                                <td>
+                                    <span class="label label-warning" ng-repeat="tag in roominfo.tags">
+                                        {{tag}}
+                                    </span>
+                                </td>
+                                <td ng-if="roominfo.status.open">Alive</td>
+                                <td ng-if="!roominfo.status.open">Closed</td>
+                                <td>
+                                    <div class="switch">
+                                        <input id="cmn-toggle-{{roominfo.rid}}" class="cmn-toggle cmn-toggle-round" type="checkbox" ng-model="roominfo.status.open" ng-change="changestatus(roominfo.status.open, roominfo.rid,roominfo.owner.pid)">
+                                        <label for="cmn-toggle-{{roominfo.rid}}"></label>
+                                    </div>                                   
+                                 </td>
                                 </tr>
                             </tbody>
                         </table>

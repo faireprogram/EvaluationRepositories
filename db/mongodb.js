@@ -65,6 +65,33 @@ MongoDB.findUserByPID = function(pid) {
     return defer.promise;
 }
 
+
+MongoDB.updateRoomstatus = function(rid, status) {
+    var defer = Q.defer();
+
+    this.findChatRoomById(rid).then(function(room) {
+        if(room) {
+            room.status.open = status;
+            if(status) {
+                room.status.closeDate = null;
+            }else{
+                room.status.closeDate = new Date();
+            }
+            user.save(function(err, successfulObj) {
+                if(err) {
+                    defer.reject(err);
+                } else {
+                    defer.resolve(successfulObj);
+                }
+            });
+        };
+
+    }).catch(function(err) {
+        defer.reject(err);
+    });
+    return defer.promise;
+}
+
 /**
  *	user : {id, username, email, balance{credit, balance}}
  **/

@@ -122,6 +122,10 @@
                 $scope.tags.remove(index);
             }
         }
+        $scope.changestatus = function(status,rid,pid){
+            console.log('return',status,rid,pid)
+        }
+      
     }
     roomInfosCtl.$inject = ['$scope', '$uibModal', '$http', 'ShareDataService'];
     main_module.controller('RoomInfosCtl', roomInfosCtl);

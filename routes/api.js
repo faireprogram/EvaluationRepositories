@@ -156,6 +156,18 @@ router.post('/tagsAssist', function(req, res, next) {
     res.json(filterArray);
 });
 
+router.post('/updateRoomstatus',function(req,res,next){
+  
+    mongodbAPI.updateRoomstatus(req.body.rid, req.body.status).then(function(){
+        res.json({
+            'msg':'update success'
+        })
+    })
+
+
+
+})
+
 //// statistics
 router.post('/roomStatistics/week', function(req, res, next) {
     if (req.session.user) {
@@ -260,6 +272,7 @@ router.post('/modify/changeimg', upload.single('avatar'), function(req, res, nex
         });
     };
 });
+
 
 
 module.exports = router;
