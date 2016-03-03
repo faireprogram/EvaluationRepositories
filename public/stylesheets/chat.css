@@ -1,3 +1,19 @@
+Skip to content
+This repository  
+Search
+Pull requests
+Issues
+Gist
+ @faireprogram
+ Unwatch 3
+  Star 0
+  Fork 1 faireprogram/EvaluationRepositories
+ Code  Issues 0  Pull requests 0  Wiki  Pulse  Graphs  Settings
+Branch: master Find file Copy pathEvaluationRepositories/public/stylesheets/chat.css
+8ce8192  an hour ago
+@joy2king joy2king add permission validation
+3 contributors @joy2king @faireprogram @schen3
+RawBlameHistory     688 lines (575 sloc)  9.36 KB
 .row-xs-12, .row-xs-11, .row-xs-10, .row-xs-9, .row-xs-8, .row-xs-7, .row-xs-6,
 .row-xs-5, .row-xs-4, .row-xs-3, .row-xs-2, .row-xs-1 {
 
@@ -78,8 +94,8 @@
    opacity: 70%;
 }
 .fix_margin_padding, .fix_margin_padding.container-fluid {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 form > div {
@@ -121,10 +137,10 @@ form > div {
     height: 100%;
 }
 .footer {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .absolute {
