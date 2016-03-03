@@ -18,17 +18,36 @@
 							<img src="/resource/screenshots/{{roomInstance.rid}}.png" alt="{{roomInstance.roomName}}"/>
 						</a>
 						<div class="wrap">
-							<span >
-								<strong>Name:</strong> 
-								{{roomInstance.roomName}}
-							</span>
-						    <span >
-						    	<strong>Room owner:</strong> 
-						    	{{roomInstance.owner.username}}
-						    </span>
-						    <span ng-repeat="tag in roomInstance.tags" ui-sref="search({tag: tag, name: ''})"  class="label label-info">	
-						    	{{tag}}
-						    </span>
+							<p class="row">
+							    <span class="col-md-4 name">
+							    	<strong>Room Name:</strong> 
+							    </span>
+							    <span class="col-md-8 value">
+							    	<span tooltip-placement="top-left" uib-tooltip="{{roomInstance.roomName}}">
+							    		 {{roomInstance.roomName | omitStringFilter:10}}
+							    	</span>
+							    </span>
+						    </p>
+							<p class="row">
+							    <span class="col-md-4 name">
+							    	<strong>Room Owner:</strong> 
+							    </span>
+							    <span class="col-md-8 value" >
+							    	<span tooltip-placement="top-left" uib-tooltip="{{roomInstance.owner.username}}">
+							    		 {{roomInstance.owner.username | omitStringFilter:10}}
+							    	</span>
+							    </span>
+						    </p>
+						    <p class="row">
+						    	<span class="col-md-4 name">
+							    	<strong>Room Tages:</strong> 
+							    </span>
+							    <span class="col-md-8" style="text-align:left;">
+							    	 <span ng-repeat="tag in roomInstance.tags" ui-sref="search({tag: tag, name: ''})"  class="label label-info" tooltip-placement="top-left" uib-tooltip="{{tag}}">	
+							    	{{tag | omitStringFilter:5}}
+							    	</span>
+							    </span>
+						    </p>
 						</div>
 					</div>
 				</div>

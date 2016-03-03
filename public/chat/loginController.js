@@ -26,7 +26,7 @@
         }
     }
 
-    var loginCtrl = function($scope, $http, $uibModal, $rootScope, $stateParams, sharedDataService) {
+    var loginCtrl = function($scope, $http, $uibModal, $rootScope, $stateParams, sharedDataService, $state) {
 
         $scope.$on('CHANGE_LOGIN_BUTTON_RES', function(ev, data) {
             $scope.login = data;
@@ -116,12 +116,13 @@
                 $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', $scope.login);
                 global.localStorage.setItem('login', JSON.stringify({}));
                 sharedDataService.login = {};
+                $state.go('index');
             });
         };
 
     };
 
-    loginCtrl.$inject = ['$scope', '$http', '$uibModal', '$rootScope', '$stateParams', 'ShareDataService'];
+    loginCtrl.$inject = ['$scope', '$http', '$uibModal', '$rootScope', '$stateParams', 'ShareDataService', '$state'];
 
     main_module.controller('LoginCtrl', loginCtrl);
 

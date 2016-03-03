@@ -87,6 +87,13 @@
         }
     });
 
+    main.filter('omitStringFilter', function() {
+        return function(input, max) {
+            var max = parseInt(max);
+            return input.length > (max - 1) ? input.substring(0, max) + '...' : input;
+        }
+    });
+
     main.service('FileUploadService', ['$http',
         function($http) {
             this.uploadFileToUrl = function(file, uploadUrl) {
@@ -123,6 +130,23 @@
                 });
             };
 
+        }
+    ]);
+
+    main.service('ProfileService', ['$q', '$http', 'ShareDataService',
+        function($q, $http, shareDataService) {
+            this.hasLogined = function() {
+                var defer = $q.defer();
+                if (!shareDataService.login.username) {
+                    $http.post('/api/login')
+                        .success(function(result) {
+                            defer.resolve(result.status == 'ok');
+                        });
+                } else {
+                    defer.resolve(true);
+                }
+                return defer.promise;
+            };
         }
     ]);
 
@@ -163,10 +187,46 @@
                     templateUrl: '/template/search/roomSearchLists.html'
                 }).state('roominfos', {
                     url: '/roominfos',
-                    templateUrl: 'template/roominfos/roomInfos.html'
+                    resolve: {
+                        logined: function(ProfileService) {
+                            return ProfileService.hasLogined();
+                        }
+                    },
+                    templateProvider: function($stateParams, $state, RoomService, logined) {
+                        if (logined) {
+                            return RoomService.getTempate('/template/roominfos/roomInfos.html');
+                        }
+                    },
+                    controller: function($scope, $timeout, $state, NoticeMessage, logined) {
+                        if (!logined) {
+                            NoticeMessage.error('You Don\'t have the perssion.Please Login First');
+                            $timeout(function() {
+                                NoticeMessage.hide();
+                                $state.go('index');
+                            }, 2000);
+                        }
+                    }
                 }).state('profile', {
                     url: '/profile',
-                    templateUrl: 'template/profile/profile.html'
+                    resolve: {
+                        logined: function(ProfileService) {
+                            return ProfileService.hasLogined();
+                        }
+                    },
+                    templateProvider: function($stateParams, $state, RoomService, logined) {
+                        if (logined) {
+                            return RoomService.getTempate('/template/profile/profile.html');
+                        }
+                    },
+                    controller: function($scope, $timeout, $state, NoticeMessage, logined) {
+                        if (!logined) {
+                            NoticeMessage.error('You Don\'t have the perssion.Please Login First');
+                            $timeout(function() {
+                                NoticeMessage.hide();
+                                $state.go('index');
+                            }, 2000);
+                        }
+                    }
                 });
         }
     ]);
