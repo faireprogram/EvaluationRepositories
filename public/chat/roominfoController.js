@@ -4,7 +4,7 @@
     var modal;
     var roomInfosCtl = function($scope, $uibModal, $http, sharedDataService, noticeMessage) {
         if (sharedDataService.login.pid) {
-            $http.post('/api/roomlists', {
+            $http.post('/api/roomlistsofuser', {
                 pid: sharedDataService.login.pid
             }).success(function(rooms) {
                 $scope.rooms = rooms;
@@ -19,7 +19,7 @@
 
         $scope.$on('CHANGE_LOGIN_NAME_RES', function() {
             if (sharedDataService.login.pid) {
-                $http.post('/api/roomlists', {
+                $http.post('/api/roomlistsofuser', {
                     pid: sharedDataService.login.pid
                 }).success(function(rooms) {
                     $scope.rooms = rooms;
@@ -124,6 +124,31 @@
             if (index != -1) {
                 $scope.tags.remove(index);
             }
+        }
+
+        $scope.changestatus = function(rid, roomstatus) {
+            console.log('sent', roomstatus, rid);
+            $http.post('/api/updateRoomstatus', {
+                rid: rid,
+                status: roomstatus
+            }).success(function(room) {
+                // console.log(data);
+                if($scope.rooms) {
+                    var find =  -1;
+                    $scope.rooms.forEach(function(eachRoom, ind) {
+                        if(eachRoom.rid == room.rid) {
+                            find = ind;
+                        };
+                    });
+
+                    if(find && roomstatus) {
+                        $scope.rooms[find].status.closeDate = null;
+                        $scope.$apply();
+                    }
+                }
+            }).error(function(err) {
+                console.log(err);
+            });
         }
     }
     roomInfosCtl.$inject = ['$scope', '$uibModal', '$http', 'ShareDataService', 'NoticeMessage'];

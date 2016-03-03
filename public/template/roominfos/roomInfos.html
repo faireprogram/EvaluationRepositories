@@ -60,8 +60,10 @@
                                 <td ng-if="roominfo.status.open">Alive</td>
                                 <td ng-if="!roominfo.status.open">Closed</td>
                                 <td>
-                                    <button class="btn btn-danger">Close Chat</button>
-                                </td>
+                                    <div class="switch">
+                                        <input id="cmn-toggle-{{roominfo.rid}}" class="cmn-toggle cmn-toggle-round" type="checkbox" ng-model="roominfo.status.open" ng-change="changestatus(roominfo.rid, roominfo.status.open)">
+                                        <label for="cmn-toggle-{{roominfo.rid}}"></label>
+                                 </td>
                             </tr>
                         </tbody>
                     </table>

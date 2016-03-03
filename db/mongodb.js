@@ -214,6 +214,33 @@ MongoDB.findImg = function(pid) {
     return defer.promise;
 }
 
+MongoDB.updateRoomstatus = function(rid, status) {
+    var defer = Q.defer();
+    
+    this.findChatRoomById(rid).then(function(findedRoom) {
+        console.log(findedRoom);
+        if(findedRoom) {
+            findedRoom.status.open = status;
+            if(status) {
+                findedRoom.status.closeDate = null;
+            }else{
+                findedRoom.status.closeDate = new Date();
+            }
+            findedRoom.save(function(err, successfulObj) {
+                if(err) {
+                    defer.reject(err);
+                } else {
+                    defer.resolve(successfulObj);
+                }
+            });
+        };
+
+    }).catch(function(err) {
+        defer.reject(err);
+    });
+    return defer.promise;
+}
+
 ///////////////////////////////////////////////////////////////////////
 ///  Chat History Part
 ///////////////////////////////////////////////////////////////////////

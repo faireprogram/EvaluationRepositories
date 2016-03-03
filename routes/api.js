@@ -135,7 +135,7 @@ router.get('/active/:activecode', function(req, res, next) {
 
             res.redirect('/');
         } else {
-            res.redirect('/notInvalidActiveCode.html');
+            res.render('error');
         }
     });
 });
@@ -155,6 +155,12 @@ router.post('/roomInfo', function(req, res, next) {
 router.post('/roomlists', function(req, res, next) {
     mongodbAPI.findAllLivesRoom(req.body.pid).then(function(allLivedRooms) {
         res.json(allLivedRooms);
+    });
+});
+
+router.post('/roomlistsofuser', function(req, res, next) {
+    mongodbAPI.findAllRooms(req.body.pid).then(function(rooms) {
+        res.json(rooms);
     });
 });
 
@@ -186,6 +192,13 @@ router.post('/tagsAssist', function(req, res, next) {
 
     res.json(filterArray);
 });
+
+//
+router.post('/updateRoomstatus',function(req,res,next){
+    mongodbAPI.updateRoomstatus(req.body.rid, req.body.status).then(function(room){
+        res.json(room);
+    });
+})
 
 //// statistics
 router.post('/roomStatistics/week', function(req, res, next) {
