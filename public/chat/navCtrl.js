@@ -12,6 +12,7 @@
         }
 
          $($window).on('scroll', function(eve) {
+            
             if($window.scrollY > 50) {
                 $('.navclude').css('position', 'fixed');
             } else {

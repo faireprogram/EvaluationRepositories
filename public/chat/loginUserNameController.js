@@ -9,7 +9,8 @@
         if (data.status === 'ok') {
             login = {
                 status: data.status,
-                username: data.username
+                username: data.username,
+                verify: data.verify
             }
         } else {
             login = {
@@ -25,7 +26,8 @@
             data.init = true;
             sharedDataService.login = {
                 pid: data.pid,
-                username: data.username
+                username: data.username,
+                verify: data.verify
             };
 
             $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', data);

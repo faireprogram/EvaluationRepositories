@@ -20,11 +20,14 @@
     <script src="/libs/ng-file-upload/ng-file-upload.js"></script>
 </head>
 
-<body ng-app="main">
+<body ng-app="main" ng-controller="MainCtrl">
+    <div notice-message message="message" type="type" ng-show="messageDisplay" ng-class="type" close="closeMsg()">
+    </div>
     <div ng-include="'/template/nav/nav.html'" class="navclude"></div>
     <div ui-view></div>
-
+    
     <script type="text/javascript" src="/chat/main.js"></script>
+    <script type="text/javascript" src="/chat/mainController.js"></script>
     <script type="text/javascript" src="/chat/navCtrl.js"></script>
     <script type="text/javascript" src="/chat/chatController.js"></script>
     <script type="text/javascript" src="/chat/loginController.js"></script>
@@ -42,7 +45,12 @@
     <!-- directive js -->
     <script type="text/javascript" src="/directives/line.js"></script>
     <script type="text/javascript" src="/directives/pie.js"></script>
-    <script type="text/javascript" src="/directives/fileUploadDirective.js"></script>
+    <script type="text/javascript" src="/directives/fileUploadDirective.js">
+    </script>
+    <script type="text/javascript" src="/directives/noticeDirective.js">
+    </script>
+    <script type="text/javascript" src="/directives/eventDirective.js">
+    </script>
 
 </body>
 

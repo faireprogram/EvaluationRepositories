@@ -2,7 +2,7 @@
     'use strict';
     var main_module = global.main_module;
     var modal;
-    var roomInfosCtl = function($scope, $uibModal, $http, sharedDataService) {
+    var roomInfosCtl = function($scope, $uibModal, $http, sharedDataService, noticeMessage) {
         if (sharedDataService.login.pid) {
             $http.post('/api/roomlists', {
                 pid: sharedDataService.login.pid
@@ -39,7 +39,10 @@
         //     }
         // }];
         $scope.openAddRoom = function() {
-            console.log('hello');
+            if(!sharedDataService.login.verify) {
+                noticeMessage.error('You Should Activate Your Email First!!');
+                return;
+            }
             modal = $uibModal.open({
                 templateUrl: '/template/models/addRoom.html',
                 controller: roomInfosCtl
@@ -123,7 +126,7 @@
             }
         }
     }
-    roomInfosCtl.$inject = ['$scope', '$uibModal', '$http', 'ShareDataService'];
+    roomInfosCtl.$inject = ['$scope', '$uibModal', '$http', 'ShareDataService', 'NoticeMessage'];
     main_module.controller('RoomInfosCtl', roomInfosCtl);
 
 })(this);

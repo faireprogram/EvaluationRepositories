@@ -87,15 +87,19 @@ MongoDB.register = function(user) {
         balance: 0
     }
 
+    var _default_img = util.constant.DEFAULT_PROFILE_IMG;
+
 
     var _default_user = new ProfileModel({
         pid: user.pid || util.string.uuid(8),
         username: user.username,
         email: user.email,
-        sex: user.sex,
+        gender: 'm',
+        birthDay: new Date(1970,01,01),
         verify: _default_verify,
         level: _default_level,
-        balance: _default_balance
+        balance: _default_balance,
+        profileImg: _default_img
     });
 
     // try to find by Email or UserName
@@ -130,14 +134,19 @@ MongoDB.activateByParams = function(code) {
         //IF the person is find, and the status is false, then
         //try to set its status 
         if (person && !person.verify.status) {
-            Account.update(query, {
+            ProfileModel.update(query, {
                 $set: {
                     'verify.status': true
                 }
             }, {
                 multi: true
             }, function(err, numAffected) {
-                defer.resolve(numAffected);
+                var newQuery =  {
+                    pid: person.pid
+                };
+                ProfileModel.findOne(newQuery).exec(function(err, updatedPerson) {
+                    defer.resolve([updatedPerson, numAffected.n]);
+                });
             });
         } else {
             defer.resolve(0);
@@ -157,13 +166,37 @@ MongoDB.changeImg = function(pid, img) {
                     defer.reject(err);
                 } else {
                     defer.resolve(true);
-                }
+                };
             });
         };
 
     }).catch(function(err) {
         defer.reject(err);
     });
+    
+    return defer.promise;
+}
+
+MongoDB.saveProfileChanges = function(user) {
+    var defer = Q.defer();
+    this.findUserByPID(user.pid).then(function(userFind) {
+        if(user) {
+            userFind.birthDay = new Date(user.birthDay);
+            userFind.gender = user.gender;
+            userFind.email = user.email;
+            userFind.save(function(err, successfulObj) {
+                if(err) {
+                    defer.reject(err);
+                } else {
+                    defer.resolve(successfulObj);
+                };
+            });
+        };
+
+    }).catch(function(err) {
+        defer.reject(err);
+    });
+    
     return defer.promise;
 }
 
@@ -600,7 +633,5 @@ MongoDB.findRoomByMulitpleConditons = function(search, pagination) {
 
     return defer.promise;
 }
-
-
 
 module.exports = MongoDB;

@@ -4,8 +4,10 @@ var mongodbAPI = require('../db/mongodb.js');
 var $injector = require('../util/injector.js');
 var staticsService = require('../service/staticticsService.js');
 var execFile = require('child_process').execFile;
-var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' });
+var multer = require('multer');
+var upload = multer({
+    dest: 'uploads/'
+});
 var fs = require('fs');
 
 
@@ -15,7 +17,8 @@ router.post('/login', function(req, res, next) {
         res.json({
             status: "ok",
             username: req.session.user.username,
-            pid: req.session.user.pid
+            pid: req.session.user.pid,
+            verify: req.session.user.verify.status
         });
 
     } else if (!req.session.user && req.body.user) {
@@ -29,8 +32,9 @@ router.post('/login', function(req, res, next) {
 
             res.json({
                 'status': "ok",
-                username: userFind.username,
-                pid: userFind.pid
+                'username': userFind.username,
+                'pid': userFind.pid,
+                'verify': userFind.verify.status
             });
         }).catch((err) => {
             res.json({
@@ -57,7 +61,8 @@ router.post('/register', function(req, res, next) {
             res.json({
                 'status': 'ok',
                 'username': user.username,
-                'pid': user.pid
+                'pid': user.pid,
+                'verify': user.verify.status
             });
 
         }).catch(function(err) {
@@ -76,9 +81,25 @@ router.post('/register', function(req, res, next) {
 
 });
 
+router.post('/retrieveUser', function(req, res, next) {
+    if (req.session.user) {
+        res.json({
+            user: req.session.user
+        });
+    } else if (req.body.pid) {
+        mongodbAPI.findUserByPID(req.body.pid).then(function(user) {
+            res.json({
+                user: user
+            });
+        });
+    } else {
+        res.json({
+            fail: 'true'
+        });
+    };
+});
 
 // loginout
-
 router.post('/loginout', function(req, res, next) {
     if (req.session) {
         var username = req.session.user.username;
@@ -87,8 +108,7 @@ router.post('/loginout', function(req, res, next) {
                 username: username
             });
         });
-    }
-
+    };
 });
 
 
@@ -97,7 +117,7 @@ router.get('/profileImg/:pid', function(req, res, next) {
     mongodbAPI.findImg(pid).then(function(img) {
 
         res.header({
-        'Content-Type': img.mimetype
+            'Content-Type': img.mimetype
         });
         res.send(img.data);
     });
@@ -108,8 +128,11 @@ router.get('/profileImg/:pid', function(req, res, next) {
 router.get('/active/:activecode', function(req, res, next) {
 
     var activeid = req.params.activecode;
-    mongodbAPI.activateByParams(activeid).then(function(effectNum) {
-        if(effectNum >= 1) {
+    mongodbAPI.activateByParams(activeid).then(function(result) {
+        if (result instanceof Array) {
+            req.session.user = result[0];
+            req.session.save();
+
             res.redirect('/');
         } else {
             res.redirect('/notInvalidActiveCode.html');
@@ -254,12 +277,16 @@ router.post('/modify/changeimg', upload.single('avatar'), function(req, res, nex
         fs.readFile(path, function(err, content) {
             var img = {
                 mimetype: mimetype,
-                data:  content
+                data: content
             };
             mongodbAPI.changeImg(req.session.user.pid, img).then(function(succes) {
-                res.json({'save' : 'success'});
+                res.json({
+                    'save': 'success'
+                });
             }).catch(function(err) {
-                res.json({'save' : 'failed'});
+                res.json({
+                    'save': 'failed'
+                });
             });
         });
     } else {
@@ -267,6 +294,22 @@ router.post('/modify/changeimg', upload.single('avatar'), function(req, res, nex
             'err': 'no login'
         });
     };
+});
+
+router.post('/modify/saveProfileChanges', function(req, res, next) {
+    var user = req.body.user;
+    mongodbAPI.saveProfileChanges(user).then(function(savedObj) {
+        req.session.user = savedObj;
+        req.session.save();
+        res.json({
+            'status' : 'ok'
+        });
+    }).catch(function() {
+        res.json({
+            'error': 'error Happens'
+        });
+    });
+
 });
 
 

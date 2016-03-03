@@ -1,5 +1,6 @@
 var MongoDB = require('./mongodb.js');
 var mongoose = require('mongoose');
+var util = require('../util/util.js');
 var moment = require('moment');
 mongoose.connect('mongodb://localhost/test');
 
@@ -80,11 +81,11 @@ var user = {
 //     console.log(findRoom);
 // });
 
-MongoDB.aggregateDateByUserId('504947123706').then(function(result) {
-    console.log(result);
-}).catch(function(err) {
-    console.log(err);
-});
+// MongoDB.aggregateDateByUserId('504947123706').then(function(result) {
+//     console.log(result);
+// }).catch(function(err) {
+//     console.log(err);
+// });
 
 // MongoDB.aggregateMonthDateById('xxxxx2', 2016).then(function(result) {
 //     console.log(result);
@@ -199,3 +200,15 @@ MongoDB.aggregateDateByUserId('504947123706').then(function(result) {
 // MongoDB.findRoomByMulitpleConditons(search, page).then(function(result) {
 //     console.log(result);
 // });
+// console.log(util.constant);
+
+
+var saveUser = {
+    birthDay: '1987-11-03',
+    email: "wenzhang.seio@gmail.com",
+    gender: "f",
+    pid: "98351a13900aa778ed3038b249bd6ccf"
+}
+MongoDB.saveProfileChanges(saveUser).then(function(result) {
+    console.log(result);
+});

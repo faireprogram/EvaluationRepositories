@@ -28,29 +28,51 @@
                     <a><span>Welcome,</span></a>
                 </li>
                 <li ng-controller="loginUserNameCtrl">
-                    <a><div ng-bind="login.username"></div></a>
+                    <a>
+                        <span ng-bind="login.username">
+                        </span>
+                        <span ng-if="!login.verify && login.username" class="unactive">unactive</span>
+                    </a>
                 </li>
                 <li ng-click="openSignup()" ng-if="login.status != 'ok'">
                     <a href="" >
-                    <span class="glyphicon glyphicon-user" ></span > Sign Up
+                        <span class="glyphicon glyphicon-user" ></span > Sign Up
+                    </a>
+                </li>
+                <li ng-click="openLogin()" ng-if="login.status != 'ok'">
+                    <a href="" >
+                        <span class="glyphicon glyphicon-log-in" ></span > Login
+                    </a>
+                </li>
+                <li ng-if="login.status == 'ok'" class="dropdown">
+                    <!-- <a ui-sref="roominfos">
+
+                    
+                        <span class="glyphicon glyphicon-log-in" ></span > rooms
+                    </a> -->
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                          Settings <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                         <li>
+                            <a ui-sref="roominfos">
+                                <span class="glyphicon glyphicon-log-in" ></span > rooms
+                            </a> 
+                        </li>
+                        <li>
+                            <a ui-sref="profile">
+                                <span class="glyphicon glyphicon-log-in" ></span > 
+                                profile
+                            </a> 
+                        </li>
+                    </ul>
+                </li>
+                <li ng-click="logOut()" ng-if="login.status == 'ok'">
+                    <a href="" >
+                    <span class="glyphicon glyphicon-log-in" ></span > Logout
                 </a>
-            </li>
-            <li ng-click="openLogin()" ng-if="login.status != 'ok'">
-                <a href="" >
-                <span class="glyphicon glyphicon-log-in" ></span > Login
-            </a>
-        </li>
-        <li ng-click="logOut()" ng-if="login.status == 'ok'">
-            <a href="" >
-            <span class="glyphicon glyphicon-log-in" ></span > Logout
-        </a>
-    </li>
-    <li ng-if="login.status == 'ok'">
-        <a ui-sref="roominfos">
-        <span class="glyphicon glyphicon-log-in" ></span > rooms
-    </a>
-</li>
-</ul>
-</div>
-</div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>

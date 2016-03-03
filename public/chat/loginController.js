@@ -13,7 +13,8 @@
         if (data.status === 'ok') {
             sharedDataService.login = {
                 pid: data.pid,
-                username: data.username
+                username: data.username,
+                verify: data.verify
             };
             $scope.$emit('CHANGE_LOGIN_NAME_REQUEST', data);
             $scope.$emit('RESET_SOCKET_REQUEST', data);

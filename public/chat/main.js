@@ -43,6 +43,35 @@
         this.login = {};
     });
 
+    main.service('NoticeMessage', ['$rootScope',
+        function($rootScope) {
+            this.info = function(msg) {
+                $rootScope.$broadcast('SHOW_MESSAGE', {
+                    type: 'info',
+                    msg: msg
+                });
+            };
+
+            this.warn = function(msg) {
+                $rootScope.$broadcast('SHOW_MESSAGE', {
+                    type: 'warn',
+                    msg: msg
+                });
+            };
+
+            this.error = function(msg) {
+                $rootScope.$broadcast('SHOW_MESSAGE', {
+                    type: 'error',
+                    msg: msg
+                });
+            };
+
+            this.hide = function() {
+                $rootScope.$broadcast('HIDE_MESSAGE');
+            };
+        }
+    ]);
+
     main.filter('mojoFilter', ['$sce',
         function($sce) {
             return function(input) {
@@ -52,11 +81,17 @@
         }
     ]);
 
+    main.filter('randomFilter', function() {
+        return function(input, para) {
+            return input + para + (Math.random() * (100000 - 1) + 1);
+        }
+    });
+
     main.service('FileUploadService', ['$http',
         function($http) {
             this.uploadFileToUrl = function(file, uploadUrl) {
                 var fd = new FormData();
-                var defaultUploadUrl  = uploadUrl || '/api/modify/changeimg';
+                var defaultUploadUrl = uploadUrl || '/api/modify/changeimg';
                 fd.append('avatar', file);
                 return $http.post(defaultUploadUrl, fd, {
                     transformRequest: angular.identity,
@@ -119,7 +154,6 @@
                     //     return '/template/chatroom/room.html';
                     // },
                     onExit: function() {
-                        console.log('ddddd');
                         // defer.resolve();
                         defer();
                     },

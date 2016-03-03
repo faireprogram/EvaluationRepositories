@@ -7,14 +7,14 @@
         <div class="col-md-2 row-xs-12 hidden-print hidden-xs hidden-sm">
             <div class="row-xs-1 ">
                 <div class="input-group">
-                    <input type="text" class="form-control " placeholder="Search for...">
+                    <input type="text" class="form-control " placeholder="Search for..." ng-model="searchText">
                     <span class="input-group-btn ">
                         <button class="btn btn-default " type="button">GO!</button>
                     </span>
                 </div>
             </div>
             <ul class="nav nav-sidebar row-xs-10" ng-controller="VisitorController">
-                <li class="listuser row" ng-repeat="vistor in visitors">
+                <li class="listuser row" ng-repeat="vistor in visitors | filter: searchText">
                     <div class="col-md-8 col-md-push-2">
                         <img ng-src="/api/profileImg/{{vistor.pid}}"></img>
                         <span>{{vistor.username}}</span>
@@ -52,7 +52,7 @@
                     <div class="row row-xs-12">
                         <div class="col-md-10 row-xs-12">
                             <!-- <input type="text" class="form-control row-xs-12 rightbottom"> -->
-                            <input type="text" class="form-control" placeholder="What's in your mind ?" ng-model="inputMsg">
+                            <input type="text" id="msgAreadID" class="form-control" placeholder="What's in your mind ?" ng-model="inputMsg" ng-keydown="$event.which === 13 && sendMsg(inputMsg)">
                         </div>
                         <div class="col-md-1 row-xs-12">
                             <div class="row-xs-12">
@@ -62,8 +62,8 @@
 
                         </div>
                         <div class="col-md-1 row-xs-12">
-                            <div class="row-xs-12">
-                                <span class="glyphicon glyphicon-ok center close" aria-hidden="true" ng-click="sendMsg(inputMsg)">
+                            <div class="row-xs-12" >
+                                <span class="glyphicon glyphicon-ok center close" aria-hidden="true" ng-click="sendMsg(inputMsg)"  >
                                 </span>
                             </div>
                         </div>

@@ -14,11 +14,17 @@ module.exports = function(grunt) {
                     "public/libs/angular-mocks/angular-mocks.js"
                 ]
             }
-        }
+        },
+		
+		
+		
+		
     });
 
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+	
+	grunt.loadNpmTasks('grunt-jasmine-nodejs');
     // Default task(s).
     grunt.registerTask('default', ['jasmine']);
 

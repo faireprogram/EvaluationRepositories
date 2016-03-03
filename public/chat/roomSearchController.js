@@ -3,7 +3,7 @@
 
     'use strict';
     var main_module = global.main_module;
-    var roomSearchCtrl = function($scope, $http, $stateParams, $state, $q) {
+    var roomSearchCtrl = function($scope, $http, $stateParams, $state, $q, noticeMessage) {
         
         var search = {
             name: $stateParams.name,
@@ -33,6 +33,9 @@
                 $scope.rooms = res[0].data; // rooms
                 $scope.totalItems = res[1].data.length; // totalNumber
                 $scope.currentPage = currentPage + 1;
+                if(!$scope.rooms || !$scope.rooms.length) {
+                    noticeMessage.warn('0 result is found !');
+                }
             });
         };
 
@@ -46,6 +49,6 @@
 
     }
 
-    roomSearchCtrl.$inject = ['$scope', '$http', '$stateParams', '$state' ,'$q'];
+    roomSearchCtrl.$inject = ['$scope', '$http', '$stateParams', '$state' ,'$q', 'NoticeMessage'];
     main_module.controller('RoomSearchCtrl', roomSearchCtrl);
 })(this);

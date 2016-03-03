@@ -13,6 +13,7 @@ var ProfileSchema  = new Schema({
 	username: String,
 	password: String,
 	email: String,
+	birthDay: Date,
 	gender: String,
 	address: String,
 	friends: [Schema.Types.Mixed],

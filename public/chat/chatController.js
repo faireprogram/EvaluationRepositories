@@ -11,7 +11,7 @@
     //      to: 'zhang',
     //      msg: 'HelloWorld!'
     //  }
-    var ChatWindowCtrl = function($scope, $http, $rootScope, $stateParams, shareservice) {
+    var ChatWindowCtrl = function($scope, $http, $rootScope, $stateParams, shareservice, noticeMessage) {
         var socket0 = io.connect('http://localhost:8090');
         var ready = false;
         var username = null;
@@ -105,6 +105,10 @@
 
         $scope.sendMsg = function(content) {
             if (ready && username) {
+                if(!shareservice.login.verify) {
+                    noticeMessage.error('Should Active first Before You can send Message');
+                    return;
+                }
                 var msg = {
                     'msgtype': 'MSG_GROUP',
                     'from': username,
@@ -114,6 +118,7 @@
                 };
 
                 socket0.emit('msg', msg);
+                $scope.inputMsg = '';
             }
         }
 
@@ -141,12 +146,13 @@
 
         $scope.selectMojo = function(num) {
             $scope.inputMsg = ($scope.inputMsg || '') + '[#' + num + ']';
+            $('#msgAreadID').focus();
         }
 
     }
 
     ChatWindowCtrl.$inject = ['$scope', '$http', '$rootScope',
-        '$stateParams', 'ShareDataService'
+        '$stateParams', 'ShareDataService', 'NoticeMessage'
     ];
 
     main_module.controller('ChatWindowCtrl', ChatWindowCtrl);

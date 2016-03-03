@@ -4,15 +4,15 @@
    
 
   <style>
-  .modal-header, h4, .close {
-      background-color: #5cb85c;
-      color:white !important;
-      text-align: center;
-      font-size: 30px;
-  }
-  .modal-footer {
-      background-color: #f9f9f9;
-  }
+.modal-header, h4, .close {
+background-color: #5cb85c;
+color:white !important;
+text-align: center;
+font-size: 30px;
+}
+.modal-footer {
+background-color: #f9f9f9;
+}
   </style>
 </head>
 
@@ -29,15 +29,15 @@
           <form role="form">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-              <input type="text" class="form-control" id="userNameInput" placeholder="Enter username" ng-model="user.username">
+              <input type="text" class="form-control" id="userNameInput" placeholder="Enter username" ng-model="user.username" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="emailInput"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-              <input type="email" class="form-control" id="emailInput" placeholder="Enter email" ng-model="user.email">
+              <input type="email" class="form-control" id="emailInput" placeholder="Enter email" ng-model="user.email" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="password" class="form-control" id="passWordInput" placeholder="Enter password" ng-model="user.password">
+              <input type="password" class="form-control" id="passWordInput" placeholder="Enter password" ng-model="user.password" autocomplete="off">
             </div>
             <div class="checkbox">
               <label></label>

@@ -146,7 +146,7 @@ form > div {
 .navclude {
   max-height: 50px;
   width: 100%;
-  z-index: 9999;
+  z-index: 1049;
 }
 
 /**
@@ -583,4 +583,76 @@ input[readonly] {
 
 .preview-group img {
   max-width: 100%;
+}
+
+
+.notice {
+  position: fixed;
+  top: 50px;
+  z-index: 1051;
+}
+
+
+.notice .close {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 15px;
+  opacity: 0.5;
+  border: 1px solid black;
+}
+
+.notice.info {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.notice.warn {
+    color: #fff;
+    background-color: #ec971f;
+    border-color: #d58512;
+}
+
+.notice.error {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+
+.notice {
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.notice.ng-hide  {
+  opacity:0;
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.placeHolder {
+  visibility: hidden;
+}
+
+.placeHolder:before {
+  content: '';
+  display: block;
+}
+
+.placeHolder:after {
+  content: '';
+  display: block;
+}
+
+.margin-container {
+  margin-top: 15px;
+}
+
+.unactive {
+  text-decoration: underline;  
 }
