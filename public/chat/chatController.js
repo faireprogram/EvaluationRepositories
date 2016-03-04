@@ -147,7 +147,11 @@
         $scope.selectMojo = function(num) {
             $scope.inputMsg = ($scope.inputMsg || '') + '[#' + num + ']';
             $('#msgAreadID').focus();
-        }
+        };
+
+        $scope.toggle = function(show) {
+            $scope.mojoShow = show;
+        };
 
     }
 

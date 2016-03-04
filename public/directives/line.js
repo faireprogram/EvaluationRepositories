@@ -6,7 +6,7 @@
     // Uncomment to style it like Apple Watch
     var opts = {
         chart: {
-            type: 'line',
+            type: 'column',
             options3d: {
                 enabled: false,
                 alpha: 10,

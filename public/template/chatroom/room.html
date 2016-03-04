@@ -29,7 +29,7 @@
         <div class="col-md-10 row-xs-12" ng-controller="ChatWindowCtrl">
             <!-- Panel -->
             <div class="row-xs-11 realContainer">
-                <div class="mogiContainer">
+                <div class="mogiContainer" ng-show="mojoShow">
                     <ul ng-repeat="(n, rows) in mogs">
                         <li ng-repeat="mogNum in rows" ng-click="selectMojo(mogNum)"><img src="/resource/expression/{{mogNum}}.gif"/></li>
                     </ul>
@@ -50,18 +50,18 @@
                 <div class="col-md-8 col-md-push-4 row-xs-12">
                     <!-- Input Box -->
                     <div class="row row-xs-12">
-                        <div class="col-md-10 row-xs-12">
+                        <div class="col-md-10 col-xs-10 row-xs-12">
                             <!-- <input type="text" class="form-control row-xs-12 rightbottom"> -->
                             <input type="text" id="msgAreadID" class="form-control" placeholder="What's in your mind ?" ng-model="inputMsg" ng-keydown="$event.which === 13 && sendMsg(inputMsg)">
                         </div>
-                        <div class="col-md-1 row-xs-12">
+                        <div class="col-md-1 col-xs-1 row-xs-12">
                             <div class="row-xs-12">
-                                <span class="glyphicon glyphicon-plus center close">
+                                <span class="glyphicon glyphicon-plus center close" ng-click="toggle(!mojoShow)">
                                 </span>
                             </div>
 
                         </div>
-                        <div class="col-md-1 row-xs-12">
+                        <div class="col-md-1 col-xs-1 row-xs-12">
                             <div class="row-xs-12" >
                                 <span class="glyphicon glyphicon-ok center close" aria-hidden="true" ng-click="sendMsg(inputMsg)"  >
                                 </span>
