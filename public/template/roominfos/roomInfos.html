@@ -47,14 +47,14 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="roominfo in rooms">
-                                <td>{{roominfo.roomName}}</td>
-                                <td>{{roominfo.rid}}</td>
-                                <td>{{roominfo.description}}</td>
-                                <td>{{roominfo.status.createDate|date:'medium'}}</td>
-                                <td>{{roominfo.status.closeDate}}</td>
+                                <td>{{rooms[$index].roomName}}</td>
+                                <td>{{rooms[$index].rid}}</td>
+                                <td>{{rooms[$index].description}}</td>
+                                <td>{{rooms[$index].status.createDate | date:'medium'}}</td>
+                                <td>{{rooms[$index].status.closeDate | date:'medium'}}</td>
                                 <td>
-                                    <span class="label label-warning" ng-repeat="tag in roominfo.tags">
-                                        {{tag}}
+                                    <span class="label label-warning" tooltip-placement="top-left" uib-tooltip="{{tag}}"  ng-repeat="tag in roominfo.tags">
+                                        {{tag | omitStringFilter:5}}
                                     </span>
                                 </td>
                                 <td ng-if="roominfo.status.open">Alive</td>

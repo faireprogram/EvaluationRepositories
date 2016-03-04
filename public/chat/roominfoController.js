@@ -39,7 +39,7 @@
         //     }
         // }];
         $scope.openAddRoom = function() {
-            if(!sharedDataService.login.verify) {
+            if (!sharedDataService.login.verify) {
                 noticeMessage.error('You Should Activate Your Email First!!');
                 return;
             }
@@ -80,6 +80,10 @@
                 $scope.potentialTags = [];
             };
         });
+
+        $scope.$watch('rooms', function(n, old) {
+            console.log('new', n);
+        }, true);
 
         if (!$scope.newRoom) {
             $scope.newRoom = {};
@@ -123,7 +127,7 @@
 
             if (index != -1) {
                 $scope.tags.remove(index);
-            }
+            };
         }
 
         $scope.changestatus = function(rid, roomstatus) {
@@ -133,18 +137,21 @@
                 status: roomstatus
             }).success(function(room) {
                 // console.log(data);
-                if($scope.rooms) {
-                    var find =  -1;
+                if ($scope.rooms) {
+                    var find = -1;
                     $scope.rooms.forEach(function(eachRoom, ind) {
-                        if(eachRoom.rid == room.rid) {
+                        if (eachRoom.rid == room.rid) {
                             find = ind;
                         };
                     });
 
-                    if(find && roomstatus) {
+                    if (find != -1 && roomstatus) {
                         $scope.rooms[find].status.closeDate = null;
-                        $scope.$apply();
                     }
+                    if (find != -1 && !roomstatus) {
+                        $scope.rooms[find].status.closeDate = room.status.closeDate;
+                    }
+                    noticeMessage.info('room successful saved!');
                 }
             }).error(function(err) {
                 console.log(err);
