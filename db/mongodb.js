@@ -111,7 +111,7 @@ MongoDB.register = function(user) {
     }, () => {
         ProfileModel.register(_default_user, user.password, (err, user) => {
             util.fn.defer(() => {
-                mail.sendMail(user.email, 'http://localhost:8090/api/active/' + user.verify.code);
+                mail.sendMail(user.email, 'http://192.168.191.1:8090/api/active/' + user.verify.code);
             });
 
             if (!!err) {

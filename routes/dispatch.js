@@ -145,7 +145,7 @@ var dispatch = function(server) {
                 console.log('roomInstance', roomInstance);
 
             };
-            if (roomInstance.observers[0]) {
+            if (roomInstance && roomInstance.observers[0]) {
                 console.log('after delete socket', roomInstance.observers[0].socket.nsp.sockets);
             }
         });

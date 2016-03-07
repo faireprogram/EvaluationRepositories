@@ -12,7 +12,7 @@
     //      msg: 'HelloWorld!'
     //  }
     var ChatWindowCtrl = function($scope, $http, $rootScope, $stateParams, shareservice, noticeMessage) {
-        var socket0 = io.connect('http://localhost:8090');
+        var socket0 = io.connect('http://192.168.191.1:8090');
         var ready = false;
         var username = null;
         var pid = null;
@@ -55,6 +55,7 @@
                     console.log(" wang received data", data);
                     $scope.msgs.push(data.message);
                     $scope.$digest();
+                     $( "#msgContainer" ).scrollTop(2000);
                 });
 
                 // $scope.$on('REFRESH_VISITOR_RES', function(ev, data) {
@@ -78,13 +79,15 @@
         _reset_socket();
         $scope.$on('RESET_SOCKET_RES', function(evt, message) {
             console.log('close the socket of client');
-            if(message.logout) {
-                socket0.emit('logout', {logout: message.logout});
+            if (message.logout) {
+                socket0.emit('logout', {
+                    logout: message.logout
+                });
             }
 
             socket0.close();
 
-            socket0 = io.connect('http://localhost:8090');
+            socket0 = io.connect('http://192.168.191.1:8090');
             _reset_socket();
         });
 
@@ -104,22 +107,32 @@
         });
 
         $scope.sendMsg = function(content) {
-            if (ready && username) {
-                if(!shareservice.login.verify) {
+
+        
+            if (!!content) {
+                if (!shareservice.login.verify) {
                     noticeMessage.error('Should Active first Before You can send Message');
                     return;
                 }
-                var msg = {
-                    'msgtype': 'MSG_GROUP',
-                    'from': username,
-                    'to': $stateParams.roomId,
-                    'content': content,
-                    'pid': pid
-                };
+                if (ready && username) {
 
-                socket0.emit('msg', msg);
-                $scope.inputMsg = '';
+                    var msg = {
+                        'msgtype': 'MSG_GROUP',
+                        'from': username,
+                        'to': $stateParams.roomId,
+                        'content': content,
+                        'pid': pid
+                    };
+
+                    socket0.emit('msg', msg);
+                    $scope.inputMsg = '';
+                }
+              
+
+            } else {
+                noticeMessage.warn('Please type something!');
             }
+
         }
 
         global.socket0 = socket0;
@@ -139,9 +152,9 @@
 
         //////Mojo Expression
         $scope.mogs = {
-            1 : [1,2,3,4,5,6,7,8,9],
-            2 : [10,11,12,13,14,15,16,17,18],
-            3 : [19,20,21,22,23,24,25,26,27]
+            1: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            2: [10, 11, 12, 13, 14, 15, 16, 17, 18],
+            3: [19, 20, 21, 22, 23, 24, 25, 26, 27]
         };
 
         $scope.selectMojo = function(num) {
