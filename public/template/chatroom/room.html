@@ -41,7 +41,7 @@
                         </span>
                         <img ng-src="/api/profileImg/{{msg.pid | randomFilter:'?token='}}" />
                     </div>
-                    <p ng-bind-html="msg.content | mojoFilter">
+                    <p ng-bind-html="msg.content | escapeFilter | mojoFilter">
                     </p>
                 </div>
             </div>

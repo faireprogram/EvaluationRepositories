@@ -95,6 +95,13 @@
         }
     });
 
+    main.filter('escapeFilter', function() {
+        return function(input) {
+            var result = !input ? '' : input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g,'&quot');
+            return result;
+        }
+    });
+
     main.service('FileUploadService', ['$http',
         function($http) {
             this.uploadFileToUrl = function(file, uploadUrl) {

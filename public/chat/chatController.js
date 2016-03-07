@@ -55,7 +55,7 @@
                     console.log(" wang received data", data);
                     $scope.msgs.push(data.message);
                     $scope.$digest();
-                     $( "#msgContainer" ).scrollTop(2000);
+                    $( "#msgContainer" ).scrollTop($( "#msgContainer" )[0].scrollHeight);
                 });
 
                 // $scope.$on('REFRESH_VISITOR_RES', function(ev, data) {
