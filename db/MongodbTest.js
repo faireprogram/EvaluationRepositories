@@ -17,18 +17,18 @@ var user = {
     // })
 
 //@@@@ userCreate test
-// var userCreate = {
-// 	username: "kkkkkkk1",
-// 	password: "1",
-// 	email: 'zfdsfds1',
-// 	sex: 'male',
-// }
+var userCreate = {
+	username: "kkkkkkk1",
+	password: "1",
+	email: 'zfdsfds1',
+	sex: 'male',
+}
 
-// MongoDB.register(userCreate).then((profile) => {
-// 	console.log('profile', profile);
-// }).catch((error) => {
-// 	console.log('error', error);
-// })
+MongoDB.register(userCreate).then((profile) => {
+	console.log('profile', profile);
+}).catch((error) => {
+	console.log('error', error);
+})
 
 // @@@@ History test
 // var msg = {
@@ -203,12 +203,12 @@ var user = {
 // console.log(util.constant);
 
 
-var saveUser = {
-    birthDay: '1987-11-03',
-    email: "wenzhang.seio@gmail.com",
-    gender: "f",
-    pid: "98351a13900aa778ed3038b249bd6ccf"
-}
-MongoDB.saveProfileChanges(saveUser).then(function(result) {
-    console.log(result);
-});
+// var saveUser = {
+//     birthDay: '1987-11-03',
+//     email: "wenzhang.seio@gmail.com",
+//     gender: "f",
+//     pid: "98351a13900aa778ed3038b249bd6ccf"
+// }
+// MongoDB.saveProfileChanges(saveUser).then(function(result) {
+//     console.log(result);
+// });

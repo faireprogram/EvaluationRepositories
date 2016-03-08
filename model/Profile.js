@@ -45,4 +45,5 @@ var ProfileSchema  = new Schema({
 });
 
 ProfileSchema.plugin(lpm, {usernameQueryFields : ['email']});
+
 module.exports = mongoose.model('profile', ProfileSchema);

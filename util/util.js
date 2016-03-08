@@ -1,4 +1,7 @@
 var fs = require('fs');
+var q = require('q');
+var gm = require('gm'); // graphicmagic library
+
 var util = {};
 util.msg = {};
 util.args = {};
@@ -6,6 +9,7 @@ util.string = {};
 util.num = {};
 util.constant = {};
 util.fn = {};
+util.gm = {};
 
 
 // Constance: server to server : {MSG_SEVER}
@@ -144,7 +148,26 @@ util.fn.defer = typeof setImmediate === 'function' ? setImmediate : function(fn)
     process.nextTick(fn.bind.apply(fn, arguments))
 }
 
+// util compress
+util.gm.compress = function(imgData, width, height) {
+    var defer = q.defer();
 
+    var type = imgData.mimetype.replace(/image\/|img\//g, '');
+    gm(imgData.data)
+        .resize(width.toString(), height.toString())
+        .toBuffer(type, function(err, buffer) {
+
+            if (err) {
+                defer.reject(err);
+            } else {
+                defer.resolve({
+                    data: buffer,
+                    mimetype: imgData.mimetype
+                });
+            }
+        });
+    return defer.promise;
+}
 
 
 module.exports = util;

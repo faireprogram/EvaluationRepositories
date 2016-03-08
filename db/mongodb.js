@@ -5,7 +5,6 @@ var ProfileModel = require('../model/Profile.js');
 var RoomModel = require('../model/Room.js');
 var mail = require('../email/mail.js');
 var util = require('../util/util.js');
-
 var Code = require('mongodb').Code;
 
 var Q = require('q');
@@ -95,11 +94,11 @@ MongoDB.register = function(user) {
         username: user.username,
         email: user.email,
         gender: 'm',
-        birthDay: new Date(1970,01,01),
+        birthDay: new Date(1970, 01, 01),
         verify: _default_verify,
         level: _default_level,
-        balance: _default_balance,
-        profileImg: _default_img
+        balance: _default_balance
+        // profileImg: _default_img
     });
 
     // try to find by Email or UserName
@@ -111,14 +110,21 @@ MongoDB.register = function(user) {
     }, () => {
         ProfileModel.register(_default_user, user.password, (err, user) => {
             util.fn.defer(() => {
-                mail.sendMail(user.email, 'http://192.168.191.1:8090/api/active/' + user.verify.code);
+                if(user && user.email) {
+                    mail.sendMail(user.email, 'http://192.168.191.1:8090/api/active/' + user.verify.code);
+                };
             });
 
             if (!!err) {
                 defer.reject(err);
             } else {
-                defer.resolve(user);
-            }
+                util.gm.compress(util.constant.DEFAULT_PROFILE_IMG, 100, 100).then(function(imgData) {
+                    user.profileImg = imgData;
+                    user.save(function(err, savedImgUsr) {
+                        defer.resolve(savedImgUsr);
+                    });
+                });
+            };
         });
     });
 
@@ -141,7 +147,7 @@ MongoDB.activateByParams = function(code) {
             }, {
                 multi: true
             }, function(err, numAffected) {
-                var newQuery =  {
+                var newQuery = {
                     pid: person.pid
                 };
                 ProfileModel.findOne(newQuery).exec(function(err, updatedPerson) {
@@ -159,33 +165,35 @@ MongoDB.activateByParams = function(code) {
 MongoDB.changeImg = function(pid, img) {
     var defer = Q.defer();
     this.findUserByPID(pid).then(function(user) {
-        if(user) {
-            user.profileImg = img;
-            user.save(function(err, successfulObj) {
-                if(err) {
-                    defer.reject(err);
-                } else {
-                    defer.resolve(true);
-                };
+        if (user) {
+            util.gm.compress(img, 100, 100).then(function(imgData) {
+                user.profileImg = imgData;
+                user.save(function(err, savedImgUsr) {
+                    if(err) {
+                        defer.resolve(err);
+                    } else {
+                        defer.resolve(true);
+                    };
+                });
             });
         };
 
     }).catch(function(err) {
         defer.reject(err);
     });
-    
+
     return defer.promise;
 }
 
 MongoDB.saveProfileChanges = function(user) {
     var defer = Q.defer();
     this.findUserByPID(user.pid).then(function(userFind) {
-        if(user) {
+        if (user) {
             userFind.birthDay = new Date(user.birthDay);
             userFind.gender = user.gender;
             userFind.email = user.email;
             userFind.save(function(err, successfulObj) {
-                if(err) {
+                if (err) {
                     defer.reject(err);
                 } else {
                     defer.resolve(successfulObj);
@@ -196,14 +204,14 @@ MongoDB.saveProfileChanges = function(user) {
     }).catch(function(err) {
         defer.reject(err);
     });
-    
+
     return defer.promise;
 }
 
 MongoDB.findImg = function(pid) {
     var defer = Q.defer();
     this.findUserByPID(pid).then(function(user) {
-        if(user) {
+        if (user) {
             defer.resolve(user.profileImg);
         } else {
             defer.resolve({});
@@ -216,18 +224,18 @@ MongoDB.findImg = function(pid) {
 
 MongoDB.updateRoomstatus = function(rid, status) {
     var defer = Q.defer();
-    
+
     this.findChatRoomById(rid).then(function(findedRoom) {
         console.log(findedRoom);
-        if(findedRoom) {
+        if (findedRoom) {
             findedRoom.status.open = status;
-            if(status) {
+            if (status) {
                 findedRoom.status.closeDate = null;
-            }else{
+            } else {
                 findedRoom.status.closeDate = new Date();
             }
             findedRoom.save(function(err, successfulObj) {
-                if(err) {
+                if (err) {
                     defer.reject(err);
                 } else {
                     defer.resolve(successfulObj);
