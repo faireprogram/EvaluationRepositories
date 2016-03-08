@@ -48,7 +48,7 @@
                         <tbody>
                             <tr ng-repeat="roominfo in rooms">
                                 <td>{{rooms[$index].roomName}}</td>
-                                <td>{{rooms[$index].rid}}</td>
+                                <td><a ui-sref="room({roomId: rooms[$index].rid})">{{rooms[$index].rid}}</a></td>
                                 <td>{{rooms[$index].description}}</td>
                                 <td>{{rooms[$index].status.createDate | date:'medium'}}</td>
                                 <td>{{rooms[$index].status.closeDate | date:'medium'}}</td>

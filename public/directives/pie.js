@@ -45,7 +45,7 @@
                         var series = [];
                         datas.forEach(function(data) {
                             series.push({
-                                name: data.rid,
+                                name: data.rname,
                                 y: data.count
                             });
                         });

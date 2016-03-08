@@ -6,7 +6,7 @@
     // Uncomment to style it like Apple Watch
     var opts = {
         chart: {
-            type: 'column',
+            type: 'line',
             options3d: {
                 enabled: false,
                 alpha: 10,
@@ -73,7 +73,7 @@
                             });
 
                             var room = {
-                                name: roomId,
+                                name: datas[roomId][0].rname,
                                 data: data
                             };
                             series.push(room);

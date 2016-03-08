@@ -110,7 +110,7 @@ MongoDB.register = function(user) {
     }, () => {
         ProfileModel.register(_default_user, user.password, (err, user) => {
             util.fn.defer(() => {
-                if(user && user.email) {
+                if (user && user.email) {
                     mail.sendMail(user.email, 'http://192.168.191.1:8090/api/active/' + user.verify.code);
                 };
             });
@@ -169,7 +169,7 @@ MongoDB.changeImg = function(pid, img) {
             util.gm.compress(img, 100, 100).then(function(imgData) {
                 user.profileImg = imgData;
                 user.save(function(err, savedImgUsr) {
-                    if(err) {
+                    if (err) {
                         defer.resolve(err);
                     } else {
                         defer.resolve(true);
@@ -416,20 +416,48 @@ MongoDB.groupDefaultByUser = function(pid, year, fn) {
     return defer.promise;
 };
 
+var bindingRoomName = function(defer, results) {
+    var promises = [];
+    results.forEach(function(result) {
+        promises.push(MongoDB.findChatRoomById(result.rid));
+    })
+    Q.all(promises).then(function(rooms) {
+        rooms.forEach(function(room, i) {
+            results[i].rname = room.roomName;
+        });
+        defer.resolve(results);
+    });
+}
 MongoDB.groupMonthByUser = function(pid, year) {
-    return this.groupDefaultByUser(pid, year, this.aggregateMonthDateById);
+    var defer = Q.defer();
+    this.groupDefaultByUser(pid, year, this.aggregateMonthDateById).then(function(results) {
+        bindingRoomName(defer, results);
+    });
+    return defer.promise;
 };
 
 MongoDB.groupWeekByUser = function(pid) {
-    return this.groupDefaultByUser(pid, null, this.aggregateCurrentWeek);
+    var defer = Q.defer();
+    this.groupDefaultByUser(pid, null, this.aggregateCurrentWeek).then(function(results) {
+       bindingRoomName(defer, results);
+    });
+    return defer.promise;
 };
 
 MongoDB.groupMonthTotalByUser = function(pid, year) {
-    return this.groupDefaultByUser(pid, year, this.aggregateMonthTotal);
+    var defer = Q.defer();
+    this.groupDefaultByUser(pid, year, this.aggregateMonthTotal).then(function(results) {
+        bindingRoomName(defer, results);
+    });
+    return defer.promise;
 };
 
 MongoDB.groupWeekTotalByUser = function(pid) {
-    return this.groupDefaultByUser(pid, null, this.aggregateCurrentWeekTotal);
+    var defer = Q.defer();
+    this.groupDefaultByUser(pid, null, this.aggregateCurrentWeekTotal).then(function(results) {
+        bindingRoomName(defer, results);
+    });
+    return defer.promise;
 };
 
 

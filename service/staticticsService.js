@@ -30,6 +30,7 @@ staticService.groupWeekByUser = function(pid) {
         };
 
         for (var roomId in rooms) {
+            var rname = rooms[roomId].length ? rooms[roomId][0].rname : roomId;
             var week = _create_weekmap();
             rooms[roomId].forEach(function(roomstatics) {
 
@@ -44,6 +45,7 @@ staticService.groupWeekByUser = function(pid) {
                 var emptyWeek = {
                     key: i,
                     rid: roomId,
+                    rname: rname,
                     year: da.year(),
                     date: da.date(),
                     count: 0,
@@ -53,7 +55,11 @@ staticService.groupWeekByUser = function(pid) {
             };
 
             var sortedRoom = rooms[roomId].sort(function(r1, r2) {
-                return r1.key > r2.key ? 1 : (r1.key === r2.key ? 0 : -1);
+                var r1Date = moment(r1.key, 'YYYY-M-D');
+                var r2Date = moment(r2.key, 'YYYY-M-D');
+                var equal = r1Date.isSame(r2Date.format(), 'day');
+                var great = r1Date.isAfter(r2Date.format());
+                return great ? 1 : (equal ? 0 : -1);
             });
 
             rooms[roomId] = sortedRoom;
@@ -107,6 +113,7 @@ staticService.groupMonthByUser = function(pid, year) {
                 var emptyMonth = {
                     key: i,
                     rid: roomId,
+                    rname: rooms[roomId].rname,
                     month: da.month() + 1,
                     year: da.year(),
                     count: 0,
