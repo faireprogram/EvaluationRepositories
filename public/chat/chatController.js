@@ -166,6 +166,10 @@
             $scope.mojoShow = show;
         };
 
+        $scope.test = function(eve) {
+            console.log(eve);
+        };
+
     }
 
     ChatWindowCtrl.$inject = ['$scope', '$http', '$rootScope',

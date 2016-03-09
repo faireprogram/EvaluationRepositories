@@ -67,6 +67,19 @@
                 noticeMessage.error('Some Problems Happens!!');
             });
         }
+
+        $scope.resendEmail = function() {
+            if(sharedService.login.pid) {
+                $http.post('/api/resend/', {email: $scope.user.email, pid: sharedService.login.pid}).success(function() {
+                    noticeMessage.info('Successful Send Email, please check your email account');
+                }).error(function() {
+                    noticeMessage.error('Error Happens, please check your input');
+                })
+            } else {
+                noticeMessage.error('Please login first');
+            }
+            
+        }
     }
 
     profileCtrl.$inject = ['$scope', '$http', '$q', 'FileUploadService', 'NoticeMessage', 'ShareDataService'];

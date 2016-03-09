@@ -28,7 +28,7 @@
         <!-- Right -->
         <div class="col-md-10 row-xs-12" ng-controller="ChatWindowCtrl">
             <!-- Panel -->
-            <div class="row-xs-11 realContainer" id="msgContainer">
+            <div class="row-xs-11 realContainer" id="msgContainer" ng-keypress="">
                 <div class="mogiContainer" ng-show="mojoShow">
                     <ul ng-repeat="(n, rows) in mogs">
                         <li ng-repeat="mogNum in rows" ng-click="selectMojo(mogNum)"><img src="/resource/expression/{{mogNum}}.gif"/></li>

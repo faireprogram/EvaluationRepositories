@@ -5,6 +5,7 @@ var $injector = require('../util/injector.js');
 var staticsService = require('../service/staticticsService.js');
 var execFile = require('child_process').execFile;
 var multer = require('multer');
+var mail = require('../email/mail.js');
 var upload = multer({
     dest: 'uploads/'
 });
@@ -194,8 +195,8 @@ router.post('/tagsAssist', function(req, res, next) {
 });
 
 //
-router.post('/updateRoomstatus',function(req,res,next){
-    mongodbAPI.updateRoomstatus(req.body.rid, req.body.status).then(function(room){
+router.post('/updateRoomstatus', function(req, res, next) {
+    mongodbAPI.updateRoomstatus(req.body.rid, req.body.status).then(function(room) {
         res.json(room);
     });
 })
@@ -315,13 +316,29 @@ router.post('/modify/saveProfileChanges', function(req, res, next) {
         req.session.user = savedObj;
         req.session.save();
         res.json({
-            'status' : 'ok'
+            'status': 'ok'
         });
     }).catch(function() {
         res.json({
             'error': 'error Happens'
         });
     });
+});
+
+router.post('/resend', function(req, res, next) {
+    var emailInfo = req.body;
+    if (emailInfo.pid) {
+        mongodbAPI.findUserByPID(emailInfo.pid).then(function(user) {
+            util.fn.defer(() => {
+                if (emailInfo && emailInfo.email) {
+                    mail.sendMail(emailInfo.email, 'http://192.168.191.1:8090/api/active/' + user.verify.code);
+                };
+            });
+            res.json({'ok' : 'ok'});
+        });
+    } else {
+        res.json({'err' : 'err'});
+    }
 
 });
 

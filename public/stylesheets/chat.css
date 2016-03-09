@@ -707,3 +707,7 @@ input[readonly] {
 .container-fluid {
   width: 100%;
 }
+
+.input-group-addon {
+  cursor: pointer;
+}
