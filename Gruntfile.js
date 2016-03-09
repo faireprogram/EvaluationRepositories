@@ -3,29 +3,31 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         jasmine: {
-            customTemplate: {
+            FrontEnd: {
                 src: 'public/*.js',
                 options: {
-                    specs: 'spec/*Spec.js',
-                    helpers: 'spec/*Helper.js'
+                    specs: 'spec/front/*Spec.js'
                 },
                 vendor: [
                     "public/libs/angular/angular.js",
                     "public/libs/angular-mocks/angular-mocks.js"
                 ]
+            },
+            BackEnd: {
+                src: 'public/*.js',
+                options: {
+                    specs: 'spec/back/*Spec.js'
+                }
             }
         },
-		
-		
-		
 		
     });
 
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 	
-	grunt.loadNpmTasks('grunt-jasmine-nodejs');
+	// grunt.loadNpmTasks('grunt-jasmine-nodejs');
     // Default task(s).
-    grunt.registerTask('default', ['jasmine']);
+    grunt.registerTask('default', ['jasmine:FrontEnd', 'jasmine:BackEnd']);
 
 };
