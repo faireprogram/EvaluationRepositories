@@ -67,7 +67,7 @@
             };
         };
 
-        $scope.styles = ['BlueOcean', 'OrangeGreen', 'PinkGirl', 'PurpleMagic', 'RedChristmas', 'WhiteJoey', 'YellowFruit'];
+        $scope.styles = ['Default','BlueOcean', 'OrangeGreen', 'PinkGirl', 'PurpleMagic', 'RedChristmas', 'WhiteJoey', 'YellowFruit'];
 
         $scope.$watch('newRoom.tag', function(n, o) {
             if (n) {

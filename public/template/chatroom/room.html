@@ -28,7 +28,7 @@
         <!-- Right -->
         <div class="col-md-10 row-xs-12" ng-controller="ChatWindowCtrl">
             <!-- Panel -->
-            <div class="row-xs-11 realContainer" id="msgContainer" ng-keypress="">
+            <div class="row-xs-11 realContainer" id="msgContainer">
                 <div class="mogiContainer" ng-show="mojoShow">
                     <ul ng-repeat="(n, rows) in mogs">
                         <li ng-repeat="mogNum in rows" ng-click="selectMojo(mogNum)"><img src="/resource/expression/{{mogNum}}.gif"/></li>
@@ -52,7 +52,7 @@
                     <div class="row row-xs-12">
                         <div class="col-md-10 col-xs-10 row-xs-12">
                             <!-- <input type="text" class="form-control row-xs-12 rightbottom"> -->
-                            <input type="text" id="msgAreadID" class="form-control" placeholder="What's in your mind ?" ng-model="inputMsg"  ng-keydown="$event.which === 13 && sendMsg(inputMsg)" >
+                            <input type="text" id="msgAreadID" class="form-control" placeholder="What's in your mind ?" ng-model="inputMsg"  ng-keydown="$event.which === 13 && sendMsg(inputMsg) || $event.which === 27 && closeMojo()" >
                         </div>
                         <div class="col-md-1 col-xs-1 row-xs-12">
                             <div class="row-xs-12">

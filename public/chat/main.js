@@ -77,7 +77,7 @@
             return function(input) {
                 console.log('input',input);
                 var imgTempate = '<img src="/resource/expression/$1.gif"></img>';
-                return $sce.trustAsHtml(input.replace(/\[#(\d{1,2})\]/g, imgTempate));
+                return $sce.trustAsHtml(input.replace(/\[#(\d{1,2}|ichat)\]/g, imgTempate));
             }
         }
     ]);

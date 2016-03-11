@@ -58,7 +58,30 @@
             };
         };
 
+        $scope.checkExistOfUser = function() {
+            if (!$scope.user.username) {
+                $scope.errormsg =  null;
+                return;
+            }
+            $http.post('/api/checkUserNameExist', {
+                'user': $scope.user
+            }).success(function(data) {
+                if (data.find) {
+                    $scope.errormsg = {
+                        msg: 'the  username exist'
+                    };
+                } else {
+                    $scope.errormsg =  null;
+                };
+            })
+        }
+
         $scope.register = function(user) {
+            // $http.get('/api/checkUserNameExist', user).success(fucntion(data) {})
+            if ($('.ng-invalid:visible').length > 0) {
+                $scope.submited = true
+                return;
+            }
 
             $http.post('/api/register', {
                 'user': user
@@ -69,7 +92,9 @@
                 _send_close_request($scope, data, sharedDataService);
 
                 if (data.status !== 'ok') {
-                    // do nothing here
+                    $scope.errormsg = {
+                        msg: data.msg
+                    };
                 } else {
                     sharedDataService.signUpInstance.close();
                 };
@@ -83,7 +108,9 @@
         }
 
         $scope.login = function(user) {
-            $http.post('/api/login', {user: user}).success(function(data) {
+            $http.post('/api/login', {
+                user: user
+            }).success(function(data) {
                 //if successful get the data
                 //send the refresh visitor, refresh socket, username
 
@@ -92,9 +119,9 @@
                 if (data.status !== 'ok') {
                     // do nothing here
 
-                    $scope.errormsg=data.msg;
+                    $scope.errormsg = data.msg;
                     console.log(data.msg);
-                    
+
                 } else {
                     sharedDataService.loginInstance.close();
                 };

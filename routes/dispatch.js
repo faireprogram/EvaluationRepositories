@@ -36,7 +36,7 @@ var dispatch = function(server) {
             pid: pid
         });
 
-        console.log('re build connected', socket.client.id)
+        // console.log('re build connected', socket.client.id)
 
         // console.log('socket', socket.handshake.session);
 
@@ -107,7 +107,7 @@ var dispatch = function(server) {
                     type: 'visitor',
                     logout: msg.logout || false
                 };
-                console.log('roomInstance.count(username)', roomInstance.count(username));
+                // console.log('roomInstance.count(username)', roomInstance.count(username));
                 //if it's logout, delete all the msgs
                 // otherwise judge all the socket in the room whether has been closed
 
@@ -132,7 +132,7 @@ var dispatch = function(server) {
         });
 
         socket.on('disconnect', function() {
-            console.log('disconnect is called!!', socket.client.id);
+            // console.log('disconnect is called!!', socket.client.id);
             // if register with wrap the socket in observer,
             // then detach observer
             // else delete socket itself
@@ -142,11 +142,11 @@ var dispatch = function(server) {
                 roomInstance.detach(currentObserver);
             }
             if (roomInstance) {
-                console.log('roomInstance', roomInstance);
+                // console.log('roomInstance', roomInstance);
 
             };
             if (roomInstance && roomInstance.observers[0]) {
-                console.log('after delete socket', roomInstance.observers[0].socket.nsp.sockets);
+                // console.log('after delete socket', roomInstance.observers[0].socket.nsp.sockets);
             }
         });
 

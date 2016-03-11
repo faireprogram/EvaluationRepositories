@@ -82,6 +82,25 @@ router.post('/register', function(req, res, next) {
 
 });
 
+router.post('/checkUserNameExist', function(req, res, next) {
+    var user = req.body.user;
+    mongodbAPI.findUserByEmailOrUserName(user).then(function(user) {
+        if (!user) {
+            res.json({
+                'find': false
+            });
+        } else {
+            res.json({
+                'find': true
+            });
+        };
+    }).catch(function(err) {
+        res.json({
+            'find': false
+        });
+    });
+});
+
 router.post('/retrieveUser', function(req, res, next) {
     if (req.session.user) {
         res.json({
@@ -186,7 +205,7 @@ router.post('/roomExist', function(req, res, next) {
 router.post('/tagsAssist', function(req, res, next) {
     var pattern = '^' + req.body.input ? req.body.input.trim() : '';
     var resExp = new RegExp(pattern, 'i');
-    var tags = ['life', 'life1', 'life2', 'abx', 'Abx', 'aBx', 'Cbx', 'Dbx'];
+    var tags = ['life', 'life1', 'life2', 'abx', 'Abx', 'aBx', 'Cbx', 'Dbx','Sports','nba','soccer'];
     var filterArray = tags.filter(function(item) {
         return resExp.test(item);
     });
@@ -334,10 +353,14 @@ router.post('/resend', function(req, res, next) {
                     mail.sendMail(emailInfo.email, 'http://192.168.191.1:8090/api/active/' + user.verify.code);
                 };
             });
-            res.json({'ok' : 'ok'});
+            res.json({
+                'ok': 'ok'
+            });
         });
     } else {
-        res.json({'err' : 'err'});
+        res.json({
+            'err': 'err'
+        });
     }
 
 });

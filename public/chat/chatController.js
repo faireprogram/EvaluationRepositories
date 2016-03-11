@@ -110,6 +110,10 @@
 
         
             if (!!content) {
+                if (!shareservice.login.username) {
+                    noticeMessage.error('Should Login First, then have the permission to send msg');
+                    return;
+                }
                 if (!shareservice.login.verify) {
                     noticeMessage.error('Should Active first Before You can send Message');
                     return;
@@ -126,6 +130,7 @@
 
                     socket0.emit('msg', msg);
                     $scope.inputMsg = '';
+                    $('#msgAreadID').focus();
                 }
               
 
@@ -164,10 +169,11 @@
 
         $scope.toggle = function(show) {
             $scope.mojoShow = show;
+            $('#msgAreadID').focus();
         };
 
-        $scope.test = function(eve) {
-            console.log(eve);
+        $scope.closeMojo = function(eve) {
+            $scope.mojoShow = false;
         };
 
     }
